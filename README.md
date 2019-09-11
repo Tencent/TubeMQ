@@ -1,4 +1,6 @@
-TubeMQ is a distributed messaging middleware system (MQ) developed by Tencent Big Data in 2013. It focuses on high-performance storage and transmission of massive data in large data scenarios.
-After nearly seven years of massive data precipitation, TubeMQ has certain advantages in mass practice (stability + performance) and low cost compared to many open source MQ components. Recently we have related code and design in open source TubeMQ. More information is being compiled and uploaded.
-You can find more information under /doc. 
-For more questions, please contact: gosonzhang@tencent.com, junpingdu@tencent.com
+TubeMQ is a distributed messaging queue (MQ) system developed by Tencent Big Data since 2013. It focuses on high-performance storage and transmission of massive data in big data scenarios.
+
+After nearly seven years of massive data precipitation, TubeMQ has certain advantages in production practice (stability + performance) and low cost compared to many open source MQ projects. Recently we open source related code and design for TubeMQ project. You can find more information and documentations under /doc. More information and documentation (in English) will get uploaded soon.
+
+
+For more questions, please contact us: gosonzhang@tencent.com, junpingdu@tencent.com
