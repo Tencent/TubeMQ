@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+    <id>demo</id>
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+    </formats>
+    <dependencySets>
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+        <fileSet>
+            <directory>../</directory>
+            <includes>
+                <include>./conf/tools.log4j.properties</include>
+                <include>./logs</include>
+            </includes>
+            <excludes>
+                <exclude>**/src/**</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</assembly>

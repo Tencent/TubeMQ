@@ -1,0 +1,9 @@
+.idea/
+target/
+*.iml
+/.metadata/
+*.class
+.*
+!.gitignore
+!.gitkeep
+tube-server/test/
