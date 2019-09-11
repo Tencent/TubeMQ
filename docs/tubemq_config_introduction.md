@@ -16,7 +16,7 @@ In addition to the back-end system configuration file, the Master also stores th
 [master]
 > Master system runs the main configuration unit, required unit, the value is fixed to "[master]"
 
-| name                          | Required                          | Type                          | Description                                                  |
+| Name                          | Required                          | Type                          | Description                                                  |
 | ----------------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | hostName                      | yes      | string  | The host address of the master external service, required, must be configured on the NIC, is enabled, non-loopback and cannot be IP of 127.0.0.1 |
 | port                          | no       | int     | Master listening port, optional, default is 8715             |
@@ -44,7 +44,7 @@ In addition to the back-end system configuration file, the Master also stores th
 [zookeeper]
 >The corresponding Tom MQ cluster of the Master stores the information about the ZooKeeper cluster of the Offset. The required unit has a fixed value of "[zookeeper]".
 
-| name                  | Required                          | Type                          | Description                                                  |
+| Name                  | Required                          | Type                          | Description                                                  |
 | --------------------- |  -----------------------------|  ----------------------------- | ------------------------------------------------------------ |
 | zkServerAddr          | no       | string | Zk server address, optional configuration, defaults to "localhost:2181" |
 | zkNodeRoot            | no       | string | The root path of the node on zk, optional configuration. The default is "/tube". |
@@ -56,7 +56,7 @@ In addition to the back-end system configuration file, the Master also stores th
 [bdbStore]
 >Master configuration of the BDB cluster to which the master belongs. The master uses BDB for metadata storage and multi-node hot standby. The required unit has a fixed value of "[bdbStore]".
 
-| name                    | Required                          | Type                          | Description                                                  |
+| Name                    | Required                          | Type                          | Description                                                  |
 | ----------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | bdbRepGroupName         | yes      | string | BDB cluster name, the primary and backup master node values must be the same, required field |
 | bdbNodeName             | yes      | string | The name of the node of the master in the BDB cluster. The value of each BDB node must not be repeated. Required field. |
@@ -71,7 +71,7 @@ In addition to the back-end system configuration file, the Master also stores th
 [tlsSetting]
 >The Master uses TLS to encrypt the transport layer data. When TLS is enabled, the configuration unit provides related settings. The optional unit has a fixed value of "[tlsSetting]".
 
-| name                  | Required                          | Type                          | Description                                                  |
+| Name                  | Required                          | Type                          | Description                                                  |
 | --------------------- |  -----------------------------|  ----------------------------- | ------------------------------------------------------------ |
 | tlsEnable             | no       | boolean | Whether to enable TLS function, optional configuration, default is false |
 | tlsPort               | no       | int     | Master TLS port number, optional configuration, default is 8716 |
@@ -83,7 +83,7 @@ In addition to the back-end system configuration file, the Master also stores th
 
 ### velocity.properties file:
 
-| name                      | Required                          | Type                          | Description                                                  |
+| Name                      | Required                          | Type                          | Description                                                  |
 | ------------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | file.resource.loader.path | yes      | string | The absolute path of the master web template. This part is the absolute path plus /resources/templates of the project when the master is deployed. The configuration is consistent with the actual deployment. If the configuration fails, the master front page access fails. |
 
@@ -92,7 +92,7 @@ In addition to the back-end system configuration file, the Master also stores th
 [broker]
 >The broker system runs the main configuration unit, required unit, and the value is fixed to "[broker]"
 
-| name                  | Required                          | Type                          | Description                                                  |
+| Name                  | Required                          | Type                          | Description                                                  |
 | --------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | brokerId              | yes      | int     | Server unique flag, required field, can be set to 0; when set to 0, the system will default to take the local IP to int value |
 | hostName              | yes      | string  | The host address of the broker external service, required, must be configured in the NIC, is enabled, non-loopback and cannot be IP of 127.0.0.1 |
@@ -122,7 +122,7 @@ In addition to the back-end system configuration file, the Master also stores th
 >The Tube MQ cluster corresponding to the Broker stores the information about the ZooKeeper cluster of the Offset. The required unit has a fixed value of "[zookeeper]".
 
 
-| name                  | Required                          | Type                          | Description                                                  |
+| Name                  | Required                          | Type                          | Description                                                  |
 | --------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | zkServerAddr          | no       | string | Zk server address, optional configuration, defaults to "localhost:2181" |
 | zkNodeRoot            | no       | string | The root path of the node on zk, optional configuration. The default is "/tube". |
@@ -136,7 +136,7 @@ In addition to the back-end system configuration file, the Master also stores th
 >The Master uses TLS to encrypt the transport layer data. When TLS is enabled, the configuration unit provides related settings. The optional unit has a fixed value of "[tlsSetting]".
 
 
-| name                  | Required                          | Type                           | Description                                                  |
+| Name                  | Required                          | Type                           | Description                                                  |
 | --------------------- |  ----------------------------- |  ----------------------------- | ------------------------------------------------------------ |
 | tlsEnable             | no       | boolean | Whether to enable TLS function, optional configuration, default is false |
 | tlsPort               | no       | int     | Broker TLS port number, optional configuration, default is 8124 |
