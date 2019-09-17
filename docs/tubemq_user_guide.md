@@ -15,13 +15,13 @@ mvn clean package -Dmaven.test.skip
 Each module of the project can also be build separately.
 
 ### Build source code
-If want to build and debug source code in IDE, go to the project root, and run
+If you want to build and debug source code in IDE, go to the project root, and run
 
 ```bash
 mvn compile
 ```
 
-This command will generate `.proto`  files corresponding Java source files(location is `target/generated-sources`).
+This command will generate the Java source files from the `protoc` files, the generated files located in `target/generated-sources`.
 
 When this command finished, you can use IDE import the project as maven project.
 
