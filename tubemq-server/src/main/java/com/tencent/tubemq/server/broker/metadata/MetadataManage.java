@@ -24,12 +24,19 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 
+
 /***
  * Metadata's manangement interface.
  */
 public interface MetadataManage {
+    /**
+    *
+    */
     void close(long waitTimeMs);
 
+    /**
+    *
+    */
     void updateBrokerTopicConfigMap(long newBrokerMetaConfId,
                                     int newConfCheckSumId,
                                     String newBrokerDefMetaConfInfo,
@@ -37,48 +44,111 @@ public interface MetadataManage {
                                     boolean isForce,
                                     final StringBuilder sb);
 
+    /**
+    *
+    */
     boolean updateBrokerRemoveTopicMap(boolean isTakeRemoveTopics,
                                        List<String> rmvTopicMetaConfInfoLst,
                                        final StringBuilder sb);
 
+    /**
+    *
+    */
     void addPropertyChangeListener(final String propertyName,
                                    final PropertyChangeListener listener);
 
+    /**
+    *
+    */
     List<String> getTopics();
 
+    /**
+    *
+    */
     TopicMetadata getTopicMetadata(final String topic);
 
+    /**
+    *
+    */
     BrokerDefMetadata getBrokerDefMetadata();
 
+    /**
+    *
+    */
     FlowCtrlRuleHandler getFlowCtrlRuleHandler();
 
+    /**
+    *
+    */
     int getNumPartitions(final String topic);
 
+    /**
+    *
+    */
     int getNumTopicStores(final String topic);
 
+    /**
+    *
+    */
     long getBrokerMetadataConfId();
 
+    /**
+    *
+    */
     int getBrokerConfCheckSumId();
 
+    /**
+    *
+    */
     String getBrokerDefMetaConfInfo();
 
+    /**
+    *
+    */
     List<String> getTopicMetaConfInfoLst();
 
+    /**
+    *
+    */
     List<String> getHardRemovedTopics();
 
+    /**
+    *
+    */
     Map<String, TopicMetadata> getRemovedTopicConfigMap();
 
+    /**
+    *
+    */
     Integer getCosedTopicStatusId(final String topic);
 
+    /**
+    *
+    */
     boolean isClosedTopic(final String topic);
 
+    /**
+    *
+    */
     boolean isBrokerMetadataChanged();
 
+    /**
+    *
+    */
     long getLastRptBrokerMetaConfId();
 
+    /**
+    *
+    */
     void setLastRptBrokerMetaConfId(long rptBrokerMetaConfId);
 
+    /**
+    *
+    */
     String getDefDeletePolicy();
 
+    /**
+    *
+    */
     String getTopicDeletePolicy(String topic);
 }
