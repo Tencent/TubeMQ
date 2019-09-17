@@ -1,10 +1,29 @@
 # TubeMQ User Guide
+## Prerequisites
+
+- Java 7/8(Java 9+ are not test)
+- Maven
+- [protoc 2.5.0](https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0)
+
 ## Build
+
+### Build distribution tarball
 Go to the project root, and run
 ```bash
 mvn clean package -Dmaven.test.skip
 ```
 Each module of the project can also be build separately.
+
+### Build source code
+If you want to build and debug source code in IDE, go to the project root, and run
+
+```bash
+mvn compile
+```
+
+This command will generate the Java source files from the `protoc` files, the generated files located in `target/generated-sources`.
+
+When this command finished, you can use IDE import the project as maven project.
 
 ## Deploy
 After the build, please go to `tubemq-server/target`. You can find the
