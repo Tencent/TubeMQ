@@ -4,6 +4,7 @@ target/
 /.metadata/
 *.class
 .*
+!.github/
 !.gitignore
 !.gitkeep
 tube-server/test/
