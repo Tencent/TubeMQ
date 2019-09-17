@@ -4,8 +4,22 @@
 - Java 7/8(Java 9+ are not test)
 - Maven
 - [protoc 2.5.0](https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0)
+<<<<<<< HEAD
 
 ## Build
+=======
+
+## Install protoc
+Install on windows operating system is simple:
+
+- Unzip `protoc-2.5.0-win32.zip`, will get `protoc.exe`.
+- Config environment variable, add path of `protoc.exe` to `Path` variable.
+
+Others os can following the protobuf official docuement.
+
+## Build source code
+If want to build and debug source code in IDE, go to the project root, and run
+>>>>>>> d32fb16dbbbb4d495c167825c2d2b856238c3121
 
 ### Build distribution tarball
 Go to the project root, and run
@@ -14,8 +28,14 @@ mvn clean package -Dmaven.test.skip
 ```
 Each module of the project can also be build separately.
 
+<<<<<<< HEAD
 ### Build source code
 If want to build and debug source code in IDE, go to the project root, and run
+=======
+This command will generate `.proto`  files corresponding Java source files(location is `target/generated-sources`).
+
+When this command finished, you can use IDE import the project as maven project.
+>>>>>>> d32fb16dbbbb4d495c167825c2d2b856238c3121
 
 ```bash
 mvn compile
