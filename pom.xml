@@ -23,7 +23,7 @@
     <groupId>com.tencent.tubemq</groupId>
     <artifactId>tubemq</artifactId>
     <inceptionYear>2013</inceptionYear>
-    <version>3.8.0</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>tubemq</name>
 
@@ -35,10 +35,10 @@
     </modules>
 
     <properties>
-        <tubemq-core-version>3.8.0</tubemq-core-version>
-        <tubemq-client-version>3.8.0</tubemq-client-version>
-        <tubemq-server-version>3.8.0</tubemq-server-version>
-        <tubemq-example-version>3.8.0</tubemq-example-version>
+        <tubemq-core-version>0.2-SNAPSHOT</tubemq-core-version>
+        <tubemq-client-version>0.2-SNAPSHOT</tubemq-client-version>
+        <tubemq-server-version>0.2-SNAPSHOT</tubemq-server-version>
+        <tubemq-example-version>0.2-SNAPSHOT</tubemq-example-version>
         <junit.version>4.11</junit.version>
         <mockito.version>2.0.2-beta</mockito.version>
         <powermock.version>1.6.5</powermock.version>
