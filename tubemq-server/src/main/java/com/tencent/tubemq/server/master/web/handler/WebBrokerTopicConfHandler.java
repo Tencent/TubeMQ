@@ -227,7 +227,7 @@ public class WebBrokerTopicConfHandler {
             Date createDate =
                     WebParameterUtils.validDateParameter("createDate", req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH, false, new Date());
-            List<LinkedHashMap<String, Object>> topicJsonArray =
+            List<Map<String, Object>> topicJsonArray =
                     WebParameterUtils.checkAndGetJsonArray("topicJsonSet",
                             req.getParameter("topicJsonSet"), TBaseConstants.META_VALUE_UNDEFINED, true);
             if ((topicJsonArray == null) || (topicJsonArray.isEmpty())) {

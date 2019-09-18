@@ -17,6 +17,8 @@
 
 package com.tencent.tubemq.server.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
@@ -26,7 +28,6 @@ import com.tencent.tubemq.server.master.TMaster;
 import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbBrokerConfEntity;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerConfManage;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerSyncStatusInfo;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -608,7 +609,7 @@ public class WebParameterUtils {
      * @return a list of linked hash map represent the json array
      * @throws Exception
      */
-    public static List<LinkedHashMap<String, Object>> checkAndGetJsonArray(String paramName,
+    public static List<Map<String, Object>> checkAndGetJsonArray(String paramName,
                                                                            Object paramValue,
                                                                            int paramMaxLen,
                                                                            boolean required) throws Exception {
@@ -642,8 +643,7 @@ public class WebParameterUtils {
                         .append(" characters").toString());
             }
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(decTmpParamVal, List.class);
+        return JSON.parseObject(decTmpParamVal, new TypeReference<List<Map<String, Object>>>() {});
     }
 
     /**

@@ -152,7 +152,7 @@ public class WebAdminGroupCtrlHandler {
                             req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH,
                             false, new Date());
-            List<LinkedHashMap<String, Object>> filterJsonArray =
+            List<Map<String, Object>> filterJsonArray =
                     WebParameterUtils.checkAndGetJsonArray("filterCondJsonSet",
                             req.getParameter("filterCondJsonSet"),
                             TBaseConstants.META_VALUE_UNDEFINED, true);
@@ -350,7 +350,7 @@ public class WebAdminGroupCtrlHandler {
                             req.getParameter("modifyDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH,
                             false, new Date());
-            List<LinkedHashMap<String, Object>> jsonArray =
+            List<Map<String, Object>> jsonArray =
                     WebParameterUtils.checkAndGetJsonArray("filterCondJsonSet",
                             req.getParameter("filterCondJsonSet"),
                             TBaseConstants.META_VALUE_UNDEFINED, true);
@@ -758,7 +758,7 @@ public class WebAdminGroupCtrlHandler {
                             req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH,
                             false, new Date());
-            List<LinkedHashMap<String, Object>> jsonArray =
+            List<Map<String, Object>> jsonArray =
                     WebParameterUtils.checkAndGetJsonArray("groupNameJsonSet",
                             req.getParameter("groupNameJsonSet"),
                             TBaseConstants.META_VALUE_UNDEFINED, true);
@@ -1026,7 +1026,7 @@ public class WebAdminGroupCtrlHandler {
                             req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH,
                             false, new Date());
-            List<LinkedHashMap<String, Object>> jsonArray =
+            List<Map<String, Object>> jsonArray =
                     WebParameterUtils.checkAndGetJsonArray("groupNameJsonSet",
                             req.getParameter("groupNameJsonSet"),
                             TBaseConstants.META_VALUE_UNDEFINED, true);
@@ -1273,7 +1273,7 @@ public class WebAdminGroupCtrlHandler {
                     WebParameterUtils.validIntDataParameter("allowedBClientRate",
                             req.getParameter("allowedBClientRate"),
                             false, 0, 0);
-            List<LinkedHashMap<String, Object>> groupNameJsonArray =
+            List<Map<String, Object>> groupNameJsonArray =
                     WebParameterUtils.checkAndGetJsonArray("groupNameJsonSet",
                             req.getParameter("groupNameJsonSet"),
                             TBaseConstants.META_VALUE_UNDEFINED, true);
