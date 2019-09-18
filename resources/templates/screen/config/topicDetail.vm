@@ -18,7 +18,7 @@
 <div class="main">
     <div class="main-hd">
         <div class="crumb-wp fl">
-            <a class="back" href="../configuration/topic.hbs.html">Topic列表</a>
+            <a class="back" href="../config/topic_list.htm">Topic列表</a>
             <span class="arrow">&rsaquo;</span>
             <span class="cur">Topic详情 - <span id="topicNav">gift_ugc_test</span></span>
         </div>
