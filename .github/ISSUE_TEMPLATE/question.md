@@ -1,6 +1,6 @@
 ---
 name: "❓ Question"
-about: Please use https://discuss.akka.io for questions
+about: Ask a question about TubeMQ
 
 ---
 
