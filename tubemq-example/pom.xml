@@ -23,7 +23,7 @@
     <parent>
         <artifactId>tubemq</artifactId>
         <groupId>com.tencent.tubemq</groupId>
-        <version>3.8.0</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
     <artifactId>tubemq-example</artifactId>
     <name>tubemq-example</name>

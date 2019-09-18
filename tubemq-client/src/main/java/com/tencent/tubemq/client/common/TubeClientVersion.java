@@ -18,7 +18,7 @@
 package com.tencent.tubemq.client.common;
 
 public class TubeClientVersion {
-    public static final String CONSUMER_VERSION = "3.8.0";
-    public static final String PRODUCER_VERSION = "3.8.0";
+    public static final String CONSUMER_VERSION = "0.2-SNAPSHOT";
+    public static final String PRODUCER_VERSION = "0.2-SNAPSHOT";
 
 }
