@@ -18,5 +18,5 @@
 package com.tencent.tubemq.server.common;
 
 public class TubeServerVersion {
-    public static final String BROKER_VERSION = "3.8.0";
+    public static final String BROKER_VERSION = "0.2-SNAPSHOT";
 }
