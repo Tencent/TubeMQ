@@ -74,10 +74,6 @@
             <artifactId>tubemq-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.tencent.tubemq</groupId>
-            <artifactId>tubemq-example</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
         </dependency>
