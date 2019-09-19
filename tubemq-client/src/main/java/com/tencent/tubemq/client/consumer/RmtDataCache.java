@@ -180,7 +180,7 @@ public class RmtDataCache implements Closeable {
                         TErrCodeConstants.BAD_REQUEST,
                         "Client instance has been shutdown!");
             }
-            String key = indexPartition.take();
+            String key = indexPartition.poll();
             if (key == null) {
                 if (hasPartitionWait()) {
                     return new PartitionSelectResult(false,
