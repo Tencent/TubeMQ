@@ -18,7 +18,7 @@
 <div class="main">
     <div class="main-hd">
         <div class="crumb-wp fl">
-            <a class="back" href="">分发查询</a>
+            <a class="back" href="../consume/consume_group_list.htm">分发查询</a>
             <span class="arrow">&rsaquo;</span>
             <span class="cur">消费组详情 - <span id="consumeGroupNav">gift_ugc_test</span></span>
         </div>
