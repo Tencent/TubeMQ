@@ -242,7 +242,7 @@ public class RmtDataCache implements Closeable {
             if (this.isClosed.get()) {
                 return null;
             }
-            String key = indexPartition.poll();
+            String key = indexPartition.take();
             if (key == null) {
                 return null;
             }
