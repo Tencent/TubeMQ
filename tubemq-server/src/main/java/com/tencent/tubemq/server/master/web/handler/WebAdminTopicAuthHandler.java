@@ -17,6 +17,8 @@
 
 package com.tencent.tubemq.server.master.web.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.utils.WebParameterUtils;
@@ -25,7 +27,6 @@ import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbConsumerGroupEnti
 import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbGroupFilterCondEntity;
 import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbTopicAuthControlEntity;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerConfManage;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +111,7 @@ public class WebAdminTopicAuthHandler {
             Date createDate =
                     WebParameterUtils.validDateParameter("createDate", req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH, false, new Date());
-            List<LinkedHashMap<String, Object>> topicJsonArray =
+            List<Map<String, Object>> topicJsonArray =
                     WebParameterUtils.checkAndGetJsonArray("topicJsonSet",
                             req.getParameter("topicJsonSet"), TBaseConstants.META_VALUE_UNDEFINED, true);
             if ((topicJsonArray == null) || (topicJsonArray.isEmpty())) {
@@ -351,9 +352,8 @@ public class WebAdminTopicAuthHandler {
             final StringBuilder sBuilder) throws Exception {
         String strAuthConsumGroup = (String) jsonObject.get("authConsumeGroup");
         if ((strAuthConsumGroup != null) && (!TStringUtils.isBlank(strAuthConsumGroup))) {
-            ObjectMapper objectMapper2 = new ObjectMapper();
-            List<LinkedHashMap<String, String>> authConsumeGroupSet =
-                    objectMapper2.readValue(strAuthConsumGroup, List.class);
+            List<Map<String, String>> authConsumeGroupSet =
+                    JSON.parseObject(strAuthConsumGroup, new TypeReference<List<Map<String, String>>>() {});
             if ((authConsumeGroupSet != null)
                     && (!authConsumeGroupSet.isEmpty())) {
                 for (int count_j = 0; count_j < authConsumeGroupSet.size(); count_j++) {

@@ -321,7 +321,7 @@ public class WebBrokerDefConfHandler {
             Date createDate =
                     WebParameterUtils.validDateParameter("createDate", req.getParameter("createDate"),
                             TBaseConstants.META_MAX_DATEVALUE_LENGTH, false, new Date());
-            List<LinkedHashMap<String, Object>> brokerJsonArray =
+            List<Map<String, Object>> brokerJsonArray =
                     WebParameterUtils.checkAndGetJsonArray("brokerJsonSet",
                             req.getParameter("brokerJsonSet"), TBaseConstants.META_VALUE_UNDEFINED, true);
             if ((brokerJsonArray == null) || (brokerJsonArray.isEmpty())) {
