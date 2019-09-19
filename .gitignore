@@ -7,4 +7,5 @@ target/
 !.github/
 !.gitignore
 !.gitkeep
+!.travis.yml
 tube-server/test/
