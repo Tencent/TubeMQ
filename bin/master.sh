@@ -49,7 +49,7 @@ PID_FILE="$PID_DIR/.master.run.pid"
 function running(){
 	if [ -f "$PID_FILE" ]; then
 		pid=$(cat "$PID_FILE")
-		process=`ps aux | grep " $pid " | grep -v grep`;
+		process=`ps aux | grep " $pid "|grep "\-Dtubemq\.home=$BASE_DIR" | grep -v grep`;
 		if [ "$process" == "" ]; then
 	    	return 1;
 		else
