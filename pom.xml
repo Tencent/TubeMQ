@@ -42,6 +42,8 @@
         <junit.version>4.11</junit.version>
         <mockito.version>2.0.2-beta</mockito.version>
         <powermock.version>1.6.5</powermock.version>
+        <exec.maven.version>1.6.0</exec.maven.version>
+        <build.helper.maven.version>3.0.0</build.helper.maven.version>
     </properties>
 
     <repositories>
@@ -89,6 +91,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build.helper.maven.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec.maven.version}</version>
             </plugin>
         </plugins>
     </build>
