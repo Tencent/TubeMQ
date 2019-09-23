@@ -243,9 +243,6 @@ public class RmtDataCache implements Closeable {
                 return null;
             }
             String key = indexPartition.take();
-            if (key == null) {
-                return null;
-            }
             PartitionExt partitionExt = partitionMap.get(key);
             if (partitionExt == null) {
                 return null;
