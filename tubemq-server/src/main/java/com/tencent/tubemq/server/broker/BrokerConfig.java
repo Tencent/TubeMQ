@@ -208,30 +208,30 @@ public class BrokerConfig extends AbstractFileConfig {
         // #lizard forgives
         final Section brokerSect = iniConf.get(SECT_TOKEN_BROKER);
         if (brokerSect == null) {
-            throw new NullPointerException("Require broker section in configure file not Blank!");
+            throw new IllegalArgumentException("Require broker section in configure file not Blank!");
         }
         this.brokerId = this.getInt(brokerSect, "brokerId");
         this.port = this.getInt(brokerSect, "port", 8123);
         if (TStringUtils.isBlank(brokerSect.get("primaryPath"))) {
-            throw new NullPointerException("Require primaryPath not Blank!");
+            throw new IllegalArgumentException("Require primaryPath not Blank!");
         }
         this.primaryPath = brokerSect.get("primaryPath").trim();
         if (TStringUtils.isNotBlank(brokerSect.get("secondDataPath"))) {
             this.secondDataPath = brokerSect.get("secondDataPath");
         }
         if (TStringUtils.isBlank(brokerSect.get("hostName"))) {
-            throw new NullPointerException(new StringBuilder(256).append("hostName is null or Blank in ")
+            throw new IllegalArgumentException(new StringBuilder(256).append("hostName is null or Blank in ")
                     .append(SECT_TOKEN_BROKER).append(" section!").toString());
         }
         try {
             this.hostName = brokerSect.get("hostName").trim();
             AddressUtils.validLocalIp(this.hostName);
         } catch (Throwable e) {
-            throw new NullPointerException(new StringBuilder(256).append("Illegal hostName value in ")
+            throw new IllegalArgumentException(new StringBuilder(256).append("Illegal hostName value in ")
                     .append(SECT_TOKEN_BROKER).append(" section!").toString());
         }
         if (TStringUtils.isBlank(brokerSect.get("masterAddressList"))) {
-            throw new NullPointerException(new StringBuilder(256).append("masterAddressList is null or Blank in ")
+            throw new IllegalArgumentException(new StringBuilder(256).append("masterAddressList is null or Blank in ")
                     .append(SECT_TOKEN_BROKER).append(" section!").toString());
         }
         this.masterAddressList = brokerSect.get("masterAddressList");
@@ -339,11 +339,11 @@ public class BrokerConfig extends AbstractFileConfig {
         }
         if (this.visitMasterAuth) {
             if (TStringUtils.isBlank(brokerSect.get("visitName"))) {
-                throw new NullPointerException(new StringBuilder(256).append("visitName is null or Blank in ")
+                throw new IllegalArgumentException(new StringBuilder(256).append("visitName is null or Blank in ")
                         .append(SECT_TOKEN_BROKER).append(" section!").toString());
             }
             if (TStringUtils.isBlank(brokerSect.get("visitPassword"))) {
-                throw new NullPointerException(new StringBuilder(256)
+                throw new IllegalArgumentException(new StringBuilder(256)
                         .append("visitPassword is null or Blank in ").append(SECT_TOKEN_BROKER)
                         .append(" section!").toString());
             }
