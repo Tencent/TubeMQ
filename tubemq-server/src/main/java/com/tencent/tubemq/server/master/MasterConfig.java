@@ -257,12 +257,12 @@ public class MasterConfig extends AbstractFileConfig {
     private void loadSystemConf(final Ini iniConf) {
         final Profile.Section masterConf = iniConf.get(SECT_TOKEN_MASTER);
         if (masterConf == null) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append(SECT_TOKEN_MASTER).append(" configure section is required!").toString());
         }
         Set<String> configKeySet = masterConf.keySet();
         if (configKeySet.isEmpty()) { /* Should have a least one config item */
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append("Empty configure item in ").append(SECT_TOKEN_MASTER)
                     .append(" section!").toString());
         }
@@ -273,7 +273,7 @@ public class MasterConfig extends AbstractFileConfig {
 
         // hostname
         if (TStringUtils.isBlank(masterConf.get("hostName"))) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append("hostName is null or Blank in ").append(SECT_TOKEN_MASTER)
                     .append(" section!").toString());
         }
@@ -281,7 +281,7 @@ public class MasterConfig extends AbstractFileConfig {
             this.hostName = masterConf.get("hostName").trim();
             AddressUtils.validLocalIp(this.hostName);
         } catch (Throwable e) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append("Illegal hostName value in ").append(SECT_TOKEN_MASTER)
                     .append(" section!").toString());
         }
@@ -293,7 +293,7 @@ public class MasterConfig extends AbstractFileConfig {
 
         // web resource path
         if (TStringUtils.isBlank(masterConf.get("webResourcePath"))) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append("webResourcePath is null or Blank in ").append(SECT_TOKEN_MASTER)
                     .append(" section!").toString());
         }
@@ -353,7 +353,7 @@ public class MasterConfig extends AbstractFileConfig {
             String tmpAuthToken = masterConf.get("confModAuthToken").trim();
             if (tmpAuthToken.length() > TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH) {
                 throw new IllegalArgumentException(
-                        "Invalid value: confModAuthToken's value > " + TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH);
+                        "Invalid value: the length of confModAuthToken's value > " + TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH);
             }
             this.confModAuthToken = tmpAuthToken;
         }
@@ -401,7 +401,7 @@ public class MasterConfig extends AbstractFileConfig {
             this.startProduceAuthorize = this.getBoolean(masterConf, "startProduceAuthorize");
         }
         if (!this.startProduceAuthenticate && this.startProduceAuthorize) {
-            throw new NullPointerException(
+            throw new IllegalArgumentException(
                     "startProduceAuthenticate must set true if startProduceAuthorize is true!");
         }
         if (TStringUtils.isNotBlank(masterConf.get("startConsumeAuthenticate"))) {
@@ -411,7 +411,7 @@ public class MasterConfig extends AbstractFileConfig {
             this.startConsumeAuthorize = this.getBoolean(masterConf, "startConsumeAuthorize");
         }
         if (!this.startConsumeAuthenticate && this.startConsumeAuthorize) {
-            throw new NullPointerException(
+            throw new IllegalArgumentException(
                     "startConsumeAuthenticate must set true if startConsumeAuthorize is true!");
         }
         if (TStringUtils.isNotBlank(masterConf.get("needBrokerVisitAuth"))) {
@@ -419,12 +419,12 @@ public class MasterConfig extends AbstractFileConfig {
         }
         if (this.needBrokerVisitAuth) {
             if (TStringUtils.isBlank(masterConf.get("visitName"))) {
-                throw new NullPointerException(new StringBuilder(256)
+                throw new IllegalArgumentException(new StringBuilder(256)
                         .append("visitName is null or Blank in ").append(SECT_TOKEN_BROKER)
                         .append(" section!").toString());
             }
             if (TStringUtils.isBlank(masterConf.get("visitPassword"))) {
-                throw new NullPointerException(new StringBuilder(256)
+                throw new IllegalArgumentException(new StringBuilder(256)
                         .append("visitPassword is null or Blank in ").append(SECT_TOKEN_BROKER)
                         .append(" section!").toString());
             }
@@ -441,12 +441,12 @@ public class MasterConfig extends AbstractFileConfig {
     private void loadBdbStoreSectConf(final Ini iniConf) {
         final Profile.Section bdbSect = iniConf.get(SECT_TOKEN_BDB);
         if (bdbSect == null) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append(SECT_TOKEN_BDB).append(" configure section is required!").toString());
         }
         Set<String> configKeySet = bdbSect.keySet();
         if (configKeySet.isEmpty()) {
-            throw new NullPointerException(new StringBuilder(256)
+            throw new IllegalArgumentException(new StringBuilder(256)
                     .append("Empty configure item in ").append(SECT_TOKEN_BDB)
                     .append(" section!").toString());
         }
