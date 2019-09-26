@@ -152,7 +152,7 @@ public class StoreRepairAdmin {
         System.exit(0);
     }
 
-    static private class IndexReparStore implements Closeable {
+    private static class IndexReparStore implements Closeable {
         private static final String DATA_SUFFIX = ".tube";
         private static final String INDEX_SUFFIX = ".index";
         private static final int ONE_M_BYTES = 10 * 1024 * 1024;

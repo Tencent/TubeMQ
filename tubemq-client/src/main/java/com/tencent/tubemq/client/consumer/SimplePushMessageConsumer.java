@@ -36,13 +36,12 @@ import org.slf4j.LoggerFactory;
  * An implementation of PushMessageConsumer.
  */
 public class SimplePushMessageConsumer implements PushMessageConsumer {
-    static final Logger logger =
-            LoggerFactory.getLogger(SimplePushMessageConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePushMessageConsumer.class);
+    private static final int MAX_FAILURE_LOG_TIMES = 10;
     private final MessageFetchManager fetchManager;
     private final BaseMessageConsumer baseConsumer;
     private AtomicLong lastLogPrintTime = new AtomicLong(0);
     private AtomicLong lastFailureCount = new AtomicLong(0);
-    private int MAX_FAILURE_LOG_TIMES = 10;
     private CountDownLatch consumeSync = new CountDownLatch(0);
 
 

@@ -35,11 +35,11 @@ public abstract class AbstractFileConfig {
     private static final Logger logger =
             LoggerFactory.getLogger(AbstractFileConfig.class);
 
-    protected String SECT_TOKEN_MASTER = "master";
-    protected String SECT_TOKEN_BROKER = "broker";
-    protected String SECT_TOKEN_BDB = "bdbStore";
-    protected String SECT_TOKEN_TLS = "tlsSetting";
-    protected String SECT_TOKEN_ZKEEPER = "zookeeper";
+    protected static final String SECT_TOKEN_MASTER = "master";
+    protected static final String SECT_TOKEN_BROKER = "broker";
+    protected static final String SECT_TOKEN_BDB = "bdbStore";
+    protected static final String SECT_TOKEN_TLS = "tlsSetting";
+    protected static final String SECT_TOKEN_ZKEEPER = "zookeeper";
 
     private String basePath;
     private String configPath;

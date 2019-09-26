@@ -51,11 +51,11 @@ public class TestFlowCtrlRuleHandler {
             // current data limit test
             FlowCtrlResult result = handler.getCurDataLimit(2000);
             if (curTime >= 800 && curTime <= 1759) {
-                assertTrue(result.dataLtInSize == 20 * 1024 * 1024l);
-                assertTrue(result.freqLtInMs == 1000l);
+                assertTrue(result.dataLtInSize == 20 * 1024 * 1024L);
+                assertTrue(result.freqLtInMs == 1000L);
             } else if (curTime >= 1800 && curTime < 2200) {
-                assertTrue(result.dataLtInSize == 20 * 1024 * 1024l);
-                assertTrue(result.freqLtInMs == 5000l);
+                assertTrue(result.dataLtInSize == 20 * 1024 * 1024L);
+                assertTrue(result.freqLtInMs == 5000L);
             } else {
                 assertEquals("result should be null", result, null);
             }
@@ -71,10 +71,10 @@ public class TestFlowCtrlRuleHandler {
             // check ssd ctrl
             SSDCtrlResult ssdResult = handler.getCurSSDStartDltInSZ();
             if (curTime >= 1200) {
-                assertEquals(ssdResult.dataEndDLtInSz, 2048l * 1024l * 1024l);
-                assertEquals(ssdResult.dataStartDltInSize, 20480l * 1024l * 1024l);
+                assertEquals(ssdResult.dataEndDLtInSz, 2048L * 1024L * 1024L);
+                assertEquals(ssdResult.dataStartDltInSize, 20480L * 1024L * 1024L);
             } else {
-                assertEquals(ssdResult.dataEndDLtInSz, 0l);
+                assertEquals(ssdResult.dataEndDLtInSz, 0L);
                 assertEquals(ssdResult.dataStartDltInSize, Long.MAX_VALUE);
             }
 

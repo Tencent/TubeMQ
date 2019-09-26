@@ -17,7 +17,7 @@
 
 package com.tencent.tubemq.server.broker.web;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkArgument;
 import com.tencent.tubemq.server.Server;
 import com.tencent.tubemq.server.broker.TubeBroker;
 import org.mortbay.jetty.servlet.ServletHolder;
@@ -46,7 +46,7 @@ public class WebServer implements Server {
 
         servletContext.addServlet(new ServletHolder(new BrokerAdminServlet(broker)), "/*");
         srv.start();
-        Preconditions.checkArgument(srv.getHandler().equals(servletContext));
+        checkArgument(srv.getHandler().equals(servletContext));
     }
 
     @Override

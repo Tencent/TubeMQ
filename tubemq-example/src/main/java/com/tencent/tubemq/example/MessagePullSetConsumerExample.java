@@ -107,8 +107,9 @@ public final class MessagePullSetConsumerExample {
                             // 如果消费组是纯粹的Pull模式，起始拉取位置可以保存，如果不是，就只能取confirmConsume的返回 才行
                             long oldValue =
                                     partOffsetMap.get(
-                                            result.getPartitionKey()) == null ?
-                                            -1 : partOffsetMap.get(result.getPartitionKey()).longValue();
+                                            result.getPartitionKey()) == null
+                                            ? -1
+                                            : partOffsetMap.get(result.getPartitionKey()).longValue();
                             partOffsetMap.put(result.getPartitionKey(), result.getCurrOffset());
                             logger.info("GetMessage , partitionKey="
                                     + result.getPartitionKey() + ", oldValue="
@@ -119,8 +120,9 @@ public final class MessagePullSetConsumerExample {
                             if (confirmResult.isSuccess()) {
                                 oldValue =
                                         partOffsetMap.get(
-                                                result.getPartitionKey()) == null ?
-                                                -1 : partOffsetMap.get(result.getPartitionKey()).longValue();
+                                                result.getPartitionKey()) == null
+                                                ? -1
+                                                : partOffsetMap.get(result.getPartitionKey()).longValue();
                                 partOffsetMap.put(result.getPartitionKey(), confirmResult.getCurrOffset());
                                 logger.info("ConfirmConsume , partitionKey="
                                         + confirmResult.getPartitionKey() + ", oldValue="

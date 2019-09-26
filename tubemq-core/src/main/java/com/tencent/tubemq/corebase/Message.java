@@ -48,7 +48,7 @@ public class Message implements Serializable {
     private String attribute;
     // message type
     private transient String msgType;
-    // message time 
+    // message time
     private transient String msgTime;
     private transient String sysAttributes;
 

@@ -67,8 +67,8 @@ public final class MessagePullConsumerExample {
         fetchRunners = new Thread[3];
 
 
-        final MessagePullConsumerExample messageConsumer
-                = new MessagePullConsumerExample(localHost, masterHostAndPort, group);
+        final MessagePullConsumerExample messageConsumer =
+                new MessagePullConsumerExample(localHost, masterHostAndPort, group);
         messageConsumer.subscribe(topicList);
         long startTime = System.currentTimeMillis();
 

@@ -340,11 +340,11 @@ public class NettyClient implements Client {
             }
         }
 
-        @Override
         /**
          * Invoked when an exception was raised by an I/O thread or a
          * {@link ChannelHandler}.
          */
+        @Override
         public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
             Throwable t = e.getCause();
             if (t != null

@@ -56,7 +56,7 @@ public class FlowCtrlRuleHandler {
     private AtomicInteger qryPriorityId =
             new AtomicInteger(TBaseConstants.META_VALUE_UNDEFINED);
     private String strFlowCtrlInfo;
-    // The maximum interval of the flow control extracts the set of values, 
+    // The maximum interval of the flow control extracts the set of values,
     //improving the efficiency of the search return in the range
     private AtomicInteger minZeroCnt =
             new AtomicInteger(Integer.MAX_VALUE);

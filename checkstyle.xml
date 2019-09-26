@@ -191,19 +191,19 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
-        <module name="ConstantNameCheck">
-            <!-- Validates non-private, static, final fields against the supplied
-            public/package final fields "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$". -->
-            <metadata name="altname" value="ConstantName"/>
-            <property name="applyToPublic" value="true"/>
-            <property name="applyToProtected" value="true"/>
-            <property name="applyToPackage" value="true"/>
-            <property name="applyToPrivate" value="false"/>
-            <property name="format" value="^([A-Z][A-Za-z0-9_]*|FLAG_.*)$"/>
-            <message key="name.invalidPattern"
-                     value="Variable ''{0}'' should be in ALL_CAPS (if it is a constant) or be private (otherwise)."/>
-            <property name="severity" value="error"/>
-        </module>
+<!--        <module name="ConstantNameCheck">-->
+<!--            &lt;!&ndash; Validates non-private, static, final fields against the supplied-->
+<!--            public/package final fields "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$". &ndash;&gt;-->
+<!--            <metadata name="altname" value="ConstantName"/>-->
+<!--            <property name="applyToPublic" value="true"/>-->
+<!--            <property name="applyToProtected" value="true"/>-->
+<!--            <property name="applyToPackage" value="true"/>-->
+<!--            <property name="applyToPrivate" value="false"/>-->
+<!--            <property name="format" value="^([A-Z][A-Za-z0-9_]*|FLAG_.*)$"/>-->
+<!--            <message key="name.invalidPattern"-->
+<!--                     value="Variable ''{0}'' should be in ALL_CAPS (if it is a constant) or be private (otherwise)."/>-->
+<!--            <property name="severity" value="error"/>-->
+<!--        </module>-->
 
         <module name="StaticVariableNameCheck">
             <!-- Validates static, non-final fields against the supplied
@@ -228,12 +228,12 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
-        <module name="MethodNameCheck">
-            <!-- Validates identifiers for method names. -->
-            <metadata name="altname" value="MethodName"/>
-            <property name="format" value="(^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$|Void)"/>
-            <property name="severity" value="error"/>
-        </module>
+<!--        <module name="MethodNameCheck">-->
+<!--            &lt;!&ndash; Validates identifiers for method names. &ndash;&gt;-->
+<!--            <metadata name="altname" value="MethodName"/>-->
+<!--            <property name="format" value="(^[a-z][a-zA-Z0-9]*(_[a-zA-Z0-9]+)*$|Void)"/>-->
+<!--            <property name="severity" value="error"/>-->
+<!--        </module>-->
 
         <module name="ParameterName">
             <!-- Validates identifiers for method parameters against the
@@ -257,17 +257,17 @@ page at http://checkstyle.sourceforge.net/config.html -->
         T, K, V, W, X or else be capital-case terminated with a T,
         such as MyGenericParameterT -->
         <module name="ClassTypeParameterName">
-            <property name="format" value="^(((T|K|V|W|X|R)[0-9]*)|([A-Z][a-z][a-zA-Z]*))$"/>
+            <property name="format" value="^(([A-Z][0-9]*)|([A-Z][a-z][a-zA-Z]*))$"/>
             <property name="severity" value="error"/>
         </module>
 
         <module name="MethodTypeParameterName">
-            <property name="format" value="^(((T|K|V|W|X|R)[0-9]*)|([A-Z][a-z][a-zA-Z]*T))$"/>
+            <property name="format" value="^(([A-Z][0-9]*)|([A-Z][a-z][a-zA-Z]*T))$"/>
             <property name="severity" value="error"/>
         </module>
 
         <module name="InterfaceTypeParameterName">
-            <property name="format" value="^(((T|K|V|W|X|R)[0-9]*)|([A-Z][a-z][a-zA-Z]*T))$"/>
+            <property name="format" value="^(([A-Z][0-9]*)|([A-Z][a-z][a-zA-Z]*T))$"/>
             <property name="severity" value="error"/>
         </module>
 
@@ -409,21 +409,21 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
-        <module name="OperatorWrap">
-            <!-- Checks that operators like + and ? appear at newlines rather than
-                 at the end of the previous line.
-            -->
-            <property name="option" value="NL"/>
-            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL,
-        GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD,
-        NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
-        </module>
+<!--        <module name="OperatorWrap">-->
+<!--            &lt;!&ndash; Checks that operators like + and ? appear at newlines rather than-->
+<!--                 at the end of the previous line.-->
+<!--            &ndash;&gt;-->
+<!--            <property name="option" value="NL"/>-->
+<!--            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL,-->
+<!--        GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD,-->
+<!--        NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>-->
+<!--        </module>-->
 
-        <module name="OperatorWrap">
-            <!-- Checks that assignment operators are at the end of the line. -->
-            <property name="option" value="eol"/>
-            <property name="tokens" value="ASSIGN"/>
-        </module>
+<!--        <module name="OperatorWrap">-->
+<!--            &lt;!&ndash; Checks that assignment operators are at the end of the line. &ndash;&gt;-->
+<!--            <property name="option" value="eol"/>-->
+<!--            <property name="tokens" value="ASSIGN"/>-->
+<!--        </module>-->
 
         <module name="ParenPad">
             <!-- Checks that there is no whitespace before close parens or after

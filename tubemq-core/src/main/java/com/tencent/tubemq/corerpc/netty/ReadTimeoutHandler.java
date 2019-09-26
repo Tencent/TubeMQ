@@ -96,7 +96,7 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
     private static State state(ChannelHandlerContext ctx) {
         State state;
         synchronized (ctx) {
-            // FIXME: It could have been better if there is setAttachmentIfAbsent().
+            // TODO: It could have been better if there is setAttachmentIfAbsent().
             state = (State) ctx.getAttachment();
             if (state != null) {
                 return state;

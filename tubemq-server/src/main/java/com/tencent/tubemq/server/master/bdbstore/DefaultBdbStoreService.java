@@ -90,7 +90,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
     private static final String BDB_DEFAULT_FLOW_CONTROL_STORE_NAME = "bdbDefaultFlowCtrlCfg";
     private static final String BDB_GROUP_FLOW_CONTROL_STORE_NAME = "bdbGroupFlowCtrlCfg";
     private static final String BDB_CONSUME_GROUP_SETTING_STORE_NAME = "bdbConsumeGroupSetting";
-    private static int REP_HANDLE_RETRY_MAX = 1;
+    private static final int REP_HANDLE_RETRY_MAX = 1;
     private final TMaster tMaster;
     // simple log print
     private final BdbStoreSamplePrint bdbStoreSamplePrint =

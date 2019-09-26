@@ -147,7 +147,7 @@ public class NettyClientFactory implements ClientFactory {
             return client;
         }
         synchronized (this) {
-            // check client has been build already 
+            // check client has been build already
             client = clients.get(addressInfo.getHostPortStr());
             if (client != null && client.isReady()) {
                 return client;

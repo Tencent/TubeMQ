@@ -34,9 +34,9 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
 
     private static final Logger logger =
             LoggerFactory.getLogger(SimpleCertificateBrokerHandler.class);
+    private static final int MAX_VISIT_TOKEN_SIZE = 6;
 
     private final TubeBroker tubeBroker;
-    private final int MAX_VISIT_TOKEN_SIZE = 6;
     private final AtomicReference<List<Long>> visitTokenList =
             new AtomicReference<List<Long>>();
     private boolean enableProduceAuthenticate = false;

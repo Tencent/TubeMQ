@@ -116,6 +116,7 @@ import org.slf4j.LoggerFactory;
 public class TMaster extends HasThread implements MasterService, Stoppable {
 
     private static final Logger logger = LoggerFactory.getLogger(TMaster.class);
+    private static final int MAX_BALANCE_DELAY_TIME = 10;
 
     private final ConcurrentHashMap<String/* consumerId */, Map<String/* topic */, Map<String, Partition>>>
             currentSubInfo = new ConcurrentHashMap<String, Map<String, Map<String, Partition>>>();
@@ -146,7 +147,6 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
     private boolean startupBalance = true;
     private boolean startupResetBalance = true;
     private int balanceDelayTimes = 0;
-    private int MAX_BALANCE_DELAY_TIME = 10;
     private Sleeper stopSleeper = new Sleeper(1000, this);
     private SimpleVisitTokenManage visitTokenManage;
 
