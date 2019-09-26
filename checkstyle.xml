@@ -60,6 +60,8 @@ page at http://checkstyle.sourceforge.net/config.html -->
     <!-- All Java AST specific tests live under TreeWalker module. -->
     <module name="TreeWalker">
 
+        <module name="Indentation"/>
+
         <!-- Allow use of comment to suppress javadocstyle -->
         <module name="SuppressionCommentFilter">
             <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
