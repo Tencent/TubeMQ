@@ -17,8 +17,6 @@
 
 package com.tencent.tubemq.example;
 
-import com.tencent.tubemq.corebase.Message;
-import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.factory.MessageSessionFactory;
@@ -26,15 +24,20 @@ import com.tencent.tubemq.client.factory.TubeSingleSessionFactory;
 import com.tencent.tubemq.client.producer.MessageProducer;
 import com.tencent.tubemq.client.producer.MessageSentCallback;
 import com.tencent.tubemq.client.producer.MessageSentResult;
+import com.tencent.tubemq.corebase.Message;
+import com.tencent.tubemq.corebase.utils.ThreadUtils;
+import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 public final class MessageProducerExample {

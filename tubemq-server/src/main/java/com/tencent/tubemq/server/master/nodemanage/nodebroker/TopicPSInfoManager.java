@@ -22,8 +22,12 @@ import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.corebase.cluster.TopicInfo;
 import com.tencent.tubemq.corebase.utils.ConcurrentHashSet;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**

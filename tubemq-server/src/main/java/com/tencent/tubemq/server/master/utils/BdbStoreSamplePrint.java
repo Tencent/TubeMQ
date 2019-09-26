@@ -19,9 +19,8 @@ package com.tencent.tubemq.server.master.utils;
 
 import com.sleepycat.je.rep.utilint.ServiceDispatcher;
 import com.tencent.tubemq.corebase.utils.AbstractSamplePrint;
-import org.slf4j.Logger;
-
 import java.io.IOException;
+import org.slf4j.Logger;
 
 
 public class BdbStoreSamplePrint extends AbstractSamplePrint {

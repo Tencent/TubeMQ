@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corerpc;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 

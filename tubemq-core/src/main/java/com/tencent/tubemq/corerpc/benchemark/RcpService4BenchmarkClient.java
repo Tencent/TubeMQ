@@ -22,12 +22,11 @@ import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
 import com.tencent.tubemq.corerpc.netty.NettyClientFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class RcpService4BenchmarkClient {

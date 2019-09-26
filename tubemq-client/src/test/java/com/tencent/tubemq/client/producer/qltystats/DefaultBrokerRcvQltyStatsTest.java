@@ -17,21 +17,21 @@
 
 package com.tencent.tubemq.client.producer.qltystats;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
-import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 
 public class DefaultBrokerRcvQltyStatsTest {
 

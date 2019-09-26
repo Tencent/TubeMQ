@@ -24,7 +24,6 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.utils.MessageFlagUtils;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.broker.stats.CountItem;
-
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.text.NumberFormat;

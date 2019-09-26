@@ -25,14 +25,13 @@ import com.tencent.tubemq.corerpc.codec.PbEnDecoder;
 import com.tencent.tubemq.corerpc.exception.ServiceStoppingException;
 import com.tencent.tubemq.corerpc.exception.StandbyException;
 import com.tencent.tubemq.corerpc.server.RequestContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class RpcProtocol implements Protocol {

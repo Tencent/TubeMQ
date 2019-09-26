@@ -21,7 +21,6 @@ import com.google.protobuf.AbstractMessageLite;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corerpc.RpcConstants;
-
 import java.util.HashMap;
 import java.util.Map;
 

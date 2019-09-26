@@ -18,14 +18,13 @@
 package com.tencent.tubemq.server.broker.stats;
 
 import com.tencent.tubemq.corebase.daemon.AbstractDaemonService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Statistics of broker. It use two CountSet alternatively print statistics to log.

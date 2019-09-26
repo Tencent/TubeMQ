@@ -23,10 +23,9 @@
 package com.tencent.tubemq.server.common.utils;
 
 import com.tencent.tubemq.server.Stoppable;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Sleeper for current thread. Sleeps for passed period. Also checks passed boolean and if

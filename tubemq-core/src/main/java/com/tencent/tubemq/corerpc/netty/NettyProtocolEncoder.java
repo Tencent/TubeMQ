@@ -24,14 +24,13 @@ package com.tencent.tubemq.corerpc.netty;
 
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcDataPack;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class NettyProtocolEncoder extends OneToOneEncoder {

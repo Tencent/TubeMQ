@@ -17,16 +17,18 @@
 
 package com.tencent.tubemq.client.consumer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.corebase.policies.FlowCtrlRuleHandler;
-import org.junit.Test;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 public class RmtDataCacheTest {
 

@@ -17,12 +17,12 @@
 
 package com.tencent.tubemq.client.factory;
 
-import com.tencent.tubemq.corebase.Shutdownable;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.consumer.PullMessageConsumer;
 import com.tencent.tubemq.client.consumer.PushMessageConsumer;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.producer.MessageProducer;
+import com.tencent.tubemq.corebase.Shutdownable;
 
 
 public interface MessageSessionFactory extends Shutdownable {

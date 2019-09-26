@@ -30,15 +30,25 @@ import com.tencent.tubemq.server.master.nodemanage.nodebroker.TopicPSInfoManager
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerBandInfo;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerInfoHolder;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.NodeRebInfo;
-import com.tencent.tubemq.server.master.web.handler.*;
+import com.tencent.tubemq.server.master.web.handler.WebAdminFlowRuleHandler;
+import com.tencent.tubemq.server.master.web.handler.WebAdminGroupCtrlHandler;
+import com.tencent.tubemq.server.master.web.handler.WebAdminTopicAuthHandler;
+import com.tencent.tubemq.server.master.web.handler.WebBrokerDefConfHandler;
+import com.tencent.tubemq.server.master.web.handler.WebBrokerTopicConfHandler;
 import com.tencent.tubemq.server.master.web.model.ClusterGroupVO;
 import com.tencent.tubemq.server.master.web.model.ClusterNodeVO;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
 import com.tencent.tubemq.server.master.web.simplemvc.RequestContext;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Public APIs for master

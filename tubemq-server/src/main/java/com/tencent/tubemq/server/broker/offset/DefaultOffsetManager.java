@@ -26,11 +26,10 @@ import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
 import com.tencent.tubemq.server.common.offsetstorage.OffsetStorage;
 import com.tencent.tubemq.server.common.offsetstorage.OffsetStorageInfo;
 import com.tencent.tubemq.server.common.offsetstorage.ZkOffsetStorage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Default offset manager.

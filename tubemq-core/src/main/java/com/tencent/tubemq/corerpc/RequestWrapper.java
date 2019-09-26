@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corerpc;
 
 import com.tencent.tubemq.corebase.TBaseConstants;
-
 import java.io.Serializable;
 
 

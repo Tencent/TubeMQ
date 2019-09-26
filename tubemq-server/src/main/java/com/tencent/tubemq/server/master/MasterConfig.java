@@ -26,11 +26,10 @@ import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.fileconfig.AbstractFileConfig;
 import com.tencent.tubemq.server.common.fileconfig.BDBConfig;
 import com.tencent.tubemq.server.common.fileconfig.ZKConfig;
+import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
-
-import java.util.Set;
 
 /**
  * Basic config for master service

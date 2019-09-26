@@ -19,7 +19,6 @@ package com.tencent.tubemq.server.common.aaaserver;
 
 import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
-
 import java.util.Set;
 
 

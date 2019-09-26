@@ -18,12 +18,15 @@
 package com.tencent.tubemq.server.master.web.common;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 
 /**

@@ -19,7 +19,6 @@ package com.tencent.tubemq.server.broker.metadata;
 
 
 import com.tencent.tubemq.corebase.policies.FlowCtrlRuleHandler;
-
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;

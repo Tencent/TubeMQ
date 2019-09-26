@@ -18,7 +18,11 @@
 package com.tencent.tubemq.server.master.web.action.screen;
 
 import com.tencent.tubemq.corebase.TokenConstants;
-import com.tencent.tubemq.corebase.cluster.*;
+import com.tencent.tubemq.corebase.cluster.BrokerInfo;
+import com.tencent.tubemq.corebase.cluster.ConsumerInfo;
+import com.tencent.tubemq.corebase.cluster.Partition;
+import com.tencent.tubemq.corebase.cluster.ProducerInfo;
+import com.tencent.tubemq.corebase.cluster.TopicInfo;
 import com.tencent.tubemq.corebase.utils.ConcurrentHashSet;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.corerpc.exception.StandbyException;
@@ -29,10 +33,13 @@ import com.tencent.tubemq.server.master.nodemanage.nodebroker.TopicPSInfoManager
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerInfoHolder;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
 import com.tencent.tubemq.server.master.web.simplemvc.RequestContext;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpServletRequest;
 
 
 public class Master implements Action {

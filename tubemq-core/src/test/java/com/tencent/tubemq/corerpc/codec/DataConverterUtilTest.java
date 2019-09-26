@@ -17,18 +17,16 @@
 
 package com.tencent.tubemq.corerpc.codec;
 
+import static org.junit.Assert.assertEquals;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.corebase.cluster.SubscribeInfo;
 import com.tencent.tubemq.corebase.cluster.TopicInfo;
 import com.tencent.tubemq.corebase.utils.DataConverterUtil;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class DataConverterUtilTest {
 

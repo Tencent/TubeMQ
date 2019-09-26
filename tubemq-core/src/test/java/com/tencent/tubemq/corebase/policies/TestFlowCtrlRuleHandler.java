@@ -17,13 +17,11 @@
 
 package com.tencent.tubemq.corebase.policies;
 
-import org.junit.Test;
-
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import java.util.Calendar;
+import java.util.TimeZone;
+import org.junit.Test;
 
 public class TestFlowCtrlRuleHandler {
 

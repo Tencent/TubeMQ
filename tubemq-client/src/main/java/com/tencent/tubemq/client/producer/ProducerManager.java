@@ -17,6 +17,10 @@
 
 package com.tencent.tubemq.client.producer;
 
+import com.tencent.tubemq.client.common.TubeClientVersion;
+import com.tencent.tubemq.client.config.TubeClientConfig;
+import com.tencent.tubemq.client.exception.TubeClientException;
+import com.tencent.tubemq.client.factory.InnerSessionFactory;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.corebase.aaaclient.ClientAuthenticateHandler;
@@ -29,26 +33,29 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corebase.utils.DataConverterUtil;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import com.tencent.tubemq.client.common.TubeClientVersion;
-import com.tencent.tubemq.client.config.TubeClientConfig;
-import com.tencent.tubemq.client.exception.TubeClientException;
-import com.tencent.tubemq.client.factory.InnerSessionFactory;
 import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
 import com.tencent.tubemq.corerpc.exception.ClientClosedException;
 import com.tencent.tubemq.corerpc.exception.LocalConnException;
 import com.tencent.tubemq.corerpc.service.MasterService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.management.ManagementFactory;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Produce messages through rpc.

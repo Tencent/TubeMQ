@@ -22,13 +22,12 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.broker.TubeBroker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler {

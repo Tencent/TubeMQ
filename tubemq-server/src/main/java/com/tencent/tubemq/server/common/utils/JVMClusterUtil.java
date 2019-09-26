@@ -27,12 +27,11 @@ import com.tencent.tubemq.server.broker.BrokerConfig;
 import com.tencent.tubemq.server.broker.TubeBroker;
 import com.tencent.tubemq.server.master.MasterConfig;
 import com.tencent.tubemq.server.master.TMaster;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

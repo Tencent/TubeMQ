@@ -19,11 +19,10 @@ package com.tencent.tubemq.server.common;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.server.common.paramcheck.PBParameterUtils;
 import com.tencent.tubemq.server.common.paramcheck.ParamCheckResult;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class PBParameterTest {
     @Test

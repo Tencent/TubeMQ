@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corebase.balance;
 
 import com.tencent.tubemq.corebase.cluster.SubscribeInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 

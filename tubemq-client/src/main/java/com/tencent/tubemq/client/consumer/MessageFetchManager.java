@@ -17,15 +17,14 @@
 
 package com.tencent.tubemq.client.consumer;
 
-import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.exception.TubeClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.tencent.tubemq.corebase.cluster.Partition;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Fetch messages with multiple threads.

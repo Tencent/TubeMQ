@@ -27,10 +27,6 @@ import com.tencent.tubemq.client.producer.MessageSentResult;
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.corebase.utils.ThreadUtils;
-import org.apache.commons.codec.binary.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +42,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.apache.commons.codec.binary.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This demo shows how to use the multi-connected {@link TubeMultiSessionFactory} in the sample single process.

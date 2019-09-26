@@ -20,12 +20,11 @@ package com.tencent.tubemq.server.master.web.simplemvc;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.web.simplemvc.conf.WebConfig;
+import java.io.StringWriter;
+import java.io.Writer;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-
-import java.io.StringWriter;
-import java.io.Writer;
 
 
 public class VelocityTemplateEngine implements TemplateEngine {

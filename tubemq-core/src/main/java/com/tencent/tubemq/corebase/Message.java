@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corebase;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

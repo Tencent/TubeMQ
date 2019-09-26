@@ -17,7 +17,6 @@
 
 package com.tencent.tubemq.client.factory;
 
-import com.tencent.tubemq.corebase.Shutdownable;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.client.config.TubeClientConfigUtils;
@@ -25,12 +24,12 @@ import com.tencent.tubemq.client.consumer.PullMessageConsumer;
 import com.tencent.tubemq.client.consumer.PushMessageConsumer;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.producer.MessageProducer;
+import com.tencent.tubemq.corebase.Shutdownable;
 import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.netty.NettyClientFactory;
+import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 
 public class TubeSingleSessionFactory implements MessageSessionFactory {

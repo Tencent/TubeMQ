@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corebase.cluster;
 
 import com.tencent.tubemq.corebase.TBaseConstants;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;

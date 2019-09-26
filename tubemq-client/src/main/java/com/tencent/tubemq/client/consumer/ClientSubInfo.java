@@ -18,7 +18,6 @@
 package com.tencent.tubemq.client.consumer;
 
 import com.tencent.tubemq.corebase.TokenConstants;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

@@ -17,26 +17,26 @@
 
 package com.tencent.tubemq.client.factory;
 
-import com.tencent.tubemq.corebase.cluster.MasterInfo;
-import com.tencent.tubemq.corebase.utils.AddressUtils;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.client.consumer.PullMessageConsumer;
 import com.tencent.tubemq.client.consumer.PushMessageConsumer;
 import com.tencent.tubemq.client.producer.MessageProducer;
 import com.tencent.tubemq.client.producer.ProducerManager;
+import com.tencent.tubemq.corebase.cluster.MasterInfo;
+import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corerpc.client.ClientFactory;
+import java.lang.reflect.Field;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.lang.reflect.Field;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AddressUtils.class)

@@ -19,7 +19,6 @@ package com.tencent.tubemq.client.consumer;
 
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.TBaseConstants;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -20,7 +20,6 @@ package com.tencent.tubemq.corerpc.client;
 import com.tencent.tubemq.corebase.cluster.NodeAddrInfo;
 import com.tencent.tubemq.corerpc.RequestWrapper;
 import com.tencent.tubemq.corerpc.ResponseWrapper;
-
 import java.util.concurrent.TimeUnit;
 
 

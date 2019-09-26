@@ -17,11 +17,10 @@
 
 package com.tencent.tubemq.server.broker.msgstore.disk;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Readonly view of file, only used for read operation.

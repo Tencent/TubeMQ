@@ -17,10 +17,9 @@
 
 package com.tencent.tubemq.corebase.daemon;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public abstract class AbstractDaemonService implements Service, Runnable {

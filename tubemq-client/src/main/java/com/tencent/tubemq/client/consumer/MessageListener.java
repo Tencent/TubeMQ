@@ -18,7 +18,6 @@
 package com.tencent.tubemq.client.consumer;
 
 import com.tencent.tubemq.corebase.Message;
-
 import java.util.List;
 import java.util.concurrent.Executor;
 

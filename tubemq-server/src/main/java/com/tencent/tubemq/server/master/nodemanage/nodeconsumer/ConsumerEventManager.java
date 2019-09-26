@@ -19,13 +19,16 @@ package com.tencent.tubemq.server.master.nodemanage.nodeconsumer;
 
 import com.tencent.tubemq.corebase.balance.ConsumerEvent;
 import com.tencent.tubemq.corebase.cluster.ConsumerInfo;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class ConsumerEventManager {

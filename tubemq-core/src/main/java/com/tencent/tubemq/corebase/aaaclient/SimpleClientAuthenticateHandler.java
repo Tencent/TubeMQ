@@ -20,9 +20,8 @@ package com.tencent.tubemq.corebase.aaaclient;
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import org.apache.commons.codec.binary.StringUtils;
-
 import java.security.SecureRandom;
+import org.apache.commons.codec.binary.StringUtils;
 
 
 public class SimpleClientAuthenticateHandler implements ClientAuthenticateHandler {

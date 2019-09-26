@@ -22,10 +22,9 @@
 
 package com.tencent.tubemq.server.common.offsetstorage.zookeeper;
 
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.TimeUnit;
 
 
 public class RetryCounter {

@@ -29,17 +29,16 @@ import com.tencent.tubemq.corerpc.ResponseWrapper;
 import com.tencent.tubemq.corerpc.RpcDataPack;
 import com.tencent.tubemq.corerpc.codec.PbEnDecoder;
 import com.tencent.tubemq.corerpc.server.RequestContext;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.util.List;
+import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.channel.ChannelFutureListener;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class NettyRequestContext implements RequestContext {

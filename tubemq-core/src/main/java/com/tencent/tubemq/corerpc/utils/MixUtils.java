@@ -20,7 +20,6 @@ package com.tencent.tubemq.corerpc.utils;
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.corerpc.exception.RemoteException;
-
 import java.lang.reflect.Constructor;
 
 

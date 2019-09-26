@@ -19,7 +19,6 @@ package com.tencent.tubemq.server.common.offsetstorage;
 
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 

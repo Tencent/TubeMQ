@@ -16,12 +16,11 @@
  */
 package com.tencent.tubemq.corerpc.codec;
 
+import static org.junit.Assert.assertTrue;
 import com.googlecode.protobuf.format.JsonFormat;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 public class PbEnDecoderTest {
 

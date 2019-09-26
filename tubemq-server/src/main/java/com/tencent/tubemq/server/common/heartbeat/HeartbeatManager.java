@@ -19,15 +19,14 @@ package com.tencent.tubemq.server.common.heartbeat;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.exception.HeartbeatException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class HeartbeatManager {
