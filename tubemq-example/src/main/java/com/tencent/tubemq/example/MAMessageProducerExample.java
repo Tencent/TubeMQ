@@ -48,7 +48,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- *
+ * This demo shows how to use the multi-connected {@link TubeMultiSessionFactory} in the sample single process.
+ * With {@link TubeMultiSessionFactory}, a single process can establish concurrent physical request connections
+ * to improve throughput from client to broker.
  */
 public class MAMessageProducerExample {
     private static final Logger LOG = LoggerFactory.getLogger(MAMessageProducerExample.class);
