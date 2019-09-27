@@ -17,16 +17,14 @@
 
 package com.tencent.tubemq.client.producer;
 
+import static org.junit.Assert.assertEquals;
+import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
-import com.tencent.tubemq.client.exception.TubeClientException;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 public class RoundRobinPartitionRouterTest {
 

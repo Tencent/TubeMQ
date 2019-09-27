@@ -22,7 +22,6 @@ import com.sleepycat.je.rep.MasterStateException;
 import com.sleepycat.je.rep.MemberNotFoundException;
 import com.sleepycat.je.rep.UnknownMasterException;
 import com.sleepycat.je.rep.util.ReplicationGroupAdmin;
-
 import java.net.InetSocketAddress;
 import java.util.HashSet;
 import java.util.Set;

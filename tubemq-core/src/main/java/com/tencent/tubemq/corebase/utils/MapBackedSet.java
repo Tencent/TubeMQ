@@ -31,11 +31,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * A {@link Map}-backed {@link Set}.
+ * A Map-backed Set.
  *
- * @author <a href="http://mina.apache.org">Apache MINA Project</a>
+ * Copied from <a href="http://mina.apache.org">Apache MINA Project</a>
  */
-
 public class MapBackedSet<E> extends AbstractSet<E> implements Serializable {
 
     private static final long serialVersionUID = -8347878570391674042L;

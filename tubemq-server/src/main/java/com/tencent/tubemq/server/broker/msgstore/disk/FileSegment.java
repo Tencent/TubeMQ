@@ -19,9 +19,6 @@ package com.tencent.tubemq.server.broker.msgstore.disk;
 
 import com.tencent.tubemq.corebase.utils.CheckSum;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -29,6 +26,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Segment file. Topic contains multi FileSegments. Each FileSegment contains data file and index file.

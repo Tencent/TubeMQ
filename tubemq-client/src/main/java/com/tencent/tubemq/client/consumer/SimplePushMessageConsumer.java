@@ -17,33 +17,31 @@
 
 package com.tencent.tubemq.client.consumer;
 
-import com.tencent.tubemq.corebase.Message;
-import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.factory.InnerSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.tencent.tubemq.corebase.Message;
+import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * An implementation of PushMessageConsumer.
  */
 public class SimplePushMessageConsumer implements PushMessageConsumer {
-    static final Logger logger =
-            LoggerFactory.getLogger(SimplePushMessageConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePushMessageConsumer.class);
+    private static final int MAX_FAILURE_LOG_TIMES = 10;
     private final MessageFetchManager fetchManager;
     private final BaseMessageConsumer baseConsumer;
     private AtomicLong lastLogPrintTime = new AtomicLong(0);
     private AtomicLong lastFailureCount = new AtomicLong(0);
-    private int MAX_FAILURE_LOG_TIMES = 10;
     private CountDownLatch consumeSync = new CountDownLatch(0);
 
 
@@ -69,7 +67,7 @@ public class SimplePushMessageConsumer implements PushMessageConsumer {
     public PushMessageConsumer subscribe(String topic,
                                          TreeSet<String> filterConds,
                                          MessageListener messageListener) throws TubeClientException {
-        baseConsumer.Subscribe(topic, filterConds, messageListener);
+        baseConsumer.subscribe(topic, filterConds, messageListener);
         return this;
     }
 

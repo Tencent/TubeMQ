@@ -17,8 +17,6 @@
 
 package com.tencent.tubemq.example;
 
-import com.tencent.tubemq.corebase.Message;
-import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.consumer.ConsumeOffsetInfo;
 import com.tencent.tubemq.client.consumer.ConsumerResult;
@@ -26,12 +24,13 @@ import com.tencent.tubemq.client.consumer.PullMessageConsumer;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.factory.MessageSessionFactory;
 import com.tencent.tubemq.client.factory.TubeSingleSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.tencent.tubemq.corebase.Message;
+import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public final class MessagePullConsumerExample {
@@ -68,8 +67,8 @@ public final class MessagePullConsumerExample {
         fetchRunners = new Thread[3];
 
 
-        final MessagePullConsumerExample messageConsumer
-                = new MessagePullConsumerExample(localHost, masterHostAndPort, group);
+        final MessagePullConsumerExample messageConsumer =
+                new MessagePullConsumerExample(localHost, masterHostAndPort, group);
         messageConsumer.subscribe(topicList);
         long startTime = System.currentTimeMillis();
 

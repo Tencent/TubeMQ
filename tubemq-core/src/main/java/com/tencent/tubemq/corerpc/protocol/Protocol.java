@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corerpc.protocol;
 
 import com.tencent.tubemq.corerpc.server.RequestContext;
-
 import java.util.concurrent.ExecutorService;
 
 

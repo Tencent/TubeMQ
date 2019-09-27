@@ -18,6 +18,10 @@
 package com.tencent.tubemq.client.producer;
 
 import com.google.protobuf.ByteString;
+import com.tencent.tubemq.client.config.TubeClientConfig;
+import com.tencent.tubemq.client.exception.TubeClientException;
+import com.tencent.tubemq.client.factory.InnerSessionFactory;
+import com.tencent.tubemq.client.producer.qltystats.DefaultBrokerRcvQltyStats;
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
@@ -27,20 +31,12 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corebase.utils.MessageFlagUtils;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import com.tencent.tubemq.client.config.TubeClientConfig;
-import com.tencent.tubemq.client.exception.TubeClientException;
-import com.tencent.tubemq.client.factory.InnerSessionFactory;
-import com.tencent.tubemq.client.producer.qltystats.DefaultBrokerRcvQltyStats;
 import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
 import com.tencent.tubemq.corerpc.client.Callback;
 import com.tencent.tubemq.corerpc.exception.LocalConnException;
 import com.tencent.tubemq.corerpc.service.BrokerWriteService;
-import org.apache.commons.codec.binary.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.nio.ByteBuffer;
 import java.util.HashSet;
 import java.util.List;
@@ -48,6 +44,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.apache.commons.codec.binary.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of MessageProducer
@@ -285,8 +284,8 @@ public class SimpleMessageProducer implements MessageProducer {
                 ? message.getData().length : (message.getData().length + message.getAttribute().length());
         if (msgSize > TBaseConstants.META_MAX_MESSAGEG_DATA_SIZE) {
             throw new TubeClientException(new StringBuilder(512)
-                    .append("Illegal parameter: over max message length for the total size of" +
-                            " message data and attribute, allowed size is ")
+                    .append("Illegal parameter: over max message length for the total size of"
+                            + " message data and attribute, allowed size is ")
                     .append(TBaseConstants.META_MAX_MESSAGEG_DATA_SIZE)
                     .append(", message's real size is ").append(msgSize).toString());
         }

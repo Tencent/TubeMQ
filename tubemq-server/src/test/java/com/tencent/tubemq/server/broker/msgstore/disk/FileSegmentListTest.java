@@ -18,13 +18,12 @@
 package com.tencent.tubemq.server.broker.msgstore.disk;
 
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /***
  * FileSegmentList test

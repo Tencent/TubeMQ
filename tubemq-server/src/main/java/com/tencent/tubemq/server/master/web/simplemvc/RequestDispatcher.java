@@ -20,17 +20,20 @@ package com.tencent.tubemq.server.master.web.simplemvc;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.web.simplemvc.conf.WebConfig;
 import com.tencent.tubemq.server.master.web.simplemvc.exception.TemplateNotFoundException;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.support.GenericXmlApplicationContext;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.net.URL;
-import java.util.*;
 
 
 public class RequestDispatcher {

@@ -22,16 +22,18 @@
 
 package com.tencent.tubemq.corerpc.netty;
 
-import org.jboss.netty.channel.*;
+import static org.jboss.netty.channel.Channels.fireExceptionCaught;
+import java.util.concurrent.TimeUnit;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.LifeCycleAwareChannelHandler;
+import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.timeout.ReadTimeoutException;
 import org.jboss.netty.util.ExternalResourceReleasable;
 import org.jboss.netty.util.Timeout;
 import org.jboss.netty.util.Timer;
 import org.jboss.netty.util.TimerTask;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.jboss.netty.channel.Channels.fireExceptionCaught;
 
 
 public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
@@ -94,7 +96,7 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
     private static State state(ChannelHandlerContext ctx) {
         State state;
         synchronized (ctx) {
-            // FIXME: It could have been better if there is setAttachmentIfAbsent().
+            // TODO: It could have been better if there is setAttachmentIfAbsent().
             state = (State) ctx.getAttachment();
             if (state != null) {
                 return state;

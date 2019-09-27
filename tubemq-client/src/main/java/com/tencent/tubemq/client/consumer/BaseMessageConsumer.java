@@ -17,6 +17,10 @@
 
 package com.tencent.tubemq.client.consumer;
 
+import com.tencent.tubemq.client.common.TubeClientVersion;
+import com.tencent.tubemq.client.config.ConsumerConfig;
+import com.tencent.tubemq.client.exception.TubeClientException;
+import com.tencent.tubemq.client.factory.InnerSessionFactory;
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
@@ -36,26 +40,33 @@ import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corebase.utils.DataConverterUtil;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.corebase.utils.ThreadUtils;
-import com.tencent.tubemq.client.common.TubeClientVersion;
-import com.tencent.tubemq.client.config.ConsumerConfig;
-import com.tencent.tubemq.client.exception.TubeClientException;
-import com.tencent.tubemq.client.factory.InnerSessionFactory;
 import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
 import com.tencent.tubemq.corerpc.service.BrokerReadService;
 import com.tencent.tubemq.corerpc.service.MasterService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of MessageConsumer.
@@ -227,7 +238,7 @@ public class BaseMessageConsumer implements MessageConsumer {
      * @return message consumer
      * @throws TubeClientException
      */
-    protected MessageConsumer Subscribe(String topic,
+    protected MessageConsumer subscribe(String topic,
                                         TreeSet<String> filterConds,
                                         MessageListener messageListener) throws TubeClientException {
         this.checkClientRunning();
@@ -322,8 +333,8 @@ public class BaseMessageConsumer implements MessageConsumer {
                     }
                     if (!consumeSubInfo.isSubscribedTopicContain(partitionKeyItems[1].trim())) {
                         throw new TubeClientException(new StringBuilder(256)
-                                .append("Parameter error: not included in subcribed topic list: " +
-                                        "partOffsetMap's key is ")
+                                .append("Parameter error: not included in subcribed topic list: "
+                                        + "partOffsetMap's key is ")
                                 .append(entry.getKey()).append(", subscribed topics are ")
                                 .append(consumeSubInfo.getSubscribedTopics().toString()).toString());
                     }
@@ -1572,8 +1583,8 @@ public class BaseMessageConsumer implements MessageConsumer {
                                                         strFailInfo.indexOf(TokenConstants.ATTR_SEP);
                                                 if (index < 0) {
                                                     logger.error(strBuffer
-                                                            .append("Parse Heartbeat response error : " +
-                                                                    "invalid response, ")
+                                                            .append("Parse Heartbeat response error : "
+                                                                    + "invalid response, ")
                                                             .append(strFailInfo).toString());
                                                     strBuffer.delete(0, strBuffer.length());
                                                     continue;

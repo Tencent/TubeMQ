@@ -21,15 +21,18 @@ import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.broker.BrokerConfig;
 import com.tencent.tubemq.server.broker.exception.StartupException;
 import com.tencent.tubemq.server.master.MasterConfig;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class ToolUtils {
 
-    static final Logger logger = LoggerFactory.getLogger(ToolUtils.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(ToolUtils.class);
 
     public static BrokerConfig getBrokerConfig(final String configFilePath) {
         final BrokerConfig brokerConfig = new BrokerConfig();

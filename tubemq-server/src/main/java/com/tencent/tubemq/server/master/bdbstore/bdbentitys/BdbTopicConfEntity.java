@@ -24,10 +24,9 @@ import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.utils.WebParameterUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.io.Serializable;
 import java.util.Date;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 
 @Entity

@@ -21,7 +21,19 @@ import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Durability;
 import com.sleepycat.je.EnvironmentConfig;
 import com.sleepycat.je.EnvironmentFailureException;
-import com.sleepycat.je.rep.*;
+import com.sleepycat.je.rep.InsufficientLogException;
+import com.sleepycat.je.rep.NetworkRestore;
+import com.sleepycat.je.rep.NetworkRestoreConfig;
+import com.sleepycat.je.rep.NodeState;
+import com.sleepycat.je.rep.ReplicatedEnvironment;
+import com.sleepycat.je.rep.ReplicationConfig;
+import com.sleepycat.je.rep.ReplicationGroup;
+import com.sleepycat.je.rep.ReplicationMutableConfig;
+import com.sleepycat.je.rep.ReplicationNode;
+import com.sleepycat.je.rep.StateChangeEvent;
+import com.sleepycat.je.rep.StateChangeListener;
+import com.sleepycat.je.rep.TimeConsistencyPolicy;
+import com.sleepycat.je.rep.UnknownMasterException;
 import com.sleepycat.je.rep.util.ReplicationGroupAdmin;
 import com.sleepycat.je.rep.utilint.ServiceDispatcher;
 import com.sleepycat.persist.EntityCursor;
@@ -34,13 +46,17 @@ import com.tencent.tubemq.server.Server;
 import com.tencent.tubemq.server.common.fileconfig.BDBConfig;
 import com.tencent.tubemq.server.master.MasterConfig;
 import com.tencent.tubemq.server.master.TMaster;
-import com.tencent.tubemq.server.master.bdbstore.bdbentitys.*;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbBlackGroupEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbBrokerConfEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbConsumeGroupSettingEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbConsumerGroupEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbGroupFilterCondEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbGroupFlowCtrlEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbTopicAuthControlEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbTopicConfEntity;
 import com.tencent.tubemq.server.master.utils.BdbStoreSamplePrint;
 import com.tencent.tubemq.server.master.web.model.ClusterGroupVO;
 import com.tencent.tubemq.server.master.web.model.ClusterNodeVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -53,6 +69,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class DefaultBdbStoreService implements BdbStoreService, Server {
@@ -72,7 +90,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
     private static final String BDB_DEFAULT_FLOW_CONTROL_STORE_NAME = "bdbDefaultFlowCtrlCfg";
     private static final String BDB_GROUP_FLOW_CONTROL_STORE_NAME = "bdbGroupFlowCtrlCfg";
     private static final String BDB_CONSUME_GROUP_SETTING_STORE_NAME = "bdbConsumeGroupSetting";
-    private static int REP_HANDLE_RETRY_MAX = 1;
+    private static final int REP_HANDLE_RETRY_MAX = 1;
     private final TMaster tMaster;
     // simple log print
     private final BdbStoreSamplePrint bdbStoreSamplePrint =

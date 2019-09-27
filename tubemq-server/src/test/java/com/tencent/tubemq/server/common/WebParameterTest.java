@@ -18,14 +18,13 @@ package com.tencent.tubemq.server.common;
 
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.server.common.utils.WebParameterUtils;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class WebParameterTest {
     @Rule

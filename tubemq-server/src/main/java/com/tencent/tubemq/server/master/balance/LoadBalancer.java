@@ -24,7 +24,6 @@ import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerConfManage;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerInfoHolder;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.TopicPSInfoManager;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerInfoHolder;
-
 import java.util.List;
 import java.util.Map;
 

@@ -19,13 +19,12 @@ package com.tencent.tubemq.server.master.nodemanage.nodebroker;
 
 
 import com.tencent.tubemq.corebase.utils.ConcurrentHashSet;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class TopicPSInfoManagerTest {
     private TopicPSInfoManager topicPSInfoManager;

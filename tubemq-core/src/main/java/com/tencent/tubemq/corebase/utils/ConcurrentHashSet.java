@@ -25,14 +25,13 @@
 package com.tencent.tubemq.corebase.utils;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A {@link Map}-backed {@link Set}.
+ * A Map-backed Set.
  *
- * @author <a href="http://mina.apache.org">Apache MINA Project</a>
+ * Copied from <a href="http://mina.apache.org">Apache MINA Project</a>
  */
 public class ConcurrentHashSet<E> extends MapBackedSet<E> {
 

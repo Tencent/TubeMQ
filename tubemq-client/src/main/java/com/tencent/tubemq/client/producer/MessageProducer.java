@@ -17,10 +17,9 @@
 
 package com.tencent.tubemq.client.producer;
 
+import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.Shutdownable;
-import com.tencent.tubemq.client.exception.TubeClientException;
-
 import java.util.Set;
 
 

@@ -17,12 +17,11 @@
 
 package com.tencent.tubemq.server.master.nodemanage.nodebroker;
 
+import static org.mockito.Mockito.mock;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.mockito.Mockito.mock;
 
 public class BrokerInfoHolderTest {
     private BrokerInfoHolder brokerInfoHolder;

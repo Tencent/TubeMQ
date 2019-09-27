@@ -17,10 +17,10 @@
 
 package com.tencent.tubemq.client.config;
 
+import com.tencent.tubemq.client.common.TClientConstants;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.cluster.MasterInfo;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import com.tencent.tubemq.client.common.TClientConstants;
 
 /**
  * Contains configuration information of a consumer.

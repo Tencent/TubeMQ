@@ -19,7 +19,6 @@ package com.tencent.tubemq.server.master.web.simplemvc;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.web.simplemvc.conf.WebConfig;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

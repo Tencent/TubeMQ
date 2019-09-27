@@ -27,9 +27,6 @@ import com.tencent.tubemq.corerpc.exception.LocalConnException;
 import com.tencent.tubemq.corerpc.netty.NettyRpcServer;
 import com.tencent.tubemq.corerpc.protocol.RpcProtocol;
 import com.tencent.tubemq.corerpc.server.ServiceRpcServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,6 +36,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

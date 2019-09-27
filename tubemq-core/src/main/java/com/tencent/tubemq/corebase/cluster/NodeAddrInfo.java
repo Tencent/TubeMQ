@@ -19,7 +19,6 @@ package com.tencent.tubemq.corebase.cluster;
 
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-
 import java.io.Serializable;
 
 

@@ -19,13 +19,8 @@ package com.tencent.tubemq.server.tools;
 
 import com.tencent.tubemq.server.master.MasterConfig;
 import com.tencent.tubemq.server.master.TMaster;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class MasterStartup {
-    static final Logger logger = LoggerFactory.getLogger(MasterStartup.class);
-
     public static void main(final String[] args) throws Exception {
         final String configFilePath = ToolUtils.getConfigFilePath(args);
         final MasterConfig masterConfig = ToolUtils.getMasterConfig(configFilePath);

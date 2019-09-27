@@ -19,10 +19,9 @@ package com.tencent.tubemq.server.master.utils;
 
 import com.tencent.tubemq.corebase.daemon.AbstractDaemonService;
 import com.tencent.tubemq.server.master.MasterConfig;
+import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 
 public class SimpleVisitTokenManage extends AbstractDaemonService {

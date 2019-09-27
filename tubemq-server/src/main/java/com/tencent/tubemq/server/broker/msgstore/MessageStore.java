@@ -33,9 +33,6 @@ import com.tencent.tubemq.server.broker.msgstore.ssd.SSDSegFound;
 import com.tencent.tubemq.server.broker.nodeinfo.ConsumerNodeInfo;
 import com.tencent.tubemq.server.broker.stats.CountItem;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -51,13 +48,15 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Topic's message storage. It's a logical topic storage. Contains multi types storage: data in memory,
  * data in disk, data in ssd, and statistics of produce and consume.
  */
 public class MessageStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MessageStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageStore.class);
     private final ReentrantLock flushMutex = new ReentrantLock();
     private final AtomicBoolean hasFlushBeenTriggered = new AtomicBoolean(false);
     private final TopicMetadata topicMetadata;

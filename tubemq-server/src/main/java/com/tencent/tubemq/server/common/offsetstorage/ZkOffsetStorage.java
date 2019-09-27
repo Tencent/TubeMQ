@@ -23,17 +23,16 @@ import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.fileconfig.ZKConfig;
 import com.tencent.tubemq.server.common.offsetstorage.zookeeper.ZKUtil;
 import com.tencent.tubemq.server.common.offsetstorage.zookeeper.ZooKeeperWatcher;
+import java.util.Collection;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 /**
  * A offset storage implementation with zookeeper
  */
 public class ZkOffsetStorage implements OffsetStorage {
-    static final Logger logger = LoggerFactory.getLogger(ZkOffsetStorage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ZkOffsetStorage.class);
 
     static {
         if (Thread.getDefaultUncaughtExceptionHandler() == null) {

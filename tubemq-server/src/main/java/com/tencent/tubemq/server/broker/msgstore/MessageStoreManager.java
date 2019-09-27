@@ -32,24 +32,38 @@ import com.tencent.tubemq.server.broker.msgstore.ssd.SSDSegFound;
 import com.tencent.tubemq.server.broker.nodeinfo.ConsumerNodeInfo;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
 import com.tencent.tubemq.server.common.TStatusConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Message storage management. It contains all topics on broker. In charge of store, expire, and flush operation,
  */
 public class MessageStoreManager implements StoreService {
-    static final Logger logger = LoggerFactory.getLogger(MessageStoreManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageStoreManager.class);
     private final BrokerConfig tubeConfig;
     private final TubeBroker tubeBroker;
     // metadata manager, get metadata from master.

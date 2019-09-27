@@ -17,9 +17,8 @@
 
 package com.tencent.tubemq.corerpc.utils;
 
-import org.junit.Assert;
-
 import javax.net.ssl.SSLEngine;
+import org.junit.Assert;
 
 /***
  * TSSLEngineUtil test.

@@ -30,15 +30,28 @@ import com.tencent.tubemq.server.broker.msgstore.disk.GetMessageResult;
 import com.tencent.tubemq.server.broker.nodeinfo.ConsumerNodeInfo;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
 import com.tencent.tubemq.server.common.utils.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Message on ssd storage management. It mainly store message on ssd, and copy to disk.
@@ -46,7 +59,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Expired files will be delete when exceed storage quota.
  */
 public class MsgSSDStoreManager implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgSSDStoreManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgSSDStoreManager.class);
     // file suffix
     private static final String DATA_FILE_SUFFIX = ".tube";
     // tube config

@@ -16,18 +16,17 @@
  */
 package com.tencent.tubemq.corerpc.codec;
 
+import static org.junit.Assert.assertTrue;
 import com.googlecode.protobuf.format.JsonFormat;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
 public class PbEnDecoderTest {
 
 
     @Test
-    public void test_PbEncodeAndDecoder() throws Exception {
+    public void testPbEncodeAndDecoder() throws Exception {
         // mock a pb object
         JsonFormat jsonFormat = new JsonFormat();
         ClientMaster.RegisterRequestP2M.Builder builder = ClientMaster.RegisterRequestP2M.newBuilder();

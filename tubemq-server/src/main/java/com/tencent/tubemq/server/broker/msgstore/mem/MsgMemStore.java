@@ -22,10 +22,6 @@ import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.server.broker.BrokerConfig;
 import com.tencent.tubemq.server.broker.msgstore.disk.MsgFileStore;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.nio.ch.DirectBuffer;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -35,12 +31,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.nio.ch.DirectBuffer;
 
 /***
  * Message's memory storage. It use direct memory store messages that received but not have been flushed to disk.
  */
 public class MsgMemStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgMemStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgMemStore.class);
     //　used for align
     private static final int MASK_64_ALIGN = ~(64 - 1);
     //　statistics of memory store

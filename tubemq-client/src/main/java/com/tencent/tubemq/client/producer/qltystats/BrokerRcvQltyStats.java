@@ -17,9 +17,8 @@
 
 package com.tencent.tubemq.client.producer.qltystats;
 
-import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.client.exception.TubeClientException;
-
+import com.tencent.tubemq.corebase.cluster.Partition;
 import java.util.List;
 import java.util.Map;
 

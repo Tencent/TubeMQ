@@ -19,9 +19,6 @@ package com.tencent.tubemq.server.broker.msgstore.disk;
 
 import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +26,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * FileSegments management. Contains two types FileSegment: data and index.

@@ -20,15 +20,14 @@ package com.tencent.tubemq.server.common.fileconfig;
 import com.tencent.tubemq.corebase.config.TLSConfig;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.broker.exception.StartupException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Set;
 
 
 public abstract class AbstractFileConfig {
@@ -36,11 +35,11 @@ public abstract class AbstractFileConfig {
     private static final Logger logger =
             LoggerFactory.getLogger(AbstractFileConfig.class);
 
-    protected String SECT_TOKEN_MASTER = "master";
-    protected String SECT_TOKEN_BROKER = "broker";
-    protected String SECT_TOKEN_BDB = "bdbStore";
-    protected String SECT_TOKEN_TLS = "tlsSetting";
-    protected String SECT_TOKEN_ZKEEPER = "zookeeper";
+    protected static final String SECT_TOKEN_MASTER = "master";
+    protected static final String SECT_TOKEN_BROKER = "broker";
+    protected static final String SECT_TOKEN_BDB = "bdbStore";
+    protected static final String SECT_TOKEN_TLS = "tlsSetting";
+    protected static final String SECT_TOKEN_ZKEEPER = "zookeeper";
 
     private String basePath;
     private String configPath;

@@ -23,15 +23,14 @@ import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.TStatusConstants;
 import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbBrokerConfEntity;
-import org.apache.commons.codec.binary.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import org.apache.commons.codec.binary.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class BrokerSyncStatusInfo {

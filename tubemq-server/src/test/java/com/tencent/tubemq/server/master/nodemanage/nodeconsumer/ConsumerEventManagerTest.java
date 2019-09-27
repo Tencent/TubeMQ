@@ -17,13 +17,12 @@
 
 package com.tencent.tubemq.server.master.nodemanage.nodeconsumer;
 
+import static org.mockito.Mockito.mock;
 import com.tencent.tubemq.corebase.balance.ConsumerEvent;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.mockito.Mockito.mock;
 
 public class ConsumerEventManagerTest {
     private ConsumerEventManager consumerEventManager;

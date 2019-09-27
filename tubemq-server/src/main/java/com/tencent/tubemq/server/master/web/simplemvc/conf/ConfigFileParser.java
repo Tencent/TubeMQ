@@ -18,14 +18,13 @@
 package com.tencent.tubemq.server.master.web.simplemvc.conf;
 
 import com.tencent.tubemq.server.master.web.simplemvc.exception.InvalidConfigException;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 
 public class ConfigFileParser {

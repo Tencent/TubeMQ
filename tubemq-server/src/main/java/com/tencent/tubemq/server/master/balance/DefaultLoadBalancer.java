@@ -31,13 +31,21 @@ import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerBandInfo
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerInfoHolder;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.NodeRebInfo;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.RebProcessInfo;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /* Load balance class for server side load balance, (partition size) mod (consumer size) */
 public class DefaultLoadBalancer implements LoadBalancer {

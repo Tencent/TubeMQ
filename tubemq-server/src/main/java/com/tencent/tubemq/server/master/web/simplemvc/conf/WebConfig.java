@@ -19,7 +19,6 @@ package com.tencent.tubemq.server.master.web.simplemvc.conf;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

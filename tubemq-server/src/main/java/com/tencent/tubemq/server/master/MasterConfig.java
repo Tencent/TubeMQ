@@ -26,11 +26,10 @@ import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.fileconfig.AbstractFileConfig;
 import com.tencent.tubemq.server.common.fileconfig.BDBConfig;
 import com.tencent.tubemq.server.common.fileconfig.ZKConfig;
+import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.ini4j.Ini;
 import org.ini4j.Profile;
-
-import java.util.Set;
 
 /**
  * Basic config for master service
@@ -353,7 +352,8 @@ public class MasterConfig extends AbstractFileConfig {
             String tmpAuthToken = masterConf.get("confModAuthToken").trim();
             if (tmpAuthToken.length() > TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH) {
                 throw new IllegalArgumentException(
-                        "Invalid value: the length of confModAuthToken's value > " + TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH);
+                        "Invalid value: the length of confModAuthToken's value > "
+                                + TServerConstants.CFG_MODAUTHTOKEN_MAX_LENGTH);
             }
             this.confModAuthToken = tmpAuthToken;
         }

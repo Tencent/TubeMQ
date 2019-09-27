@@ -36,15 +36,6 @@ import com.tencent.tubemq.corerpc.codec.PbEnDecoder;
 import com.tencent.tubemq.corerpc.exception.ClientClosedException;
 import com.tencent.tubemq.corerpc.exception.NetworkException;
 import com.tencent.tubemq.corerpc.utils.MixUtils;
-import org.jboss.netty.channel.*;
-import org.jboss.netty.handler.timeout.ReadTimeoutException;
-import org.jboss.netty.util.HashedWheelTimer;
-import org.jboss.netty.util.Timeout;
-import org.jboss.netty.util.Timer;
-import org.jboss.netty.util.TimerTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.channels.UnresolvedAddressException;
@@ -54,6 +45,20 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.ChannelHandler;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.ExceptionEvent;
+import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.handler.timeout.ReadTimeoutException;
+import org.jboss.netty.util.HashedWheelTimer;
+import org.jboss.netty.util.Timeout;
+import org.jboss.netty.util.Timer;
+import org.jboss.netty.util.TimerTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -335,11 +340,11 @@ public class NettyClient implements Client {
             }
         }
 
-        @Override
         /**
          * Invoked when an exception was raised by an I/O thread or a
          * {@link ChannelHandler}.
          */
+        @Override
         public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
             Throwable t = e.getCause();
             if (t != null

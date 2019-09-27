@@ -16,12 +16,11 @@
  */
 package com.tencent.tubemq.server.broker.metadata;
 
-import org.junit.Test;
-import org.springframework.util.Assert;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.junit.Test;
+import org.springframework.util.Assert;
 
 /***
  * BrokerMetadataManage test

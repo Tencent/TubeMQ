@@ -27,9 +27,12 @@ import com.tencent.tubemq.server.master.web.common.BrokerQueryResult;
 import com.tencent.tubemq.server.master.web.model.BrokerVO;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
 import com.tencent.tubemq.server.master.web.simplemvc.RequestContext;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 
 
 public class BrokerList implements Action {

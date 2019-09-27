@@ -21,17 +21,13 @@ import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.corebase.cluster.Partition;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class FetchContext {
-
-    static final Logger logger =
-            LoggerFactory.getLogger(FetchContext.class);
+    private static final Logger logger = LoggerFactory.getLogger(FetchContext.class);
     private Partition partition;
     private long usedToken;
     private boolean lastConsumed = false;

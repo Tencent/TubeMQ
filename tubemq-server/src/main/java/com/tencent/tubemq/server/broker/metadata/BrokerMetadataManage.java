@@ -20,9 +20,6 @@ package com.tencent.tubemq.server.broker.metadata;
 import com.tencent.tubemq.corebase.policies.FlowCtrlRuleHandler;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.TStatusConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -30,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Broker's metadata management util. Metadata contains broker's default configurations, topics,

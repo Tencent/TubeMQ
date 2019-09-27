@@ -17,8 +17,6 @@
 
 package com.tencent.tubemq.example;
 
-import com.tencent.tubemq.corebase.Message;
-import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.consumer.ConsumeOffsetInfo;
 import com.tencent.tubemq.client.consumer.ConsumerResult;
@@ -26,9 +24,8 @@ import com.tencent.tubemq.client.consumer.PullMessageConsumer;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.factory.MessageSessionFactory;
 import com.tencent.tubemq.client.factory.TubeSingleSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.tencent.tubemq.corebase.Message;
+import com.tencent.tubemq.corebase.utils.ThreadUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +34,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public final class MessagePullSetConsumerExample {
@@ -109,8 +107,9 @@ public final class MessagePullSetConsumerExample {
                             // 如果消费组是纯粹的Pull模式，起始拉取位置可以保存，如果不是，就只能取confirmConsume的返回 才行
                             long oldValue =
                                     partOffsetMap.get(
-                                            result.getPartitionKey()) == null ?
-                                            -1 : partOffsetMap.get(result.getPartitionKey()).longValue();
+                                            result.getPartitionKey()) == null
+                                            ? -1
+                                            : partOffsetMap.get(result.getPartitionKey()).longValue();
                             partOffsetMap.put(result.getPartitionKey(), result.getCurrOffset());
                             logger.info("GetMessage , partitionKey="
                                     + result.getPartitionKey() + ", oldValue="
@@ -121,8 +120,9 @@ public final class MessagePullSetConsumerExample {
                             if (confirmResult.isSuccess()) {
                                 oldValue =
                                         partOffsetMap.get(
-                                                result.getPartitionKey()) == null ?
-                                                -1 : partOffsetMap.get(result.getPartitionKey()).longValue();
+                                                result.getPartitionKey()) == null
+                                                ? -1
+                                                : partOffsetMap.get(result.getPartitionKey()).longValue();
                                 partOffsetMap.put(result.getPartitionKey(), confirmResult.getCurrOffset());
                                 logger.info("ConfirmConsume , partitionKey="
                                         + confirmResult.getPartitionKey() + ", oldValue="

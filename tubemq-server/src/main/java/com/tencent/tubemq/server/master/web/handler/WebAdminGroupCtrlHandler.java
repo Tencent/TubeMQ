@@ -23,17 +23,26 @@ import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.utils.WebParameterUtils;
 import com.tencent.tubemq.server.master.TMaster;
-import com.tencent.tubemq.server.master.bdbstore.bdbentitys.*;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbBlackGroupEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbConsumeGroupSettingEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbConsumerGroupEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbGroupFilterCondEntity;
+import com.tencent.tubemq.server.master.bdbstore.bdbentitys.BdbTopicAuthControlEntity;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerConfManage;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerBandInfo;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.ConsumerInfoHolder;
 import com.tencent.tubemq.server.master.nodemanage.nodeconsumer.NodeRebInfo;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 
 public class WebAdminGroupCtrlHandler {
@@ -162,8 +171,8 @@ public class WebAdminGroupCtrlHandler {
             Set<String> confgiuredTopicSet = brokerConfManage.getTotalConfiguredTopicNames();
             HashMap<String, BdbGroupFilterCondEntity> inGroupFilterCondEntityMap =
                     new HashMap<String, BdbGroupFilterCondEntity>();
-            for (int count_j = 0; count_j < filterJsonArray.size(); count_j++) {
-                Map<String, Object> groupObject = filterJsonArray.get(count_j);
+            for (int j = 0; j < filterJsonArray.size(); j++) {
+                Map<String, Object> groupObject = filterJsonArray.get(j);
                 try {
                     String groupName =
                             WebParameterUtils.validStringParameter("groupName",
@@ -359,8 +368,8 @@ public class WebAdminGroupCtrlHandler {
             }
             Set<String> bathRecords = new HashSet<String>();
             List<BdbGroupFilterCondEntity> modifyFilterCondEntitys = new ArrayList<>();
-            for (int count_j = 0; count_j < jsonArray.size(); count_j++) {
-                Map<String, Object> groupObject = jsonArray.get(count_j);
+            for (int j = 0; j < jsonArray.size(); j++) {
+                Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
                             WebParameterUtils.validStringParameter("groupName",
@@ -631,7 +640,7 @@ public class WebAdminGroupCtrlHandler {
                     brokerConfManage.confGetBdbAllowedGroupFilterCondSet(webGroupFilterCondEntity);
             SimpleDateFormat formatter =
                     new SimpleDateFormat(TBaseConstants.META_TMP_DATE_VALUE);
-            int count_j = 0;
+            int j = 0;
             sBuilder.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"OK\",\"data\":[");
             for (BdbGroupFilterCondEntity entity : webGroupCondEntities) {
                 if (!filterCondSet.isEmpty()) {
@@ -652,7 +661,7 @@ public class WebAdminGroupCtrlHandler {
                         }
                     }
                 }
-                if (count_j++ > 0) {
+                if (j++ > 0) {
                     sBuilder.append(",");
                 }
                 sBuilder.append("{\"topicName\":\"").append(entity.getTopicName())
@@ -669,7 +678,7 @@ public class WebAdminGroupCtrlHandler {
                         .append("\",\"createDate\":\"").append(formatter.format(entity.getCreateDate()))
                         .append("\"}");
             }
-            sBuilder.append("],\"count\":").append(count_j).append("}");
+            sBuilder.append("],\"count\":").append(j).append("}");
         } catch (Exception e) {
             sBuilder.delete(0, sBuilder.length());
             sBuilder.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
@@ -768,8 +777,8 @@ public class WebAdminGroupCtrlHandler {
             Set<String> confgiuredTopicSet = brokerConfManage.getTotalConfiguredTopicNames();
             HashMap<String, BdbConsumerGroupEntity> inGroupAuthConfEntityMap =
                     new HashMap<String, BdbConsumerGroupEntity>();
-            for (int count_j = 0; count_j < jsonArray.size(); count_j++) {
-                Map<String, Object> groupObject = jsonArray.get(count_j);
+            for (int j = 0; j < jsonArray.size(); j++) {
+                Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
                             WebParameterUtils.validStringParameter("groupName",
@@ -873,11 +882,11 @@ public class WebAdminGroupCtrlHandler {
                     brokerConfManage.confGetBdbAllowedConsumerGroupSet(webConsumerGroupEntity);
             SimpleDateFormat formatter =
                     new SimpleDateFormat(TBaseConstants.META_TMP_DATE_VALUE);
-            int count_j = 0;
+            int j = 0;
             sBuilder.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"OK\",\"count\":")
                     .append(webConsumerGroupEntities.size()).append(",\"data\":[");
             for (BdbConsumerGroupEntity entity : webConsumerGroupEntities) {
-                if (count_j++ > 0) {
+                if (j++ > 0) {
                     sBuilder.append(",");
                 }
                 sBuilder.append("{\"topicName\":\"").append(entity.getGroupTopicName())
@@ -1035,8 +1044,8 @@ public class WebAdminGroupCtrlHandler {
             }
             Set<String> confgiuredTopicSet = brokerConfManage.getTotalConfiguredTopicNames();
             HashMap<String, BdbBlackGroupEntity> inBlackGroupEntityMap = new HashMap<>();
-            for (int count_j = 0; count_j < jsonArray.size(); count_j++) {
-                Map<String, Object> groupObject = jsonArray.get(count_j);
+            for (int j = 0; j < jsonArray.size(); j++) {
+                Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
                             WebParameterUtils.validStringParameter("groupName",
@@ -1130,9 +1139,9 @@ public class WebAdminGroupCtrlHandler {
                     new SimpleDateFormat(TBaseConstants.META_TMP_DATE_VALUE);
             sBuilder.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"OK\",\"count\":")
                     .append(webBlackGroupEntities.size()).append(",\"data\":[");
-            int count_j = 0;
+            int j = 0;
             for (BdbBlackGroupEntity entity : webBlackGroupEntities) {
-                if (count_j++ > 0) {
+                if (j++ > 0) {
                     sBuilder.append(",");
                 }
                 sBuilder.append("{\"topicName\":\"").append(entity.getTopicName())
@@ -1282,8 +1291,8 @@ public class WebAdminGroupCtrlHandler {
             }
             HashMap<String, BdbConsumeGroupSettingEntity> inOffsetRstGroupEntityMap =
                     new HashMap<String, BdbConsumeGroupSettingEntity>();
-            for (int count_j = 0; count_j < groupNameJsonArray.size(); count_j++) {
-                Map<String, Object> groupObject = groupNameJsonArray.get(count_j);
+            for (int j = 0; j < groupNameJsonArray.size(); j++) {
+                Map<String, Object> groupObject = groupNameJsonArray.get(j);
                 try {
                     String groupName =
                             WebParameterUtils.validStringParameter("groupName",
@@ -1371,9 +1380,9 @@ public class WebAdminGroupCtrlHandler {
                     new SimpleDateFormat(TBaseConstants.META_TMP_DATE_VALUE);
             sBuilder.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"OK\",\"count\":")
                     .append(resultEntities.size()).append(",\"data\":[");
-            int count_j = 0;
+            int j = 0;
             for (BdbConsumeGroupSettingEntity entity : resultEntities) {
-                if (count_j++ > 0) {
+                if (j++ > 0) {
                     sBuilder.append(",");
                 }
                 sBuilder.append("{\"groupName\":\"").append(entity.getConsumeGroupName())

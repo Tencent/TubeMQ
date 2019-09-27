@@ -18,7 +18,6 @@
 package com.tencent.tubemq.server.master.nodemanage.nodeproducer;
 
 import com.tencent.tubemq.corebase.cluster.ProducerInfo;
-
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 

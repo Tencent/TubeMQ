@@ -22,22 +22,21 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.broker.TubeBroker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler {
 
     private static final Logger logger =
             LoggerFactory.getLogger(SimpleCertificateBrokerHandler.class);
+    private static final int MAX_VISIT_TOKEN_SIZE = 6;
 
     private final TubeBroker tubeBroker;
-    private final int MAX_VISIT_TOKEN_SIZE = 6;
     private final AtomicReference<List<Long>> visitTokenList =
             new AtomicReference<List<Long>>();
     private boolean enableProduceAuthenticate = false;

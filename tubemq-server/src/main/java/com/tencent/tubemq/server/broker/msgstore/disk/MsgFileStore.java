@@ -27,9 +27,6 @@ import com.tencent.tubemq.server.broker.stats.CountItem;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
 import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.utils.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -42,12 +39,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Message file's storage. Contains data file and index file.
  */
 public class MsgFileStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgFileStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgFileStore.class);
     private static final int MAX_META_REFRESH_DUR = 1000 * 60 * 60;
     // storage ID
     private final String storeKey;

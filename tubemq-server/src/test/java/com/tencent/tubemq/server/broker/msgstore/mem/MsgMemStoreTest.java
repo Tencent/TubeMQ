@@ -17,9 +17,8 @@
 
 package com.tencent.tubemq.server.broker.msgstore.mem;
 
-import org.junit.Test;
-
 import java.nio.ByteBuffer;
+import org.junit.Test;
 
 /***
  * MsgMemStore test.

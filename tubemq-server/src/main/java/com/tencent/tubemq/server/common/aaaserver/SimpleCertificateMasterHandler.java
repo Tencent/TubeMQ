@@ -21,7 +21,6 @@ import com.tencent.tubemq.corebase.TErrCodeConstants;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.MasterConfig;
-
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;

@@ -24,6 +24,8 @@ package com.tencent.tubemq.server.common.offsetstorage.zookeeper;
 
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.server.common.fileconfig.ZKConfig;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
@@ -35,9 +37,6 @@ import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 
 /**

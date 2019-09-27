@@ -17,10 +17,9 @@
 
 package com.tencent.tubemq.client.consumer;
 
-import com.tencent.tubemq.corebase.Shutdownable;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.exception.TubeClientException;
-
+import com.tencent.tubemq.corebase.Shutdownable;
 import java.util.Map;
 
 

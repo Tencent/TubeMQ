@@ -22,22 +22,20 @@
 
 package com.tencent.tubemq.corerpc.netty;
 
+import static com.tencent.tubemq.corebase.utils.AddressUtils.getRemoteAddressIP;
 import com.tencent.tubemq.corerpc.RpcConstants;
 import com.tencent.tubemq.corerpc.RpcDataPack;
 import com.tencent.tubemq.corerpc.exception.UnknownProtocolException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
-import static com.tencent.tubemq.corebase.utils.AddressUtils.getRemoteAddressIP;
 
 
 public class NettyProtocolDecoder extends FrameDecoder {

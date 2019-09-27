@@ -21,7 +21,6 @@ import com.tencent.tubemq.server.master.TMaster;
 import com.tencent.tubemq.server.master.nodemanage.nodebroker.BrokerConfManage;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
 import com.tencent.tubemq.server.master.web.simplemvc.RequestContext;
-
 import java.net.InetSocketAddress;
 
 

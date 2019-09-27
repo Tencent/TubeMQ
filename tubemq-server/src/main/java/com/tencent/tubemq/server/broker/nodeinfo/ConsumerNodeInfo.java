@@ -23,21 +23,19 @@ import com.tencent.tubemq.corebase.policies.FlowCtrlRuleHandler;
 import com.tencent.tubemq.corebase.policies.SSDCtrlResult;
 import com.tencent.tubemq.server.broker.msgstore.MessageStoreManager;
 import com.tencent.tubemq.server.common.TServerConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /***
  * Consumer node info, which broker contains.
  */
 public class ConsumerNodeInfo {
-    static final Logger logger =
-            LoggerFactory.getLogger(ConsumerNodeInfo.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConsumerNodeInfo.class);
     // partition string format
     private final String partStr;
     private final MessageStoreManager storeManager;

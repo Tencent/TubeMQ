@@ -17,19 +17,25 @@
 
 package com.tencent.tubemq.client.producer.qltystats;
 
+import com.tencent.tubemq.client.config.TubeClientConfig;
+import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.cluster.Partition;
-import com.tencent.tubemq.client.config.TubeClientConfig;
-import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of BrokerRcvQltyStats.

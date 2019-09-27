@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corerpc;
 
 import com.tencent.tubemq.corerpc.exception.StandbyException;
-
 import java.io.Serializable;
 
 

@@ -18,9 +18,8 @@
 package com.tencent.tubemq.server.broker.utils;
 
 import com.tencent.tubemq.corebase.utils.AbstractSamplePrint;
-import org.slf4j.Logger;
-
 import java.io.IOException;
+import org.slf4j.Logger;
 
 /***
  * Compressed print broker's statistics.

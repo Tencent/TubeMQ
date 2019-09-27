@@ -17,6 +17,7 @@
 
 package com.tencent.tubemq.server.broker;
 
+import static java.lang.Math.abs;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.config.TLSConfig;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
@@ -31,8 +32,6 @@ import org.ini4j.Ini;
 import org.ini4j.Profile.Section;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.lang.Math.abs;
 
 /***
  * Config of broker. Read from broker.ini config file.

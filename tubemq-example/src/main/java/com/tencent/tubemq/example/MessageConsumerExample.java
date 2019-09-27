@@ -17,21 +17,24 @@
 
 package com.tencent.tubemq.example;
 
-import com.tencent.tubemq.corebase.Message;
 import com.tencent.tubemq.client.config.ConsumerConfig;
 import com.tencent.tubemq.client.consumer.MessageListener;
 import com.tencent.tubemq.client.consumer.PushMessageConsumer;
 import com.tencent.tubemq.client.exception.TubeClientException;
 import com.tencent.tubemq.client.factory.MessageSessionFactory;
 import com.tencent.tubemq.client.factory.TubeSingleSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
+import com.tencent.tubemq.corebase.Message;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public final class MessageConsumerExample {

@@ -19,10 +19,9 @@ package com.tencent.tubemq.corerpc.benchemark;
 
 import com.tencent.tubemq.corerpc.RpcConfig;
 import com.tencent.tubemq.corerpc.RpcServiceFactory;
+import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.Executors;
 
 
 public class RpcService4BenchmarkServer {

@@ -24,13 +24,12 @@ package com.tencent.tubemq.corebase.utils;
 
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TokenConstants;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.HmacUtils;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.HmacUtils;
 
 
 public class TStringUtils {
@@ -464,13 +463,10 @@ public class TStringUtils {
 
         int[] p = new int[n + 1]; //'previous' cost array, horizontally
         int[] d = new int[n + 1]; // cost array, horizontally
-        int[] _d; //placeholder to assist in swapping p and d
 
         // indexes into strings s and t
         int i; // iterates through s
         int j; // iterates through t
-
-        char t_j; // jth character of t
 
         int cost; // cost
 
@@ -479,19 +475,19 @@ public class TStringUtils {
         }
 
         for (j = 1; j <= m; j++) {
-            t_j = t.charAt(j - 1);
+            char ch = t.charAt(j - 1);
             d[0] = j;
 
             for (i = 1; i <= n; i++) {
-                cost = s.charAt(i - 1) == t_j ? 0 : 1;
+                cost = s.charAt(i - 1) == ch ? 0 : 1;
                 // minimum of cell to the left+1, to the top+1, diagonally left and up +cost
                 d[i] = Math.min(Math.min(d[i - 1] + 1, p[i] + 1), p[i - 1] + cost);
             }
 
             // copy current distance counts to 'previous row' distance counts
-            _d = p;
+            int[] swap = p;
             p = d;
-            d = _d;
+            d = swap;
         }
 
         // our last action in the above loop was to switch d and p, so p now
@@ -500,8 +496,9 @@ public class TStringUtils {
     }
 
     public static String arrayToString(String[] strs) {
-        if (strs.length == 0)
+        if (strs.length == 0) {
             return "";
+        }
         StringBuffer sbuf = new StringBuffer();
         sbuf.append(strs[0]);
         for (int idx = 1; idx < strs.length; idx++) {
@@ -862,7 +859,7 @@ public class TStringUtils {
                         }
                     }
 
-                    // 1. wordIndex == length, indicating that the last letter is uppercase 
+                    // 1. wordIndex == length, indicating that the last letter is uppercase
                     //      and is handled by upperCaseWord.
                     // 2. wordIndex == index, indicating that index is a titleCaseWord.
                     // 3. wordIndex > index, indicating that index to wordIndex - 1 is all uppercase,

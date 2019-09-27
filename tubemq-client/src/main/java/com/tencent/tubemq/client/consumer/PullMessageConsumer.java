@@ -18,7 +18,6 @@
 package com.tencent.tubemq.client.consumer;
 
 import com.tencent.tubemq.client.exception.TubeClientException;
-
 import java.util.TreeSet;
 
 

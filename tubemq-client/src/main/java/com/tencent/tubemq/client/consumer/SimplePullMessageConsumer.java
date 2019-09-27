@@ -17,28 +17,25 @@
 
 package com.tencent.tubemq.client.consumer;
 
+import com.tencent.tubemq.client.config.ConsumerConfig;
+import com.tencent.tubemq.client.exception.TubeClientException;
+import com.tencent.tubemq.client.factory.InnerSessionFactory;
 import com.tencent.tubemq.corebase.TBaseConstants;
 import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.cluster.Partition;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import com.tencent.tubemq.client.config.ConsumerConfig;
-import com.tencent.tubemq.client.exception.TubeClientException;
-import com.tencent.tubemq.client.factory.InnerSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.TreeSet;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of PullMessageConsumer
  */
 public class SimplePullMessageConsumer implements PullMessageConsumer {
-    static final Logger logger =
-            LoggerFactory.getLogger(SimplePullMessageConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePullMessageConsumer.class);
     private final BaseMessageConsumer baseConsumer;
 
     public SimplePullMessageConsumer(final InnerSessionFactory messageSessionFactory,
@@ -90,7 +87,7 @@ public class SimplePullMessageConsumer implements PullMessageConsumer {
     @Override
     public PullMessageConsumer subscribe(String topic,
                                          TreeSet<String> filterConds) throws TubeClientException {
-        baseConsumer.Subscribe(topic, filterConds, null);
+        baseConsumer.subscribe(topic, filterConds, null);
         return this;
     }
 

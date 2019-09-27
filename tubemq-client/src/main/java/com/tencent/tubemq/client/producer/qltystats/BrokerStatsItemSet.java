@@ -18,7 +18,6 @@
 package com.tencent.tubemq.client.producer.qltystats;
 
 import com.tencent.tubemq.corebase.TokenConstants;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 

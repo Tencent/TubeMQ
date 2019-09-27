@@ -20,7 +20,6 @@ package com.tencent.tubemq.corerpc;
 import com.tencent.tubemq.corerpc.client.Callback;
 import com.tencent.tubemq.corerpc.client.ClientFactory;
 import com.tencent.tubemq.corerpc.utils.MixUtils;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 

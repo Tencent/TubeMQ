@@ -18,12 +18,14 @@
 package com.tencent.tubemq.server.tools;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-import com.tencent.tubemq.server.broker.msgstore.disk.*;
+import com.tencent.tubemq.server.broker.msgstore.disk.FileSegment;
+import com.tencent.tubemq.server.broker.msgstore.disk.FileSegmentList;
+import com.tencent.tubemq.server.broker.msgstore.disk.RecordView;
+import com.tencent.tubemq.server.broker.msgstore.disk.Segment;
+import com.tencent.tubemq.server.broker.msgstore.disk.SegmentList;
+import com.tencent.tubemq.server.broker.msgstore.disk.SegmentType;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
 import com.tencent.tubemq.server.common.utils.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +33,14 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class StoreRepairAdmin {
@@ -143,7 +152,7 @@ public class StoreRepairAdmin {
         System.exit(0);
     }
 
-    static private class IndexReparStore implements Closeable {
+    private static class IndexReparStore implements Closeable {
         private static final String DATA_SUFFIX = ".tube";
         private static final String INDEX_SUFFIX = ".index";
         private static final int ONE_M_BYTES = 10 * 1024 * 1024;

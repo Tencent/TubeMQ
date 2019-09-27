@@ -18,8 +18,11 @@
 package com.tencent.tubemq.server.master.nodemanage.nodeconsumer;
 
 import com.tencent.tubemq.corebase.cluster.ConsumerInfo;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

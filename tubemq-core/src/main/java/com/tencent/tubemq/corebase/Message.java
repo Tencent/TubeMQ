@@ -18,7 +18,6 @@
 package com.tencent.tubemq.corebase;
 
 import com.tencent.tubemq.corebase.utils.TStringUtils;
-
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,7 +48,7 @@ public class Message implements Serializable {
     private String attribute;
     // message type
     private transient String msgType;
-    // message time 
+    // message time
     private transient String msgTime;
     private transient String sysAttributes;
 

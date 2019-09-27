@@ -18,13 +18,12 @@
 package com.tencent.tubemq.corerpc.netty;
 
 import com.tencent.tubemq.corerpc.RpcDataPack;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.List;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.junit.Assert;
+import org.junit.Test;
 
 /***
  * NettyProtocolEncoder test.

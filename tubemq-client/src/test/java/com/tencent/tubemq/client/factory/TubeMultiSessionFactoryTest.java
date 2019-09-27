@@ -17,17 +17,16 @@
 
 package com.tencent.tubemq.client.factory;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import com.tencent.tubemq.client.config.TubeClientConfig;
 import com.tencent.tubemq.corebase.cluster.MasterInfo;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
-import com.tencent.tubemq.client.config.TubeClientConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AddressUtils.class)
