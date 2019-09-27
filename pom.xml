@@ -115,8 +115,8 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>checkstyle.xml</configLocation>
-                    <suppressionsLocation>suppressions.xml</suppressionsLocation>
+                    <configLocation>codestyle/checkstyle.xml</configLocation>
+                    <suppressionsLocation>codestyle/suppressions.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failOnViolation>true</failOnViolation>
