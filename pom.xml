@@ -134,6 +134,55 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>0.13</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludeSubProjects>false</excludeSubProjects>
+                    <numUnapprovedLicenses>0</numUnapprovedLicenses>
+                    <licenses>
+                        <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                            <licenseFamilyCategory>AL2</licenseFamilyCategory>
+                            <licenseFamilyName>Apache License 2.0</licenseFamilyName>
+                            <notes/>
+                            <patterns>
+                                <pattern>Tencent is pleased to support the open source community by making TubeMQ available.</pattern>
+                            </patterns>
+                        </license>
+                    </licenses>
+                    <licenseFamilies>
+                        <licenseFamily implementation="org.apache.rat.license.SimpleLicenseFamily">
+                            <familyName>Apache License 2.0</familyName>
+                        </licenseFamily>
+                    </licenseFamilies>
+                    <excludes>
+                        <exclude>**/.*/**</exclude>
+                        <exclude>**/*.log</exclude>
+                        <exclude>**/README.md</exclude>
+                        <!-- Intellij IDEA -->
+                        <exclude>**/*.iml</exclude>
+                        <exclude>**/.idea/**</exclude>
+                        <!-- Generated content -->
+                        <exclude>**/out/**</exclude>
+                        <exclude>**/target/**</exclude>
+                        <!-- Document -->
+                        <exclude>**/docs/**</exclude>
+                        <!-- Front-end -->
+                        <exclude>resources/assets/lib/**</exclude>
+                        <exclude>resources/assets/public/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencyManagement>
