@@ -67,7 +67,7 @@ public class SimplePushMessageConsumer implements PushMessageConsumer {
     public PushMessageConsumer subscribe(String topic,
                                          TreeSet<String> filterConds,
                                          MessageListener messageListener) throws TubeClientException {
-        baseConsumer.Subscribe(topic, filterConds, messageListener);
+        baseConsumer.subscribe(topic, filterConds, messageListener);
         return this;
     }
 

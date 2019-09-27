@@ -42,7 +42,7 @@ public class HeartbeatManagerTest {
     }
 
     @Test
-    public void TestBrokerTimeout() {
+    public void testBrokerTimeout() {
         heartbeatManager.regBrokerCheckBusiness(1000,
                 new TimeoutListener() {
                     @Override
@@ -57,7 +57,7 @@ public class HeartbeatManagerTest {
     }
 
     @Test
-    public void TestConsumerTimeout() {
+    public void testConsumerTimeout() {
         heartbeatManager.regConsumerCheckBusiness(1000,
                 new TimeoutListener() {
                     @Override
@@ -72,7 +72,7 @@ public class HeartbeatManagerTest {
     }
 
     @Test
-    public void TestProducerTimeout() {
+    public void testProducerTimeout() {
         heartbeatManager.regProducerCheckBusiness(1000,
                 new TimeoutListener() {
                     @Override

@@ -26,7 +26,7 @@ public class PbEnDecoderTest {
 
 
     @Test
-    public void test_PbEncodeAndDecoder() throws Exception {
+    public void testPbEncodeAndDecoder() throws Exception {
         // mock a pb object
         JsonFormat jsonFormat = new JsonFormat();
         ClientMaster.RegisterRequestP2M.Builder builder = ClientMaster.RegisterRequestP2M.newBuilder();

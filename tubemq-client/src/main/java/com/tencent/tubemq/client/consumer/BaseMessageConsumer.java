@@ -238,7 +238,7 @@ public class BaseMessageConsumer implements MessageConsumer {
      * @return message consumer
      * @throws TubeClientException
      */
-    protected MessageConsumer Subscribe(String topic,
+    protected MessageConsumer subscribe(String topic,
                                         TreeSet<String> filterConds,
                                         MessageListener messageListener) throws TubeClientException {
         this.checkClientRunning();

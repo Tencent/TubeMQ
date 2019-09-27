@@ -87,7 +87,7 @@ public class SimplePullMessageConsumer implements PullMessageConsumer {
     @Override
     public PullMessageConsumer subscribe(String topic,
                                          TreeSet<String> filterConds) throws TubeClientException {
-        baseConsumer.Subscribe(topic, filterConds, null);
+        baseConsumer.subscribe(topic, filterConds, null);
         return this;
     }
 
