@@ -60,6 +60,9 @@ page at http://checkstyle.sourceforge.net/config.html -->
     <!-- All Java AST specific tests live under TreeWalker module. -->
     <module name="TreeWalker">
 
+        <!-- Check indentation. More configuration
+             see also https://checkstyle.org/config_misc.html#Indentation
+        -->
         <module name="Indentation"/>
 
         <!-- Allow use of comment to suppress javadocstyle -->
@@ -113,14 +116,6 @@ page at http://checkstyle.sourceforge.net/config.html -->
 <!--        </module>-->
 
         <!--
-            IllegalImport cannot blacklist classes, and c.g.api.client.util is used for some shaded
-            code and some useful code. So we need to fall back to Regexp.
-        -->
-        <module name="RegexpSinglelineJava">
-            <property name="format" value="com\.google\.api\.client\.util\.(ByteStreams|Charsets|Collections2|Joiner|Lists|Maps|Objects|Preconditions|Sets|Strings|Throwables)"/>
-        </module>
-
-        <!--
              Require static importing from Preconditions.
         -->
         <module name="RegexpSinglelineJava">
@@ -135,6 +130,9 @@ page at http://checkstyle.sourceforge.net/config.html -->
                      value="Unused import: {0}."/>
         </module>
 
+<!--        TODO We ignore JAVADOC related checker _for now_ and -->
+<!--        it is hopefully we enable this section -->
+<!--        once our documentation is formally completed. -->
 <!--        &lt;!&ndash;-->
 
 <!--        JAVADOC CHECKS-->
@@ -174,7 +172,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         -->
 
-        <!-- Item 38 - Adhere to generally accepted naming conventions -->
+        <!-- Adhere to generally accepted naming conventions -->
 
         <module name="PackageName">
             <!-- Validates identifiers for package names against the
@@ -279,6 +277,9 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         -->
 
+<!--        TODO We ignore LineLength checker _for now_ and -->
+<!--        it is hopefully we enable this section after we reach a consensus -->
+<!--        on an exact length limitation -->
 <!--        <module name="LineLength">-->
 <!--            &lt;!&ndash; Checks if a line is too long. &ndash;&gt;-->
 <!--            <property name="max" value="120"/>-->
@@ -410,22 +411,6 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="allowLineBreaks" value="true"/>
             <property name="severity" value="error"/>
         </module>
-
-<!--        <module name="OperatorWrap">-->
-<!--            &lt;!&ndash; Checks that operators like + and ? appear at newlines rather than-->
-<!--                 at the end of the previous line.-->
-<!--            &ndash;&gt;-->
-<!--            <property name="option" value="NL"/>-->
-<!--            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL,-->
-<!--        GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD,-->
-<!--        NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>-->
-<!--        </module>-->
-
-<!--        <module name="OperatorWrap">-->
-<!--            &lt;!&ndash; Checks that assignment operators are at the end of the line. &ndash;&gt;-->
-<!--            <property name="option" value="eol"/>-->
-<!--            <property name="tokens" value="ASSIGN"/>-->
-<!--        </module>-->
 
         <module name="ParenPad">
             <!-- Checks that there is no whitespace before close parens or after
