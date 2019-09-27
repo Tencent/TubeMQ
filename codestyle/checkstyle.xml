@@ -277,23 +277,20 @@ page at http://checkstyle.sourceforge.net/config.html -->
 
         -->
 
-<!--        TODO We ignore LineLength checker _for now_ and -->
-<!--        it is hopefully we enable this section after we reach a consensus -->
-<!--        on an exact length limitation -->
-<!--        <module name="LineLength">-->
-<!--            &lt;!&ndash; Checks if a line is too long. &ndash;&gt;-->
-<!--            <property name="max" value="120"/>-->
-<!--            <property name="severity" value="error"/>-->
+        <module name="LineLength">
+            <!-- Checks if a line is too long. -->
+            <property name="max" value="120"/>
+            <property name="severity" value="error"/>
 
-<!--            &lt;!&ndash;-->
-<!--              The default ignore pattern exempts the following elements:-->
-<!--                - import statements-->
-<!--                - long URLs inside comments-->
-<!--            &ndash;&gt;-->
+            <!--
+              The default ignore pattern exempts the following elements:
+                - import statements
+                - long URLs inside comments
+            -->
 
-<!--            <property name="ignorePattern"-->
-<!--                      value="^(package .*;\s*)|(import .*;\s*)|( *\* .*https?://.*)$"/>-->
-<!--        </module>-->
+            <property name="ignorePattern"
+                      value="^(package .*;\s*)|(import .*;\s*)|( *\* .*https?://.*)$"/>
+        </module>
 
         <module name="LeftCurly">
             <!-- Checks for placement of the left curly brace ('{'). -->
