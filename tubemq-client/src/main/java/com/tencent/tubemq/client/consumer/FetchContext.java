@@ -26,11 +26,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class FetchContext {
-
-    static final Logger logger =
-            LoggerFactory.getLogger(FetchContext.class);
+    private static final Logger logger = LoggerFactory.getLogger(FetchContext.class);
     private Partition partition;
     private long usedToken;
     private boolean lastConsumed = false;

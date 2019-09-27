@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * to improve throughput from client to broker.
  */
 public class MAMessageProducerExample {
-    private static final Logger LOG = LoggerFactory.getLogger(MAMessageProducerExample.class);
+    private static final Logger logger = LoggerFactory.getLogger(MAMessageProducerExample.class);
     private static final AtomicLong SENT_SUCC_COUNTER = new AtomicLong(0);
     private static final List<MessageProducer> PRODUCER_LIST = new ArrayList<>();
     private static final int MAX_PRODUCER_NUM = 100;
@@ -101,7 +101,7 @@ public class MAMessageProducerExample {
         msgCnt = Integer.parseInt(args[3]);
         producerCnt = Math.min(args.length > 4 ? Integer.parseInt(args[4]) : 10, MAX_PRODUCER_NUM);
 
-        LOG.info("MAMessageProducerExample.main started...");
+        logger.info("MAMessageProducerExample.main started...");
 
         final byte[] transmitData = StringUtils.getBytesUtf8("This is a test message from multi-session factory.");
         final ByteBuffer dataBuffer1 = ByteBuffer.allocate(1024);
@@ -126,9 +126,9 @@ public class MAMessageProducerExample {
             messageProducer.shutdown();
 
         } catch (TubeClientException e) {
-            LOG.error("TubeClientException: ", e);
+            logger.error("TubeClientException: ", e);
         } catch (Throwable e) {
-            LOG.error("Throwable: ", e);
+            logger.error("Throwable: ", e);
         }
 
     }
@@ -172,7 +172,7 @@ public class MAMessageProducerExample {
             try {
                 producer.publish(topicSet);
             } catch (Throwable t) {
-                LOG.error("publish exception: ", t);
+                logger.error("publish exception: ", t);
             }
             for (int i = 0; i < msgCnt; i++) {
                 long millis = System.currentTimeMillis();
@@ -196,7 +196,7 @@ public class MAMessageProducerExample {
                         // send message asynchronously, recommended
                         producer.sendMessage(message, new DefaultSendCallback());
                     } catch (Throwable e1) {
-                        LOG.error("sendMessage exception: ", e1);
+                        logger.error("sendMessage exception: ", e1);
                     }
 
                     if (i % 5000 == 0) {
@@ -213,7 +213,7 @@ public class MAMessageProducerExample {
             try {
                 producer.shutdown();
             } catch (Throwable e) {
-                LOG.error("producer shutdown error: ", e);
+                logger.error("producer shutdown error: ", e);
             }
 
         }
@@ -223,17 +223,17 @@ public class MAMessageProducerExample {
         public void onMessageSent(MessageSentResult result) {
             if (result.isSuccess()) {
                 if (SENT_SUCC_COUNTER.incrementAndGet() % 1000 == 0) {
-                    LOG.info("Send {} message, keyCount is {}", SENT_SUCC_COUNTER.get(), keyCount);
+                    logger.info("Send {} message, keyCount is {}", SENT_SUCC_COUNTER.get(), keyCount);
                 }
             } else {
                 if (result.getErrCode() != TErrCodeConstants.SERVER_RECEIVE_OVERFLOW) {
-                    LOG.error("Send message failed!" + result.getErrMsg());
+                    logger.error("Send message failed!" + result.getErrMsg());
                 }
             }
         }
 
         public void onException(Throwable e) {
-            LOG.error("Send message error!", e);
+            logger.error("Send message error!", e);
         }
     }
 }

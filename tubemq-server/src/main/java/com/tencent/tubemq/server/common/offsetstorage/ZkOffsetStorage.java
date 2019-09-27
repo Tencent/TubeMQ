@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * A offset storage implementation with zookeeper
  */
 public class ZkOffsetStorage implements OffsetStorage {
-    static final Logger logger = LoggerFactory.getLogger(ZkOffsetStorage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ZkOffsetStorage.class);
 
     static {
         if (Thread.getDefaultUncaughtExceptionHandler() == null) {

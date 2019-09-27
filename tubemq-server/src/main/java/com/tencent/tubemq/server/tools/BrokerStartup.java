@@ -19,18 +19,12 @@ package com.tencent.tubemq.server.tools;
 
 import com.tencent.tubemq.server.broker.BrokerConfig;
 import com.tencent.tubemq.server.broker.TubeBroker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class BrokerStartup {
-    static final Logger logger = LoggerFactory.getLogger(BrokerStartup.class);
-
     public static void main(final String[] args) throws Exception {
         final String configFilePath = ToolUtils.getConfigFilePath(args);
         final BrokerConfig tubeConfig = ToolUtils.getBrokerConfig(configFilePath);
         final TubeBroker server = new TubeBroker(tubeConfig);
         server.start();
     }
-
 }

@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * Message file's storage. Contains data file and index file.
  */
 public class MsgFileStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgFileStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgFileStore.class);
     private static final int MAX_META_REFRESH_DUR = 1000 * 60 * 60;
     // storage ID
     private final String storeKey;

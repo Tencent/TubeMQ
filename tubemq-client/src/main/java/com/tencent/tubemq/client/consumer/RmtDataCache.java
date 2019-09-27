@@ -49,8 +49,7 @@ import org.slf4j.LoggerFactory;
  * Remote data cache.
  */
 public class RmtDataCache implements Closeable {
-    static final Logger logger =
-            LoggerFactory.getLogger(RmtDataCache.class);
+    private static final Logger logger = LoggerFactory.getLogger(RmtDataCache.class);
     private static final AtomicLong refCont = new AtomicLong(0);
     private static Timer timer;
     private final FlowCtrlRuleHandler groupFlowCtrlRuleHandler;

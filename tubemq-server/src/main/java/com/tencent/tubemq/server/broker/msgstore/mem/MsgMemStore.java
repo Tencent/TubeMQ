@@ -39,7 +39,7 @@ import sun.nio.ch.DirectBuffer;
  * Message's memory storage. It use direct memory store messages that received but not have been flushed to disk.
  */
 public class MsgMemStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgMemStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgMemStore.class);
     //　used for align
     private static final int MASK_64_ALIGN = ~(64 - 1);
     //　statistics of memory store

@@ -23,13 +23,8 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.util.Enumeration;
 import org.jboss.netty.channel.Channel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class AddressUtils {
-
-    protected static final Logger logger = LoggerFactory.getLogger(AddressUtils.class);
     private static String localIPAddress = null;
 
     public static synchronized String getLocalAddress() throws Exception {

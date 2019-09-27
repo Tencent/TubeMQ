@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * Message storage management. It contains all topics on broker. In charge of store, expire, and flush operation,
  */
 public class MessageStoreManager implements StoreService {
-    static final Logger logger = LoggerFactory.getLogger(MessageStoreManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageStoreManager.class);
     private final BrokerConfig tubeConfig;
     private final TubeBroker tubeBroker;
     // metadata manager, get metadata from master.

@@ -164,13 +164,13 @@ public class Bytes {
         enum UnsafeComparer implements Comparer<byte[]> {
             INSTANCE;
 
-            static final Unsafe theUnsafe;
+            private static final Unsafe theUnsafe;
 
             /**
              * The offset to the first element in a byte array.
              */
-            static final int BYTE_ARRAY_BASE_OFFSET;
-            static final boolean littleEndian =
+            private static final int BYTE_ARRAY_BASE_OFFSET;
+            private static final boolean littleEndian =
                     ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN);
 
             static {

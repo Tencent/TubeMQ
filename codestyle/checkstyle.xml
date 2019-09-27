@@ -191,19 +191,19 @@ page at http://checkstyle.sourceforge.net/config.html -->
             <property name="severity" value="error"/>
         </module>
 
-<!--        <module name="ConstantNameCheck">-->
-<!--            &lt;!&ndash; Validates non-private, static, final fields against the supplied-->
-<!--            public/package final fields "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$". &ndash;&gt;-->
-<!--            <metadata name="altname" value="ConstantName"/>-->
-<!--            <property name="applyToPublic" value="true"/>-->
-<!--            <property name="applyToProtected" value="true"/>-->
-<!--            <property name="applyToPackage" value="true"/>-->
-<!--            <property name="applyToPrivate" value="false"/>-->
-<!--            <property name="format" value="^([A-Z][A-Za-z0-9_]*|FLAG_.*)$"/>-->
-<!--            <message key="name.invalidPattern"-->
-<!--                     value="Variable ''{0}'' should be in ALL_CAPS (if it is a constant) or be private (otherwise)."/>-->
-<!--            <property name="severity" value="error"/>-->
-<!--        </module>-->
+        <module name="ConstantNameCheck">
+            <!-- Validates non-private, static, final fields against the supplied
+            public/package final fields "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$". -->
+            <metadata name="altname" value="ConstantName"/>
+            <property name="applyToPublic" value="true"/>
+            <property name="applyToProtected" value="true"/>
+            <property name="applyToPackage" value="true"/>
+            <property name="applyToPrivate" value="false"/>
+            <property name="format" value="^([A-Z][A-Za-z0-9_]*|FLAG_.*)$"/>
+            <message key="name.invalidPattern"
+                     value="Variable ''{0}'' should be in ALL_CAPS (if it is a constant) or be private (otherwise)."/>
+            <property name="severity" value="error"/>
+        </module>
 
         <module name="StaticVariableNameCheck">
             <!-- Validates static, non-final fields against the supplied

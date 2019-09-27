@@ -26,9 +26,7 @@ import org.slf4j.LoggerFactory;
  * Readonly view of file, only used for read operation.
  */
 public class FileReadView implements RecordView {
-
-    static final Logger logger =
-            LoggerFactory.getLogger(FileReadView.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileReadView.class);
     private final Segment segment;
     private final long offset;
 

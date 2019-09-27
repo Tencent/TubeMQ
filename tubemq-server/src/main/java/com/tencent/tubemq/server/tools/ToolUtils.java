@@ -30,11 +30,9 @@ import org.apache.commons.cli.PosixParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class ToolUtils {
 
-    static final Logger logger = LoggerFactory.getLogger(ToolUtils.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(ToolUtils.class);
 
     public static BrokerConfig getBrokerConfig(final String configFilePath) {
         final BrokerConfig brokerConfig = new BrokerConfig();

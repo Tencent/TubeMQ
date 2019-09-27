@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * Expired files will be delete when exceed storage quota.
  */
 public class MsgSSDStoreManager implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgSSDStoreManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgSSDStoreManager.class);
     // file suffix
     private static final String DATA_FILE_SUFFIX = ".tube";
     // tube config

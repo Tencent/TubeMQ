@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory;
  * Consumer node info, which broker contains.
  */
 public class ConsumerNodeInfo {
-    static final Logger logger =
-            LoggerFactory.getLogger(ConsumerNodeInfo.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConsumerNodeInfo.class);
     // partition string format
     private final String partStr;
     private final MessageStoreManager storeManager;

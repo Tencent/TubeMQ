@@ -23,15 +23,11 @@ import com.tencent.tubemq.corebase.config.TLSConfig;
 import com.tencent.tubemq.corebase.utils.AddressUtils;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.corerpc.RpcConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Configuration of the Tube client.
  */
 public class TubeClientConfig {
-    static final Logger logger = LoggerFactory.getLogger(TubeClientConfig.class);
-
     // Master information.
     private MasterInfo masterInfo;
     // Rpc read time out.

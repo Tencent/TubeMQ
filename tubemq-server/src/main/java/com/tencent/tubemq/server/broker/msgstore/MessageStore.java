@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * data in disk, data in ssd, and statistics of produce and consume.
  */
 public class MessageStore implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MessageStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageStore.class);
     private final ReentrantLock flushMutex = new ReentrantLock();
     private final AtomicBoolean hasFlushBeenTriggered = new AtomicBoolean(false);
     private final TopicMetadata topicMetadata;

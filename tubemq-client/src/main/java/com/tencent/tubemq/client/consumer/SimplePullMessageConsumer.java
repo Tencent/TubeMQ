@@ -31,13 +31,11 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * An implementation of PullMessageConsumer
  */
 public class SimplePullMessageConsumer implements PullMessageConsumer {
-    static final Logger logger =
-            LoggerFactory.getLogger(SimplePullMessageConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePullMessageConsumer.class);
     private final BaseMessageConsumer baseConsumer;
 
     public SimplePullMessageConsumer(final InnerSessionFactory messageSessionFactory,

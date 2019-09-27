@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * Messages in ssd format, it same to messages in disk.
  */
 public class MsgSSDSegment implements Closeable {
-    static final Logger logger = LoggerFactory.getLogger(MsgSSDSegment.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgSSDSegment.class);
     private final Segment dataSegment;
     private final ConcurrentHashMap<String, SSDVisitInfo> visitMap =
             new ConcurrentHashMap<String, SSDVisitInfo>();

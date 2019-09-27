@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Thread Utility
  */
 public class ThreadUtils {
-    protected static final Logger logger = LoggerFactory.getLogger(ThreadUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(ThreadUtils.class);
     private static final AtomicInteger poolNumber = new AtomicInteger(1);
 
     /**
