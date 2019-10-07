@@ -172,7 +172,7 @@ public class RmtDataCache implements Closeable {
             if (hasPartitionWait()) {
                 return new PartitionSelectResult(false,
                         TErrCodeConstants.BAD_REQUEST,
-                        "All partiton in waiting, retry later!");
+                        "All partition in waiting, retry later!");
             } else {
                 return new PartitionSelectResult(false,
                         TErrCodeConstants.BAD_REQUEST,
@@ -192,7 +192,7 @@ public class RmtDataCache implements Closeable {
                 if (hasPartitionWait()) {
                     return new PartitionSelectResult(false,
                             TErrCodeConstants.BAD_REQUEST,
-                            "All partiton in waiting, retry later!");
+                            "All partition in waiting, retry later!");
                 } else {
                     return new PartitionSelectResult(false,
                             TErrCodeConstants.BAD_REQUEST,
@@ -437,7 +437,7 @@ public class RmtDataCache implements Closeable {
                         lastPackConsumed = partitionExt.isLastPackConsumed();
                         if (!cancelTimeTask(partition.getPartitionKey())
                                 && !indexPartition.remove(partition.getPartitionKey())) {
-                            logger.info(sBuilder.append("[Process Interrupt] Partiton : ")
+                            logger.info(sBuilder.append("[Process Interrupt] Partition : ")
                                     .append(partition.toString())
                                     .append(", data in processing, canceled").toString());
                             sBuilder.delete(0, sBuilder.length());

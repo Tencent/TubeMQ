@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * - Delete config
  * And manage the broker status.
  * <p>
- * Please note that one IP could only host one broker, and borkerId must be unique
+ * Please note that one IP could only host one broker, and brokerId must be unique
  */
 public class WebBrokerDefConfHandler {
 

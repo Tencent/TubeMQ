@@ -49,7 +49,7 @@ public class ConsumerNodeInfo {
     private Set<String> filterCondStrs = new HashSet<String>(10);
     // filter conditions in int format
     private Set<Integer> filterCondCode = new HashSet<Integer>(10);
-    // consumer's addredd
+    // consumer's address
     private String rmtAddrInfo;
     private boolean isSupportLimit = false;
     private long nextStatTime = 0L;

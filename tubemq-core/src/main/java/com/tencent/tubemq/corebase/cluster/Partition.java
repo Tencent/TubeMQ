@@ -219,7 +219,7 @@ public class Partition implements Comparable<Partition>, Serializable {
     }
 
     /**
-     * get the partion full string info
+     * get the partition full string info
      *
      * @param overTLS
      * @return

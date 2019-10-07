@@ -121,7 +121,7 @@ public class Message implements Serializable {
             String tmpMsgTime = msgTime.trim();
             if (tmpMsgTime.length() != 12) {
                 throw new IllegalStateException("Illegal parameter: msgTime's value "
-                        + "must 'yyyyMMddHHmm' formart and length must equal 12!");
+                        + "must 'yyyyMMddHHmm' format and length must equal 12!");
             }
             Date tmpDate;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
@@ -129,7 +129,7 @@ public class Message implements Serializable {
                 tmpDate = sdf.parse(tmpMsgTime);
             } catch (ParseException e) {
                 throw new IllegalStateException("Illegal parameter: parse msgTime value"
-                        + " failure , msgType's value must 'yyyyMMddHHmm' formart!");
+                        + " failure , msgType's value must 'yyyyMMddHHmm' format!");
             }
             this.msgTime = tmpMsgTime;
             if (TStringUtils.isBlank(this.sysAttributes)) {

@@ -242,7 +242,7 @@ public class SimplePushMessageConsumer implements PushMessageConsumer {
                 topicProcessor.getMessageListener().receiveMessages(messageList);
             } catch (InterruptedException e) {
                 logger.info(
-                        "Call listener to process recieved messages throw Interrupted Exception!");
+                        "Call listener to process received messages throw Interrupted Exception!");
             }
         }
     }

@@ -141,7 +141,7 @@ public class MessageStoreManager implements StoreService {
             this.loadMessageStores(this.tubeConfig);
         } catch (final IOException e) {
             logger.error("[Store Manager] load message stores failed", e);
-            throw new StartupException("Initilize message store manager failed", e);
+            throw new StartupException("Initialize message store manager failed", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

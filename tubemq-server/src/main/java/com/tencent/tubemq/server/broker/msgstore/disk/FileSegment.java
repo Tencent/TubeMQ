@@ -315,7 +315,7 @@ public class FileSegment implements Segment, Comparable<FileSegment> {
      * Check whether this FileSegment is expired, and set expire status. The last FileSegment cannot be marked expired.
      *
      * @param checkTimestamp check timestamp.
-     * @param maxValidTimeMs the max expire interval in millseconds.
+     * @param maxValidTimeMs the max expire interval in milliseconds.
      * @return -1 means already expired, 0 means the last FileSegment, 1 means expired.
      */
     @Override

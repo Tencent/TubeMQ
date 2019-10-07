@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * The network Client for tube rpc serivice
+ * The network Client for tube rpc service
  */
 public class NettyClient implements Client {
 

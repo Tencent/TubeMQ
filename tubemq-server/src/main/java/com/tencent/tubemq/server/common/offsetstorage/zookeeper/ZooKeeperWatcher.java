@@ -110,7 +110,7 @@ public class ZooKeeperWatcher implements Watcher, Abortable {
         this.conf = conf;
         // Capture a stack trace now. Will print it out later if problem so we
         // can
-        // distingush amongst the myriad ZKWs.
+        // distinguish amongst the myriad ZKWs.
         try {
             throw new Exception("ZKW CONSTRUCTOR STACK TRACE FOR DEBUGGING");
         } catch (Exception e) {
