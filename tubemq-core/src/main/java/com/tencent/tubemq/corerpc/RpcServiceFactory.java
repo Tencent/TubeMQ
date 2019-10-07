@@ -75,7 +75,7 @@ public class RpcServiceFactory {
             RpcConstants.CFG_LQ_MAX_FAIL_FORBIDDEN_RATE;
 
     /**
-     * inital an empty server factory
+     * initial an empty server factory
      */
     public RpcServiceFactory() {
         this.clientFactory = null;
@@ -83,7 +83,7 @@ public class RpcServiceFactory {
     }
 
     /**
-     * inital with an tube clientFactory
+     * initial with an tube clientFactory
      */
     public RpcServiceFactory(final ClientFactory clientFactory) {
         this.clientFactory = clientFactory;
@@ -91,7 +91,7 @@ public class RpcServiceFactory {
     }
 
     /**
-     * inital with an tube clientFactory and rpc config
+     * initial with an tube clientFactory and rpc config
      */
     public RpcServiceFactory(final ClientFactory clientFactory, final RpcConfig config) {
         this.clientFactory = clientFactory;

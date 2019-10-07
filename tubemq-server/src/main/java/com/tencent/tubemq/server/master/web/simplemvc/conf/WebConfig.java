@@ -116,8 +116,8 @@ public class WebConfig {
         return types.contains(type);
     }
 
-    private void parseTypes(String typeParttern) {
-        String[] typeArr = typeParttern.split(",");
+    private void parseTypes(String typePattern) {
+        String[] typeArr = typePattern.split(",");
         types.clear();
         for (String type : typeArr) {
             types.add(type);

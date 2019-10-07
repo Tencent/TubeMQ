@@ -33,7 +33,7 @@ public class TopicMetadata {
     private int numTopicStores = 1;
     // topic partition count.
     private int numPartitions = 1;
-    // data will be flushed to disk when elapse unflushInterval millseconds since last flush operation.
+    // data will be flushed to disk when elapse unflushInterval milliseconds since last flush operation.
     private int unflushThreshold = 1000;
     // data will be flushed to disk when unflushed message count exceed this.
     private int unflushInterval = 10000;
@@ -53,7 +53,7 @@ public class TopicMetadata {
     private int memCacheMsgSize = 1 * 1024 * 1024;
     // the max cache message count for topic.
     private int memCacheMsgCnt = 5 * 1024;
-    // the max interval(millseconds) that topic's memory cache will flush to disk.
+    // the max interval(milliseconds) that topic's memory cache will flush to disk.
     private int memCacheFlushIntvl = 20000;
 
     /***

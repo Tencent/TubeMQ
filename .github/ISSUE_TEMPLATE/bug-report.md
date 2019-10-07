@@ -14,5 +14,5 @@ snippet (this helps resolve issues much quicker).
 
 **(optional) Reproducer snippet**
 
-**(optional) Suggestions for an imporvement**
+**(optional) Suggestions for an improvement**
 

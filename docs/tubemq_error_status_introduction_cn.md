@@ -46,7 +46,7 @@
 | 15     | Not found available partition for   topic: XX                | 没有找到有效分区                                             | 有分区分配但由于网络质量问题分配的分区处于屏蔽中，           |
 | 16     | Channel is not writable, please   try later!                 | 管道不可写                                                   | 缺省10M，通过TubeClientConfig.setNettyWriteBufferHighWaterMark调大写buffer |
 | 17     | Put message failed from xxxxx,   server receive message overflow! | 存储消息时对应服务器过载                                     | 重试消息发送,若持续的出现该类报错,则需要联系管理员进行扩容处理 |
-| 18     | Write StoreService temporary   unavilable!                   | 对应服务器临时写无效                                         | 重试消息发送，如果连续写无效，联系管理员，调整分区在broker上的分布，同时处理异常的broker |
+| 18     | Write StoreService temporary   unavailable!                   | 对应服务器临时写无效                                         | 重试消息发送，如果连续写无效，联系管理员，调整分区在broker上的分布，同时处理异常的broker |
 | 19     | Topic xxx not existed, please   check your configure         | 生产的Topic不存在                                            | 有可能是生产过程中topic被管理员删除,联系管理员处理           |
 | 20     | Partition[xxx:yyy] has been closed                           | 生产的Topic已删除                                            | 有可能是生产过程中topic被管理员软删除,联系管理员处理         |
 | 21     | Partition xxx-yyy not existed,   please check your configure | 生产的Topic分区不存在                                        | 异常情况,分区只会增加不会减少,联系管理员处理                 |
@@ -75,14 +75,14 @@
 | 44     | Parameter error: blank filter   value in parameter filterConds! | filterConds里包含了为Blank的内容项                           | 参数异常，调整内容项值                                       |
 | 45     | Parameter error: over max allowed   filter length, allowed length is XXX | 过滤项长度超标                                               |                                                              |
 | 46     | Parameter error: null   messageListener                      | messageListener参数为null                                    |                                                              |
-| 47     | Topic=XXX has been subscribered                              | Topic XXX被重复订阅                                          |                                                              |
+| 47     | Topic=XXX has been subscribed                              | Topic XXX被重复订阅                                          |                                                              |
 | 48     | Not subscribe any topic, please   subscribe first!           | 未订阅任何topic即启动消费                                    | 接口调用逻辑异常，检查业务代码                               |
 | 49     | Duplicated completeSubscribe call!                           | 重复调用completeSubscribe()函数                              | 接口调用逻辑异常，检查业务代码                               |
 | 50     | Subscribe has finished!                                      | 重复调用completeSubscribe()函数                              |                                                              |
 | 51     | Parameter error: sessionKey is   Blank!                      | 参数不合规，sessionKey值不允许为Blank内容                    |                                                              |
 | 52     | Parameter error: sourceCount must   over zero!               | 参数不合规，sourceCount值必须大于0                           |                                                              |
 | 53     | Parameter error: partOffsetMap's   key XXX format error: value must be aaaa:bbbb:cccc ! | 参数不合规，partOffsetMap的key值内容必须是aaaa:bbbb:cccc格式 |                                                              |
-| 54     | Parameter error: not included in   subcribed topic list: partOffsetMap's key is XXX , subscribed topics are YYY | 参数不合规，partOffsetMap里指定的topic在订阅列表里并不存在   |                                                              |
+| 54     | Parameter error: not included in   subscribed topic list: partOffsetMap's key is XXX , subscribed topics are YYY | 参数不合规，partOffsetMap里指定的topic在订阅列表里并不存在   |                                                              |
 | 55     | Parameter error: illegal format   error of XXX  : value must not include   ',' char!" | 参数不合规，key值里面不能包含","字符                         |                                                              |
 | 56     | Parameter error: Offset must over   or equal zero of partOffsetMap  key   XXX, value is YYY | 参数不合规，offset值必须是大于等于0                          |                                                              |
 | 57     | Duplicated completeSubscribe call!                           | 重复调用completeSubscribe()函数                              |                                                              |
@@ -93,5 +93,5 @@
 | 62     | Get message null                                             | 获取到的消息为null                                           | 重试                                                         |
 | 63     | Get message   failed,topic=XXX,partition=YYY, throw info is ZZZ | 拉取消息失败                                                 | 将相关错误信息提交给相关的业务负责人处理，需要根据具体错误信息对齐原因 |
 | 64     | Status error: consumer has been   shutdown                   | 消费者已调用shutdown，不应该继续调用其它函数进行业务处理     |                                                              |
-| 65     | All partiton in waiting, retry   later!                      | 所有分区都在等待,请稍候                                      | 该错误信息可以不做打印,遇到该情况时拉取县城sleep 200 ~   400ms |
+| 65     | All partition in waiting, retry   later!                      | 所有分区都在等待,请稍候                                      | 该错误信息可以不做打印,遇到该情况时拉取县城sleep 200 ~   400ms |
 | 66     | The request offset reached   maxOffset                       | 请求的分区已经消费到最新位置                                 | 可以通过ConsumerConfig.setMsgNotFoundWaitPeriodMs()设置该情况时分区停止拉取的时间段来等待最新消息的到来 |

@@ -124,19 +124,19 @@ public class PBParameterUtils {
 
     public static ParamCheckResult checkConsumerOffsetSetInfo(boolean isReqConsumeBand,
                                                               final Set<String> reqTopicSet,
-                                                              final String requredParts,
+                                                              final String requiredParts,
                                                               final StringBuilder strBuffer) {
-        Map<String, Long> requredPartMap = new HashMap<String, Long>();
+        Map<String, Long> requiredPartMap = new HashMap<String, Long>();
         ParamCheckResult retResult = new ParamCheckResult();
         if (!isReqConsumeBand) {
-            retResult.setCheckData(requredPartMap);
+            retResult.setCheckData(requiredPartMap);
             return retResult;
         }
-        if (TStringUtils.isBlank(requredParts)) {
-            retResult.setCheckData(requredPartMap);
+        if (TStringUtils.isBlank(requiredParts)) {
+            retResult.setCheckData(requiredPartMap);
             return retResult;
         }
-        String[] partOffsetItems = requredParts.trim().split(TokenConstants.ARRAY_SEP);
+        String[] partOffsetItems = requiredParts.trim().split(TokenConstants.ARRAY_SEP);
         for (String partOffset : partOffsetItems) {
             String[] partKeyVal = partOffset.split(TokenConstants.EQ);
             if (partKeyVal.length == 1) {
@@ -163,7 +163,7 @@ public class PBParameterUtils {
                 return retResult;
             }
             try {
-                requredPartMap.put(partKeyVal[0].trim(), Long.parseLong(partKeyVal[1].trim()));
+                requiredPartMap.put(partKeyVal[0].trim(), Long.parseLong(partKeyVal[1].trim()));
             } catch (Throwable ex) {
                 retResult.setCheckResult(false,
                         TErrCodeConstants.BAD_REQUEST,
@@ -172,7 +172,7 @@ public class PBParameterUtils {
                 return retResult;
             }
         }
-        retResult.setCheckData(requredPartMap);
+        retResult.setCheckData(requiredPartMap);
         return retResult;
     }
 
@@ -469,7 +469,7 @@ public class PBParameterUtils {
      *
      * @param topicName      the topic name to be checked.
      * @param partitionId    the partition ID where the topic locates
-     * @param metadataManage the matadata manager which contains topic information
+     * @param metadataManage the metadata manager which contains topic information
      * @param strBuffer      the string buffer used to construct the check result
      * @return the check result
      */

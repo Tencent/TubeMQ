@@ -73,16 +73,16 @@ public class BrokerConfig extends AbstractFileConfig {
     private int transferSize = 512 * 1024;
     // transfer index count
     private int indexTransCount = 1000;
-    // rpc read timeout in millseconds
+    // rpc read timeout in milliseconds
     private long rpcReadTimeoutMs = 10 * 1000;
     // max ssd file count
     private int maxSSDTotalFileCnt = 70;
     // max ssd file size
     private long maxSSDTotalFileSizes = 32212254720L;
-    // consumer register timeout in millseconds
+    // consumer register timeout in milliseconds
     private int consumerRegTimeoutMs = 30000;
     private boolean updateConsumerOffsets = true;
-    // heartbeat interval in millseconds
+    // heartbeat interval in milliseconds
     private long heartbeatPeriodMs = 8000L;
     // quartz thread count
     private int quartzThreadCount = 5;
@@ -90,11 +90,11 @@ public class BrokerConfig extends AbstractFileConfig {
     private long nettyWriteBufferHighWaterMark = 10 * 1024 * 1024;
     // netty write buffer low water mark
     private long nettyWriteBufferLowWaterMark = 5 * 1024 * 1024;
-    // log cleanup interval in millseconds
+    // log cleanup interval in milliseconds
     private long logClearupDurationMs = 30 * 60 * 1000;
-    // log flush to disk interval in millseconds
+    // log flush to disk interval in milliseconds
     private long logFlushDiskDurMs = 20 * 1000;
-    // memory flush to disk interval in millseconds
+    // memory flush to disk interval in milliseconds
     private long logFlushMemDurMs = 10 * 1000;
     // socket send buffer
     private long socketSendBuffer = -1;

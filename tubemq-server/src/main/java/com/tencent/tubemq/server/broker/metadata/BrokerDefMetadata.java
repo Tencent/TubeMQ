@@ -34,7 +34,7 @@ public class BrokerDefMetadata {
     private int unflushThreshold = 1000;
     @Deprecated
     private int unflushDataHold = 10000;
-    // data will be flushed to disk when elapse unflushInterval millseconds since last flush operation.
+    // data will be flushed to disk when elapse unflushInterval milliseconds since last flush operation.
     private int unflushInterval = 10000;
     // enable produce data to topic.
     private boolean acceptPublish = true;
@@ -50,7 +50,7 @@ public class BrokerDefMetadata {
     private int memCacheMsgSize = 1 * 1024 * 1024;
     // the max cache message count for topic.
     private int memCacheMsgCnt = 5 * 1024;
-    // the max interval(millseconds) that topic's memory cache will flush to disk.
+    // the max interval(milliseconds) that topic's memory cache will flush to disk.
     private int memCacheFlushInterval = 20000;
 
 

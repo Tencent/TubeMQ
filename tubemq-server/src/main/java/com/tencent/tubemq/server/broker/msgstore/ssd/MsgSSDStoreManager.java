@@ -135,7 +135,7 @@ public class MsgSSDStoreManager implements Closeable {
             this.reqExecutor.execute(new SsdStoreRunner());
         } catch (final IOException e) {
             logger.error("[SSD Manager] load SSD data files failed", e);
-            throw new StartupException("Initilize SSD data files failed", e);
+            throw new StartupException("Initialize SSD data files failed", e);
         } catch (Throwable e) {
             Thread.currentThread().interrupt();
         }
@@ -416,7 +416,7 @@ public class MsgSSDStoreManager implements Closeable {
                     final String name = subDir.getName();
                     final int index = name.lastIndexOf('-');
                     if (index < 0) {
-                        logger.warn(strBuffer.append("[SSD Manager] Ignore invlaid directory:")
+                        logger.warn(strBuffer.append("[SSD Manager] Ignore invalid directory:")
                                 .append(subDir.getAbsolutePath()).toString());
                         strBuffer.delete(0, strBuffer.length());
                         continue;
@@ -732,7 +732,7 @@ public class MsgSSDStoreManager implements Closeable {
                         }
                         final int index = ssdSegEvent.storeKey.lastIndexOf('-');
                         if (index < 0) {
-                            logger.warn(strBuffer.append("[SSD Manager] Ignore invlaid storeKey=")
+                            logger.warn(strBuffer.append("[SSD Manager] Ignore invalid storeKey=")
                                     .append(ssdSegEvent.storeKey).toString());
                             strBuffer.delete(0, strBuffer.length());
                             continue;

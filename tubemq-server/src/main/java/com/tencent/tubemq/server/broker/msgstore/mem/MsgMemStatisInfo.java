@@ -57,7 +57,7 @@ public class MsgMemStatisInfo {
     }
 
     /***
-     * Add write fail count statitic.
+     * Add write fail count statistic.
      */
     public void addWriteFailCount() {
         if (isStart.get()) {

@@ -25,7 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * The BrokerInfo hold basic info of an tube broker the borkerId, the borker host
+ * The BrokerInfo hold basic info of an tube broker the brokerId, the broker host
  * and the port and so on.
  */
 

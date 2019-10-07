@@ -431,11 +431,11 @@ public class ZKUtil {
         }
     }
 
-    // TODO: Double check the replancement
+    // TODO: Double check the replacement
   /*---------------------------------------------------------*/
   /*---------------------------------------------------------*/
   /* Following APIs added by Denny */
-  /* The APIs are nearly compatiable with old tube */
+  /* The APIs are nearly compatible with old tube */
   /*---------------------------------------------------------*/
   /*---------------------------------------------------------*/
 
@@ -452,7 +452,7 @@ public class ZKUtil {
     }
 
     /**
-     * Update the value of a persistent node with the given path and data. create parrent directory
+     * Update the value of a persistent node with the given path and data. create parent directory
      * if necessary. Never throw NodeExistException.
      */
     public static void updatePersistentPath(final ZooKeeperWatcher zkw, final String path,
