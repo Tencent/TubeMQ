@@ -135,7 +135,7 @@ server IPs in this way, assume the ip is `192.168.1.2`:
 
 ## High Availability
 
-In above example, we run the services on a single node. However, in the real production environment, you may
+In the example above, we run the services on a single node. However, in real production environment, you
 need to run multiple master services on different servers for high availability purpose. Here's
 the introduction of availability level.
 
