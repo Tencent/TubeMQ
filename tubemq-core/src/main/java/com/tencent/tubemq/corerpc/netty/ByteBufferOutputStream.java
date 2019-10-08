@@ -28,8 +28,8 @@ import java.util.List;
 
 
 /**
- * Utility to collect data written to an {@link java.io.OutputStream} in {@link java.nio.ByteBuffer}
- * s. Copied from avro.
+ * Utility to collect data written to an {@link java.io.OutputStream} in {@link java.nio.ByteBuffer}s.
+ * Copied from <a href="http://avro.apache.org">Apache Avro Project</a>
  */
 public class ByteBufferOutputStream extends OutputStream {
 

@@ -26,8 +26,8 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 /**
- * Utility to present {@link java.nio.ByteBuffer} data as an {@link java.io.InputStream}. Copied
- * from avro.
+ * Utility to present {@link java.nio.ByteBuffer} data as an {@link java.io.InputStream}.
+ * Copied from <a href="http://avro.apache.org">Apache Avro Project</a>
  */
 public class ByteBufferInputStream extends InputStream {
     private List<ByteBuffer> buffers;
