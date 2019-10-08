@@ -439,7 +439,8 @@ public class FlowCtrlRuleHandler {
                 }
             }
         } catch (Throwable e2) {
-            throw new Exception("Parse flow-ctrl rule failure", e2);
+            throw new Exception(new StringBuilder(512).append("Parse flow-ctrl rule failure, ")
+                    .append(e2.getMessage()).toString());
         }
         return flowCtrlMap;
     }
@@ -481,7 +482,7 @@ public class FlowCtrlRuleHandler {
             long dltVal = ruleObject.getLong("dltInM");
             if (dltVal <= 20) {
                 throw new Exception(new StringBuilder(512)
-                        .append("dltInM value must over than 20 in index(")
+                        .append("dltInM value must be greater than 20 in index(")
                         .append(index).append(") of data limit rule!").toString());
             }
             if (!ruleObject.containsKey("limitInM")) {
@@ -492,7 +493,7 @@ public class FlowCtrlRuleHandler {
             long dataLimitInM = ruleObject.getLong("limitInM");
             if (dataLimitInM < 0) {
                 throw new Exception(new StringBuilder(512)
-                        .append("limitInM value must over than equal or bigger than zero in index(")
+                        .append("limitInM value must be greater than or equal to zero in index(")
                         .append(index).append(") of data limit rule!").toString());
             }
             dataLimitInM = dataLimitInM * 1024 * 1024;
@@ -504,7 +505,7 @@ public class FlowCtrlRuleHandler {
             int freqInMs = ruleObject.getIntValue("freqInMs");
             if (freqInMs < 200) {
                 throw new Exception(new StringBuilder(512)
-                        .append("freqInMs value must over than equal or bigger than 200 in index(")
+                        .append("freqInMs value must be greater than or equal to 200 in index(")
                         .append(index).append(") of data limit rule!").toString());
             }
             flowCtrlItems.add(new FlowCtrlItem(typeVal,
@@ -552,7 +553,7 @@ public class FlowCtrlRuleHandler {
             int zeroCnt = ruleObject.getIntValue("zeroCnt");
             if (zeroCnt < 1) {
                 throw new Exception(new StringBuilder(512)
-                        .append("zeroCnt value must over than equal or bigger than 1 in index(")
+                        .append("zeroCnt value must be greater than or equal to 1 in index(")
                         .append(index).append(") of freq limit rule!").toString());
             }
             if (!ruleObject.containsKey("freqInMs")) {
@@ -563,7 +564,7 @@ public class FlowCtrlRuleHandler {
             int freqInMs = ruleObject.getIntValue("freqInMs");
             if (freqInMs < 0) {
                 throw new Exception(new StringBuilder(512)
-                        .append("freqInMs value must over than equal or bigger than zero in index(")
+                        .append("freqInMs value must be greater than or equal to zero in index(")
                         .append(index).append(") of freq limit rule!").toString());
             }
             flowCtrlItems.add(new FlowCtrlItem(typeVal, zeroCnt, freqInMs));
@@ -629,7 +630,8 @@ public class FlowCtrlRuleHandler {
                 }
                 if (minDataFilterFreqInMs < filterFreqInMs) {
                     throw new Exception(new StringBuilder(512)
-                            .append("minDataFilterFreqInMs must lower than filterFreqInMs in index(")
+                            .append("minDataFilterFreqInMs value must be greater than ")
+                            .append("or equal to filterFreqInMs value in index(")
                             .append(index).append(") of low fetch limit rule!").toString());
                 }
             }
@@ -684,7 +686,7 @@ public class FlowCtrlRuleHandler {
                     ruleObject.getString("end"), index, "SSD");
             if (startTime >= endTime) {
                 throw new Exception(new StringBuilder(512)
-                        .append("start value must lower than the End value in index(")
+                        .append("start value must be less than End value in index(")
                         .append(index).append(") of SSD limit rule!").toString());
             }
             if (!ruleObject.containsKey("dltStInM")) {
@@ -695,7 +697,7 @@ public class FlowCtrlRuleHandler {
             long dltStInM = ruleObject.getLong("dltStInM");
             if (dltStInM < 512) {
                 throw new Exception(new StringBuilder(512)
-                        .append("dltStInM value must over than 512 in index(")
+                        .append("dltStInM value must be greater than or equal to 512 in index(")
                         .append(index).append(") of SSD limit rule!").toString());
             }
             if (!ruleObject.containsKey("dltEdInM")) {
@@ -706,17 +708,18 @@ public class FlowCtrlRuleHandler {
             long dataEndInM = ruleObject.getLong("dltEdInM");
             if (dataEndInM < 0) {
                 throw new Exception(new StringBuilder(512)
-                        .append("dltEdInM value must over than equal or bigger than zero in index(")
+                        .append("dltEdInM value must be greater than or equal to zero in index(")
                         .append(index).append(") of SSD limit rule!").toString());
             }
             if (dataEndInM < 512) {
                 throw new Exception(new StringBuilder(512)
-                        .append("dltStInM value must over than 512 in index(")
+                        .append("dltStInM value must be greater than or equal to 512 in index(")
                         .append(index).append(") of SSD limit rule!").toString());
             }
             if (dltStInM < dataEndInM) {
                 throw new Exception(new StringBuilder(512)
-                        .append("dltStInM value must bigger or equal than dltEdInM value in index(")
+                        .append("dltStInM value must be greater than ")
+                        .append("or equal to dltEdInM value in index(")
                         .append(index).append(") of SSD limit rule!").toString());
             }
             dltStInM = (long) (dltStInM * 1024 * 1024);
