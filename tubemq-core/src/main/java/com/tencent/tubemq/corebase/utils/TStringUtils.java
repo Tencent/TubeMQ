@@ -463,6 +463,7 @@ public class TStringUtils {
 
         int[] p = new int[n + 1]; //'previous' cost array, horizontally
         int[] d = new int[n + 1]; // cost array, horizontally
+        int[] swap; // swap helper to assist in swapping p and d
 
         // indexes into strings s and t
         int i; // iterates through s
@@ -474,8 +475,9 @@ public class TStringUtils {
             p[i] = i;
         }
 
+        char ch; // jth character of t
         for (j = 1; j <= m; j++) {
-            char ch = t.charAt(j - 1);
+            ch = t.charAt(j - 1);
             d[0] = j;
 
             for (i = 1; i <= n; i++) {
@@ -485,7 +487,7 @@ public class TStringUtils {
             }
 
             // copy current distance counts to 'previous row' distance counts
-            int[] swap = p;
+            swap = p;
             p = d;
             d = swap;
         }
