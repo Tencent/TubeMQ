@@ -181,8 +181,6 @@
                         <!-- Front-end -->
                         <exclude>resources/assets/lib/**</exclude>
                         <exclude>resources/assets/public/**</exclude>
-                        <!-- manually installed version on travis -->
-                        <exclude>protobuf-2.5.0/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

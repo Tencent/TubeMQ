@@ -29,10 +29,5 @@ cache:
   directories:
     - $HOME/.m2
 
-install:
-  - wget https://github.com/protocolbuffers/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
-  - tar -xzvf protobuf-2.5.0.tar.gz
-  - pushd protobuf-2.5.0 && ./configure --prefix=/usr && make && sudo make install && popd
-
 script:
   - mvn -B -V -e verify
