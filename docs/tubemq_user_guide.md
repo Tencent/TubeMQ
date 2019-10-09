@@ -3,7 +3,6 @@
 
 - Java 1.7 or 1.8(Java 9 and above haven't been verified yet)
 - Maven
-- [protoc 2.5.0](https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0)
 
 ## Build
 
