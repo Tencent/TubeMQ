@@ -67,6 +67,7 @@ import com.tencent.tubemq.server.common.utils.IdWorker;
 import com.tencent.tubemq.server.common.utils.RowLock;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +77,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Encoder;
 
 /***
  * Broker service. Receive and conduct client's request, store messages, query messages, print statistics, etc.
@@ -552,8 +552,7 @@ public class BrokerServiceServer implements BrokerReadService, BrokerWriteServic
                 List<Message> messageList = DataConverterUtil.convertMessage(topicName, tmpMsgList);
                 int startPos = messageList.size() - msgCount < 0 ? 0 : messageList.size() - msgCount;
                 for (; startPos < messageList.size(); startPos++) {
-                    String msgItem = (new BASE64Encoder())
-                            .encode(messageList.get(startPos).getData());
+                    String msgItem = Base64.getMimeEncoder().encodeToString(messageList.get(startPos).getData());
                     transferedMessageList.add(msgItem);
                 }
                 int i = 0;
