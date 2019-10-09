@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Internal HBase utility class for ZooKeeper.
+ * Internal utility class for ZooKeeper.
  * <p>
  * <p>Contains only static methods and constants.
  * <p>
