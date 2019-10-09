@@ -30,6 +30,10 @@ import org.apache.commons.cli.PosixParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Utility for .ini configure file loading.
+ * Copied from <a href="https://github.com/killme2008/Metamorphosis">Metamorphosis Project</a>
+ */
 public class ToolUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(ToolUtils.class);
