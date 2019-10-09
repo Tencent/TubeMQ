@@ -253,15 +253,6 @@ public class ZKUtil {
     }
 
     public static boolean isSecureZooKeeper() {
-        // We need a better check for security enabled ZooKeeper.
-        // Currently
-        // the secure ZooKeeper client is set up using a supplied JaaS
-        // configuration file. But if the system property for the JaaS
-        // configuration file is set, this may not be an exclusive indication
-        // that HBase should set ACLs on znodes. As an alternative, we could do
-        // this more like Hadoop and build a JaaS configuration programmatically
-        // based on a site conf setting. The scope of such a change will be
-        // addressed in HBASE-4791.
         return (System.getProperty("java.security.auth.login.config") != null
                 && System.getProperty("zookeeper.sasl.clientconfig") != null);
     }
