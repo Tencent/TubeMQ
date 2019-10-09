@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * Sleeper for current thread. Sleeps for passed period. Also checks passed boolean and if
  * interrupted, will return if the flag is set (rather than go back to sleep until its sleep time is
  * up).
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class Sleeper {
     private static final long MINIMAL_DELTA_FOR_LOGGING = 10000;
@@ -99,8 +100,7 @@ public class Sleeper {
                 if (slept - this.period > MINIMAL_DELTA_FOR_LOGGING) {
                     logger.warn("We slept " + slept + "ms instead of " + this.period
                             + "ms, this is likely due to a long "
-                            + "garbage collecting pause and it's usually bad, see "
-                            + "http://hbase.apache.org/book.html#trouble.rs.runtime.zkexpired");
+                            + "garbage collecting pause and it's usually bad!");
                 }
             } catch (InterruptedException iex) {
                 // We we interrupted because we're meant to close? If not, just
