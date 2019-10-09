@@ -27,6 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Utility for retry counter.
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
+ */
 public class RetryCounter {
     private static final Logger logger = LoggerFactory.getLogger(RetryCounter.class);
     private final int maxRetries;

@@ -56,6 +56,8 @@ import org.slf4j.LoggerFactory;
  * created is "x-352-109".
  *
  * @see "http://wiki.apache.org/hadoop/ZooKeeper/ErrorHandling"
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class RecoverableZooKeeper {
     private static final Logger logger =

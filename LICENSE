@@ -1111,63 +1111,57 @@ Copyrighy (C) Alibaba Group Holding Limited.
 2. Metamorphosis metamorphosis-all-1.4.4 （Please note that the software have been modified.）
 Copyrighy (C) Alibaba Group Holding Limited.
 
-3. material-design-icons 3.0.0
-Copyright (c) Material Design Authors
-
-4. commons-cli 1.2
+3. commons-cli 1.2
 Copyright 2001-2009 The Apache Software Foundation
 
-5. commons-codec 1.10
+4. commons-codec 1.10
 Copyright 2002-2019 The Apache Software Foundation
 Copyright (C) 2002 Kevin Atkinson (kevina@gnu.org)
 Copyright (c) 2008 Alexander Beider & Stephen P. Morse.
 
-6. fastjson 1.2.60
+5. fastjson 1.2.60
 Copyright 1999-2019 Alibaba Group Holding Ltd.
 
-7. jackson-mapper-asl 1.9.13
-Copyright (c) Tatu Saloranta
-
-8. commons-lang 2.6
+6. commons-lang 2.6
 Copyright 2001-2011 The Apache Software Foundation
 
-9. commons-io 2.1
+7. commons-io 2.1
 Copyright 2002-2011 The Apache Software Foundation
 
-10. zookeeper 3.4.3
+8. zookeeper 3.4.3
 Copyright 2009-2011 The Apache Software Foundation
 
-11. guava 13.0
+9. guava 13.0
 Copyright (C) 2008 The Guava Authors
 
-12. servlet-api 2.5
+10. servlet-api 2.5
 Copyriht (c) Mort Bay Consulting
 
-13. spring-core 4.1.6.RELEASE
+11. spring-core 4.1.6.RELEASE
 Copyright (c) the original author or authors.
 
-14. spring-context 4.1.6.RELEASE
+12. spring-context 4.1.6.RELEASE
 Copyright (c) the original author or authors.
 
-15. spring-jdbc 4.1.6.RELEASE
+13. spring-jdbc 4.1.6.RELEASE
 Copyright (c) the original author or authors.
 
-16. spring-orm 4.1.6.RELEASE
+14. spring-orm 4.1.6.RELEASE
 Copyright (c) the original author or authors.
 
-17. jetty 6.1.26
+15. jetty 6.1.26
 Copyriht (c) Mort Bay Consulting
 
-18. velocity 1.7
+16. velocity 1.7
 Copyright (C) 2000-2007 The Apache Software Foundation
 
-19. ini4j 0.5.1
+17. ini4j 0.5.1
 Copyright 2005,2009 Ivan SZKIBA
 
-20. easymock 2.5.2
+18. easymock 2.5.2
 Copyright 2003-2009 Henri Tremblay
 
-21. powermock 1.6.5
+19. powermock 1.6.5
 Copyright 2011 the original author or authors.
 
 Terms of the Apache License Version 2.0:

@@ -27,6 +27,7 @@ import java.util.Arrays;
 /**
  * This class encapsulates a byte array and overrides hashCode and equals so that it's identity is
  * based on the data rather than the array instance.
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class HashedBytes {
 

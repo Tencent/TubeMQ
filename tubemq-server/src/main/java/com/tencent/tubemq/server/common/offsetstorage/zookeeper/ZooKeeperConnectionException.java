@@ -26,6 +26,7 @@ import java.io.IOException;
 
 /**
  * Thrown if the client can't connect to zookeeper
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class ZooKeeperConnectionException extends IOException {
     private static final long serialVersionUID = 1L << 23 - 1L;

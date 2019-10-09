@@ -23,10 +23,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * Abstract class which contains a Thread and delegates the common Thread methods to that instance.
- * <p/>
- * The purpose of this class is to workaround Sun JVM bug #6915621, in which something internal to
- * the JDK uses Thread.currentThread() as a monitor lock. This can produce deadlocks like
- * HBASE-4367, HBASE-4101, etc.
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public abstract class HasThread implements Runnable {
     private final Thread thread;

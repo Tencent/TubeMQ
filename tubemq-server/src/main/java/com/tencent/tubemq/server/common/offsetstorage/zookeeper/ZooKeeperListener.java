@@ -33,6 +33,8 @@ package com.tencent.tubemq.server.common.offsetstorage.zookeeper;
  * <p/>
  * Note that the watcher will be blocked when invoking methods in listeners so they must not be
  * long-running.
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public abstract class ZooKeeperListener {
 

@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Thread Utility
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class ThreadUtils {
     private static final Logger logger = LoggerFactory.getLogger(ThreadUtils.class);

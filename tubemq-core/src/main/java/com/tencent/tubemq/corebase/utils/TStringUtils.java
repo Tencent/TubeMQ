@@ -31,7 +31,10 @@ import java.net.URLEncoder;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacUtils;
 
-
+/**
+ * Utility to String operations.
+ * Modified version of <a href="https://github.com/webx/citrus">citrus Project</a>
+ */
 public class TStringUtils {
 
     public static final String EMPTY = "";

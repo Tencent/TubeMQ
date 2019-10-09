@@ -35,6 +35,7 @@ import sun.misc.Unsafe;
 /**
  * Utility class that handles byte arrays, conversions to/from other types, comparisons, hash code
  * generation, manufacturing keys for HashMaps or HashSets, etc.
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class Bytes {
     /**

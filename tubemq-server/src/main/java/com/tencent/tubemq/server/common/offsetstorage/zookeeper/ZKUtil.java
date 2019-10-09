@@ -40,13 +40,15 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Internal HBase utility class for ZooKeeper.
+ * Internal utility class for ZooKeeper.
  * <p>
  * <p>Contains only static methods and constants.
  * <p>
  * <p>Methods all throw {@link KeeperException} if there is an unexpected
  * zookeeper exception, so callers of these methods must handle appropriately.
  * If ZK is required for the operation, the server will need to be aborted.
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class ZKUtil {
     private static final Logger logger = LoggerFactory.getLogger(ZKUtil.class);
@@ -251,15 +253,6 @@ public class ZKUtil {
     }
 
     public static boolean isSecureZooKeeper() {
-        // We need a better check for security enabled ZooKeeper.
-        // Currently
-        // the secure ZooKeeper client is set up using a supplied JaaS
-        // configuration file. But if the system property for the JaaS
-        // configuration file is set, this may not be an exclusive indication
-        // that HBase should set ACLs on znodes. As an alternative, we could do
-        // this more like Hadoop and build a JaaS configuration programmatically
-        // based on a site conf setting. The scope of such a change will be
-        // addressed in HBASE-4791.
         return (System.getProperty("java.security.auth.login.config") != null
                 && System.getProperty("zookeeper.sasl.clientconfig") != null);
     }

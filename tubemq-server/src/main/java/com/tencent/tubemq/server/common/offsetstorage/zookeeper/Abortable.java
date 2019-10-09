@@ -24,11 +24,8 @@ package com.tencent.tubemq.server.common.offsetstorage.zookeeper;
 
 /**
  * Interface to support the aborting of a given server or client.
- * <p/>
- * This is used primarily for ZooKeeper usage when we could get an unexpected and fatal exception,
- * requiring an abort.
- * <p/>
- * Implemented by the Master, RegionServer, and TableServers (client).
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public interface Abortable {
     /**
