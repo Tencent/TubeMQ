@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * <p/>
  * Don't subclass Chore if the task relies on being woken up for something to do, such as an entry
  * being added to a queue, etc.
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public abstract class Chore extends HasThread {
     protected final Stoppable stopper;

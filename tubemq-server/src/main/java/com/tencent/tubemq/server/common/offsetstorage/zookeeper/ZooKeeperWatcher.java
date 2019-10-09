@@ -50,6 +50,8 @@ import org.slf4j.LoggerFactory;
  * <p/>
  * This class also holds and manages the connection to ZooKeeper. Code to deal with connection
  * related events and exceptions are handled here.
+ *
+ * modified version of <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class ZooKeeperWatcher implements Watcher, Abortable {
     // Certain ZooKeeper nodes need to be world-readable

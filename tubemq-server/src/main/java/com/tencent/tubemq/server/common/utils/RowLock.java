@@ -31,7 +31,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Utility to RowLock.
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
+ */
 public class RowLock {
     private static final Logger logger = LoggerFactory.getLogger(RowLock.class);
     private static Random rand = new Random();

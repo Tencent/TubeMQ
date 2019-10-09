@@ -47,6 +47,8 @@ import org.slf4j.LoggerFactory;
  * <p>Methods all throw {@link KeeperException} if there is an unexpected
  * zookeeper exception, so callers of these methods must handle appropriately.
  * If ZK is required for the operation, the server will need to be aborted.
+ *
+ * Copied from <a href="http://hbase.apache.org">Apache HBase Project</a>
  */
 public class ZKUtil {
     private static final Logger logger = LoggerFactory.getLogger(ZKUtil.class);
