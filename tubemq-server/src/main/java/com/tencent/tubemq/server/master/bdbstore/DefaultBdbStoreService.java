@@ -982,23 +982,21 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
                 consumeGroupSettingStore.getPrimaryIndex(String.class, BdbConsumeGroupSettingEntity.class);
     }
 
+    /**
+     * Initialize configuration for BDB-JE replication environment.
+     *
+     * */
     private void initEnvConfig() throws InterruptedException {
-    /*
-     * Set envHome and generate a ReplicationConfig. Note that ReplicationConfig and
-     * EnvironmentConfig values could all be specified in the je.properties file, as is shown in the
-     * properties file included in the example.
-     */
+
+        //Set envHome and generate a ReplicationConfig. Note that ReplicationConfig and
+        //EnvironmentConfig values could all be specified in the je.properties file, as is shown in the
+        //properties file included in the example.
         repConfig = new ReplicationConfig();
-    /* Set consistency policy for replica. */
-        TimeConsistencyPolicy consistencyPolicy = new TimeConsistencyPolicy(3, TimeUnit.SECONDS, /*
-                                                                                              * 3
-                                                                                              * sec
-                                                                                              * of
-                                                                                              * lag
-                                                                                              */
-                3, TimeUnit.SECONDS /* Wait up to 3 sec */);
+        // Set consistency policy for replica.
+        TimeConsistencyPolicy consistencyPolicy = new TimeConsistencyPolicy(3, TimeUnit.SECONDS,
+                3, TimeUnit.SECONDS);
         repConfig.setConsistencyPolicy(consistencyPolicy);
-    /* Wait up to 3 seconds for commitConsumed acknowledgments. */
+        // Wait up to 3 seconds for commitConsumed acknowledgments.
         repConfig.setReplicaAckTimeout(3, TimeUnit.SECONDS);
         repConfig.setConfigParam(ReplicationConfig.TXN_ROLLBACK_LIMIT, "1000");
         repConfig.setGroupName(bdbConfig.getBdbRepGroupName());
@@ -1010,12 +1008,10 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             repConfig.setHelperHosts(bdbConfig.getBdbHelperHost());
         }
 
-    /*
-     * A replicated environment must be opened with transactions enabled. Environments on a master
-     * must be read/write, while environments on a client can be read/write or read/only. Since the
-     * master's identity may change, it's most convenient to open the environment in the default
-     * read/write mode. All write operations will be refused on the client though.
-     */
+        //A replicated environment must be opened with transactions enabled. Environments on a master
+        //must be read/write, while environments on a client can be read/write or read/only. Since the
+        //master's identity may change, it's most convenient to open the environment in the default
+        //read/write mode. All write operations will be refused on the client though.
         envConfig = new EnvironmentConfig();
         envConfig.setTransactional(true);
         Durability durability =
@@ -1024,13 +1020,11 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
         envConfig.setDurability(durability);
         envConfig.setAllowCreate(true);
 
-        // seqConfig.setCacheSize(1);
-        // seqConfig.setAllowCreate(true);
-
         envHome = new File(bdbConfig.getBdbEnvHome());
-    /* An Entity Store in a replicated environment must be transactional. */
+
+        // An Entity Store in a replicated environment must be transactional.
         storeConfig.setTransactional(true);
-    /* Note that both Master and Replica open the store for write. */
+        // Note that both Master and Replica open the store for write.
         storeConfig.setReadOnly(false);
         storeConfig.setAllowCreate(true);
     }
@@ -1045,24 +1039,19 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
      */
     private ReplicatedEnvironment getEnvironment(File envHome) throws InterruptedException {
         DatabaseException exception = null;
-    /*
-     * In this example we retry REP_HANDLE_RETRY_MAX times, but a production HA application may
-     * retry indefinitely.
-     */
+
+        //In this example we retry REP_HANDLE_RETRY_MAX times, but a production HA application may
+        //retry indefinitely.
         for (int i = 0; i < REP_HANDLE_RETRY_MAX; i++) {
             try {
                 return new ReplicatedEnvironment(envHome, repConfig, envConfig);
-
             } catch (UnknownMasterException unknownMaster) {
                 exception = unknownMaster;
-        /*
-         * Indicates there is a group level problem: insufficient nodes for an election, network
-         * connectivity issues, etc. Wait and retry to allow the problem to be resolved.
-         */
+                //Indicates there is a group level problem: insufficient nodes for an election, network
+                //connectivity issues, etc. Wait and retry to allow the problem to be resolved.
                 logger.error("Master could not be established. " + "Exception message:"
                         + unknownMaster.getMessage() + " Will retry after 5 seconds.");
                 Thread.sleep(5 * 1000);
-
                 continue;
             } catch (InsufficientLogException insufficientLogEx) {
                 logger.info("[Restoring data please wait....] " +
@@ -1071,18 +1060,18 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
                         "and has fallen behind in its execution of the replication stream.");
                 NetworkRestore restore = new NetworkRestore();
                 NetworkRestoreConfig config = new NetworkRestoreConfig();
-                config.setRetainLogFiles(false); // delete obsolete logger files.
+                // delete obsolete logger files.
+                config.setRetainLogFiles(false);
                 restore.execute(insufficientLogEx, config);
-
                 // retry
                 return new ReplicatedEnvironment(envHome, repConfig, envConfig);
             }
         }
-    /* Failed despite retries. */
+        // Failed despite retries.
         if (exception != null) {
             throw exception;
         }
-    /* Don't expect to get here. */
+        // Don't expect to get here.
         throw new IllegalStateException("Failed despite retries");
     }
 
