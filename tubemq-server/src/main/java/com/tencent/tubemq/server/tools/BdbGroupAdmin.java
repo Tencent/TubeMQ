@@ -74,7 +74,7 @@ public class BdbGroupAdmin {
         try {
             //print node information before remove
             Set<String> nodeNames = new HashSet<>();
-            for(ReplicationNode repNode  : rga.getGroup().getNodes()) {
+            for (ReplicationNode repNode  : rga.getGroup().getNodes()) {
                 nodeNames.add(repNode.getName());
             }
             System.out.println("Before remove, " + group +
@@ -86,7 +86,7 @@ public class BdbGroupAdmin {
 
             //print node information after remove
             nodeNames.clear();
-            for(ReplicationNode repNode  : rga.getGroup().getNodes()) {
+            for (ReplicationNode repNode  : rga.getGroup().getNodes()) {
                 nodeNames.add(repNode.getName());
             }
             System.out.println("After remove, " + group +
