@@ -46,6 +46,7 @@
         <build.helper.maven.version>3.0.0</build.helper.maven.version>
         <checkstyle.version>8.17</checkstyle.version>
         <protobuf.version>2.5.0</protobuf.version>
+        <je.version>7.3.7</je.version>
     </properties>
 
     <repositories>
@@ -239,7 +240,7 @@
             <dependency>
                 <groupId>com.sleepycat</groupId>
                 <artifactId>je</artifactId>
-                <version>7.3.7</version>
+                <version>${je.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
