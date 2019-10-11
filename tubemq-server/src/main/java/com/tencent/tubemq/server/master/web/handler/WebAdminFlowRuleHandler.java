@@ -43,6 +43,7 @@ public class WebAdminFlowRuleHandler {
             LoggerFactory.getLogger(WebAdminFlowRuleHandler.class);
     private TMaster master;
     private BrokerConfManage brokerConfManage;
+    private static final List<Integer> allowedPriorityVal = Arrays.asList(1, 2, 3);
 
     public WebAdminFlowRuleHandler(TMaster master) {
         this.master = master;
