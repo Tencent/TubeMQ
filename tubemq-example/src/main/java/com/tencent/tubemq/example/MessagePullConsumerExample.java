@@ -33,7 +33,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This demo shows how to consume message by pull.
  *
+ * <p>Consume message in pull mode achieved by {@link PullMessageConsumer#getMessage()}.
+ * Note that whenever {@link PullMessageConsumer#getMessage()} returns successfully, the
+ * return value(whether or not to be {@code null}) should be processed by
+ * {@link PullMessageConsumer#confirmConsume(String, boolean)}.
  */
 public final class MessagePullConsumerExample {
 

@@ -39,7 +39,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * This demo shows how to reset offset on consuming. The main difference from {@link MessagePullConsumerExample}
+ * is that we call {@link PullMessageConsumer#completeSubscribe(String, int, boolean, Map)} instead of
+ * {@link PullMessageConsumer#completeSubscribe()}. The former supports multiple options to configure
+ * when to reset offset.
  */
 public final class MessagePullSetConsumerExample {
 

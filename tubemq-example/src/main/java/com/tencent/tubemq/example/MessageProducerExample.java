@@ -41,7 +41,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This demo shows how to produce message normally.
  *
+ * <p>Producer supports publish one or more topics via {@link MessageProducer#publish(String)}
+ * or {@link MessageProducer#publish(Set)}. Note that topic publish asynchronously.
  */
 public final class MessageProducerExample {
 

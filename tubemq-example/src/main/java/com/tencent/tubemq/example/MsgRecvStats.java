@@ -25,6 +25,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This demo shows how to collect and report message received statistics.
+ */
 public class MsgRecvStats implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MsgRecvStats.class);
     private static final ConcurrentHashMap<String, AtomicLong> counterMap = new ConcurrentHashMap<>();
