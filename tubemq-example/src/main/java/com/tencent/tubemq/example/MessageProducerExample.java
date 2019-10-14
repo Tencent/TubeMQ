@@ -54,6 +54,7 @@ public final class MessageProducerExample {
     private final String[] arrayKey = {"aaa", "bbb", "ac", "dd", "eee", "fff", "gggg", "hhhh"};
     private final Set<String> filters = new TreeSet<>();
     private final MessageProducer messageProducer;
+    private final MessageSessionFactory messageSessionFactory;
 
     private int keyCount = 0;
     private int sentCount = 0;
@@ -63,7 +64,7 @@ public final class MessageProducerExample {
         filters.add("bbb");
 
         TubeClientConfig clientConfig = new TubeClientConfig(localHost, masterHostAndPort);
-        MessageSessionFactory messageSessionFactory = new TubeSingleSessionFactory(clientConfig);
+        this.messageSessionFactory = new TubeSingleSessionFactory(clientConfig);
         this.messageProducer = messageSessionFactory.createProducer();
     }
 

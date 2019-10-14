@@ -55,7 +55,9 @@ public final class MessageConsumerExample {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageConsumerExample.class);
     private static final MsgRecvStats msgRecvStats = new MsgRecvStats();
-    private PushMessageConsumer messageConsumer;
+
+    private final PushMessageConsumer messageConsumer;
+    private final MessageSessionFactory messageSessionFactory;
 
     public MessageConsumerExample(
         String localHost,
@@ -68,7 +70,7 @@ public final class MessageConsumerExample {
         if (fetchCount > 0) {
             consumerConfig.setPushFetchThreadCnt(fetchCount);
         }
-        MessageSessionFactory messageSessionFactory = new TubeSingleSessionFactory(consumerConfig);
+        this.messageSessionFactory = new TubeSingleSessionFactory(consumerConfig);
         this.messageConsumer = messageSessionFactory.createPushConsumer(consumerConfig);
     }
 

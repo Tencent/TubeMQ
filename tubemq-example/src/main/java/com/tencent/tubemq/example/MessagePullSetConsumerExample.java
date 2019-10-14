@@ -48,7 +48,9 @@ public final class MessagePullSetConsumerExample {
 
     private static final Logger logger = LoggerFactory.getLogger(MessagePullSetConsumerExample.class);
     private static final AtomicLong counter = new AtomicLong(0);
-    private PullMessageConsumer messagePullConsumer;
+
+    private final PullMessageConsumer messagePullConsumer;
+    private final MessageSessionFactory messageSessionFactory;
 
     public MessagePullSetConsumerExample(
         String localHost,
@@ -56,7 +58,7 @@ public final class MessagePullSetConsumerExample {
         String group
     ) throws Exception {
         ConsumerConfig consumerConfig = new ConsumerConfig(localHost, masterHostAndPort, group);
-        MessageSessionFactory messageSessionFactory = new TubeSingleSessionFactory(consumerConfig);
+        this.messageSessionFactory = new TubeSingleSessionFactory(consumerConfig);
         this.messagePullConsumer = messageSessionFactory.createPullConsumer(consumerConfig);
     }
 
