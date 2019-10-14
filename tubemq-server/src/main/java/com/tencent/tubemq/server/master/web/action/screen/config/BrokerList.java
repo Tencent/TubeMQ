@@ -43,19 +43,6 @@ public class BrokerList implements Action {
         this.master = master;
     }
 
-    public static void main(String[] args) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(100000000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
     @Override
     public void execute(RequestContext context) {
         HttpServletRequest req = context.getReq();
