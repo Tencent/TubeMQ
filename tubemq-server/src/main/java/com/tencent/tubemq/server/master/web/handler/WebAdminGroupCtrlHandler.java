@@ -185,15 +185,17 @@ public class WebAdminGroupCtrlHandler {
                                     TBaseConstants.META_MAX_TOPICNAME_LENGTH,
                                     true, "");
                     if (!confgiuredTopicSet.contains(groupTopicName)) {
-                        throw new Exception("Topic " + groupTopicName
-                                + " not configure in master configure, please configure first!");
+                        throw new Exception(sBuilder.append("Topic ").append(groupTopicName)
+                                .append(" not configure in master configure, please configure first!").toString());
                     }
                     int filterCondStatus =
                             WebParameterUtils.validIntDataParameter("condStatus",
                                     groupObject.get("condStatus"),
                                     false, 0, 0);
                     String strNewFilterConds =
-                            WebParameterUtils.checkAndGetFilterConds(req.getParameter("filterConds"), true, sBuilder);
+                            WebParameterUtils.checkAndGetFilterConds(
+                                    (String) groupObject.get("filterConds"),
+                                    true, sBuilder);
                     String recordKey = sBuilder.append(groupName)
                             .append("-").append(groupTopicName).toString();
                     sBuilder.delete(0, sBuilder.length());
@@ -414,7 +416,9 @@ public class WebAdminGroupCtrlHandler {
                         newFilterCondEntity.setControlStatus(filterCondStatus);
                     }
                     String strNewFilterConds =
-                            WebParameterUtils.checkAndGetFilterConds(req.getParameter("filterConds"), false, sBuilder);
+                            WebParameterUtils.checkAndGetFilterConds(
+                                    (String) groupObject.get("filterConds"),
+                                    false, sBuilder);
                     if (TStringUtils.isNotBlank(strNewFilterConds)) {
                         if (!curFilterCondEntity.getAttributes().equals(strNewFilterConds)) {
                             foundChange = true;
