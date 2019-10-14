@@ -36,28 +36,36 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * This demo shows how to consume message sequentially.
+ *
+ * <p>Consumer supports subscribe multiple topics in one consume group. Message from subscription
+ * sent back to business logic via callback {@link MessageListener}. It is highly recommended NOT
+ * to perform any blocking operation inside the callback.
+ *
+ * <p>As for consumption control of {@link PushMessageConsumer}, business logic is able to monitor
+ * current state and adjust consumption by
+ *
+ * <p><ul>
+ *     <li>call {@link PushMessageConsumer#pauseConsume()} to pause consumption when high water mark exceeded.</li>
+ *     <li>call {@link PushMessageConsumer#resumeConsume()} to resume consumption</li>
+ * </ul>
+ */
 public final class MessageConsumerExample {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(MessageConsumerExample.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageConsumerExample.class);
     private static final MsgRecvStats msgRecvStats = new MsgRecvStats();
-    private final String masterHostAndPort;
-    private final String localHost;
-    private final String group;
-    private PushMessageConsumer messageConsumer;
-    private MessageSessionFactory messageSessionFactory;
 
+    private final PushMessageConsumer messageConsumer;
+    private final MessageSessionFactory messageSessionFactory;
 
-    public MessageConsumerExample(String localHost,
-                                  String masterHostAndPort,
-                                  String group,
-                                  int fetchCount) throws Exception {
-        this.localHost = localHost;
-        this.masterHostAndPort = masterHostAndPort;
-        this.group = group;
-        ConsumerConfig consumerConfig =
-                new ConsumerConfig(this.localHost, this.masterHostAndPort, this.group);
+    public MessageConsumerExample(
+        String localHost,
+        String masterHostAndPort,
+        String group,
+        int fetchCount
+    ) throws Exception {
+        ConsumerConfig consumerConfig = new ConsumerConfig(localHost, masterHostAndPort, group);
         consumerConfig.setConsumeModel(0);
         if (fetchCount > 0) {
             consumerConfig.setPushFetchThreadCnt(fetchCount);
@@ -69,7 +77,6 @@ public final class MessageConsumerExample {
     public static void main(String[] args) {
         final String localHost = args[0];
         final String masterHostAndPort = args[1];
-        final Thread statisticThread;
         final String topics = args[2];
         final String group = args[3];
         final int consumerCount = Integer.parseInt(args[4]);
@@ -77,9 +84,9 @@ public final class MessageConsumerExample {
         if (args.length > 5) {
             fetchCount = Integer.parseInt(args[5]);
         }
-        final Map<String, TreeSet<String>> topicTidsMap = new HashMap<String, TreeSet<String>>();
+        final Map<String, TreeSet<String>> topicTidsMap = new HashMap<>();
 
-        List<String> topicTidsList = Arrays.asList(topics.split(","));
+        String[] topicTidsList = topics.split(",");
         for (String topicTids : topicTidsList) {
             String[] topicTidStr = topicTids.split(":");
             TreeSet<String> tids = null;
@@ -87,24 +94,23 @@ public final class MessageConsumerExample {
                 String tidsStr = topicTidStr[1];
                 String[] tidsSet = tidsStr.split(";");
                 if (tidsSet.length > 0) {
-                    tids = new TreeSet<String>();
-                    for (String tidStr : tidsSet) {
-                        tids.add(tidStr);
-                    }
+                    tids = new TreeSet<>(Arrays.asList(tidsSet));
                 }
             }
             topicTidsMap.put(topicTidStr[0], tids);
         }
         final int startFetchCnt = fetchCount;
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        final ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     for (int i = 0; i < consumerCount; i++) {
-                        MessageConsumerExample messageConsumer =
-                                new MessageConsumerExample(localHost,
-                                        masterHostAndPort, group, startFetchCnt);
+                        MessageConsumerExample messageConsumer = new MessageConsumerExample(
+                                localHost,
+                                masterHostAndPort,
+                                group,
+                                startFetchCnt);
                         messageConsumer.subscribe(topicTidsMap);
                     }
                 } catch (Exception e) {
@@ -112,7 +118,8 @@ public final class MessageConsumerExample {
                 }
             }
         });
-        statisticThread = new Thread(msgRecvStats, "Sent Statistic Thread");
+
+        final Thread statisticThread = new Thread(msgRecvStats, "Sent Statistic Thread");
         statisticThread.start();
 
         executorService.shutdown();
@@ -124,16 +131,15 @@ public final class MessageConsumerExample {
         msgRecvStats.stopStats();
     }
 
-    public void subscribe(final Map<String, TreeSet<String>> topicTidsMap)
-            throws TubeClientException {
+    public void subscribe(Map<String, TreeSet<String>> topicTidsMap) throws TubeClientException {
         for (Map.Entry<String, TreeSet<String>> entry : topicTidsMap.entrySet()) {
-            this.messageConsumer.subscribe(entry.getKey(),
-                    entry.getValue(), new DefaultMessageListener(entry.getKey()));
+            MessageListener messageListener = new DefaultMessageListener(entry.getKey());
+            messageConsumer.subscribe(entry.getKey(), entry.getValue(), messageListener);
         }
         messageConsumer.completeSubscribe();
     }
 
-    public class DefaultMessageListener implements MessageListener {
+    public static class DefaultMessageListener implements MessageListener {
 
         private String topic;
 
@@ -141,7 +147,7 @@ public final class MessageConsumerExample {
             this.topic = topic;
         }
 
-        public void receiveMessages(final List<Message> messages) throws InterruptedException {
+        public void receiveMessages(List<Message> messages) {
             if (messages != null && !messages.isEmpty()) {
                 msgRecvStats.addMsgCount(this.topic, messages.size());
             }

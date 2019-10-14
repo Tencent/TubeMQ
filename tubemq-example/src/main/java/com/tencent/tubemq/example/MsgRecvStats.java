@@ -25,21 +25,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * This demo shows how to collect and report message received statistics.
+ */
 public class MsgRecvStats implements Runnable {
-    private static final Logger logger =
-            LoggerFactory.getLogger(MsgRecvStats.class);
-    private static final ConcurrentHashMap<String, AtomicLong> counterMap =
-            new ConcurrentHashMap<String, AtomicLong>();
-    private static final ConcurrentHashMap<String, AtomicLong> befCountMap =
-            new ConcurrentHashMap<String, AtomicLong>();
-    private static final ConcurrentHashMap<Integer, AtomicLong> timeStat =
-            new ConcurrentHashMap<Integer, AtomicLong>();
+    private static final Logger logger = LoggerFactory.getLogger(MsgRecvStats.class);
+    private static final ConcurrentHashMap<String, AtomicLong> counterMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, AtomicLong> befCountMap = new ConcurrentHashMap<>();
     private AtomicBoolean isStarted = new AtomicBoolean(false);
-
-    public MsgRecvStats() {
-
-    }
 
     @Override
     public void run() {
@@ -47,6 +40,7 @@ public class MsgRecvStats implements Runnable {
             try {
                 for (Map.Entry<String, AtomicLong> entry : counterMap.entrySet()) {
                     long currCount = entry.getValue().get();
+
                     AtomicLong befCount = befCountMap.get(entry.getKey());
                     if (befCount == null) {
                         AtomicLong tmpCount = new AtomicLong(0);
@@ -55,13 +49,13 @@ public class MsgRecvStats implements Runnable {
                             befCount = tmpCount;
                         }
                     }
-                    logger.info("********* Current " + entry.getKey()
-                            + " Message receive count is " + currCount
-                            + ", dlt is " + (currCount - befCount.get()));
+
+                    logger.info("********* Current {} Message receive count is {}, dlt is {}",
+                        new Object[]{entry.getKey(), currCount, (currCount - befCount.get())});
 
                 }
-            } catch (Throwable e) {
-                //
+            } catch (Throwable t) {
+                // ignore
             }
             ThreadUtils.sleep(30000);
         }
@@ -77,6 +71,7 @@ public class MsgRecvStats implements Runnable {
                     currCount = tmpCount;
                 }
             }
+
             if (currCount.addAndGet(msgCnt) % 500 == 0) {
                 logger.info("Receive messages:" + currCount.get());
             }
