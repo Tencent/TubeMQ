@@ -90,7 +90,7 @@ public class WebFilter implements Filter {
         } catch (ServletException se) {
             throw se;
         } catch (Throwable t) {
-            logger.info("Dispatcher start failed!", t);
+            logger.error("Dispatcher start failed!", t);
             throw new ServletException(t);
         }
     }

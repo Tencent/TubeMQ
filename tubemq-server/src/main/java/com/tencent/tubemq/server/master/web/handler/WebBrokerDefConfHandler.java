@@ -1502,7 +1502,7 @@ public class WebBrokerDefConfHandler {
             }
             strBuffer.append("],\"count\":").append(count).append("}");
         } catch (Exception e) {
-            logger.info(" adminQueryBrokerDefConfEntityInfo exception", e);
+            logger.error(" adminQueryBrokerDefConfEntityInfo exception", e);
             strBuffer.delete(0, strBuffer.length());
             strBuffer.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
                     .append(e.getMessage()).append("\",\"count\":0,\"data\":[]}");
