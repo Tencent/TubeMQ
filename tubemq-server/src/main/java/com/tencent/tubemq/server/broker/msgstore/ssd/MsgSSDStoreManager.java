@@ -518,10 +518,8 @@ public class MsgSSDStoreManager implements Closeable {
                 isSuccess = true;
                 isNew = true;
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
                 logger.warn("[SSD Manager] copy File to SSD FileNotFoundException failure ", e);
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.warn("[SSD Manager] copy File to SSD IOException failure ", e);
             } finally {
                 if (fosfrom != null) {

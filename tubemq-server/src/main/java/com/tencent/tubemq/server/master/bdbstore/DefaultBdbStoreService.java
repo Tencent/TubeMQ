@@ -1054,7 +1054,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
                 Thread.sleep(5 * 1000);
                 continue;
             } catch (InsufficientLogException insufficientLogEx) {
-                logger.info("[Restoring data please wait....] " +
+                logger.error("[Restoring data please wait....] " +
                         "Obtains logger files for a Replica from other members of the replication group. " +
                         "A Replica may need to do so if it has been offline for some time, " +
                         "and has fallen behind in its execution of the replication stream.");
@@ -1128,7 +1128,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadBrokerConfUnits] total load records are " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadBrokerConfUnits error] ", e);
             throw e;
         } finally {
@@ -1186,7 +1185,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadTopicConfUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadTopicConfUnits error] ", e);
             throw e;
         } finally {
@@ -1248,7 +1246,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadConsumerGroupUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadConsumerGroupUnits error] ", e);
             throw e;
         } finally {
@@ -1310,7 +1307,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadGroupFilterCondUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadGroupFilterCondUnits error] ", e);
             throw e;
         } finally {
@@ -1356,7 +1352,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadGroupFlowCtrlUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadGroupFlowCtrlUnits error] ", e);
             throw e;
         } finally {
@@ -1418,7 +1413,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadBlackGroupUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadBlackGroupUnits error] ", e);
             throw e;
         } finally {
@@ -1470,7 +1464,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadTopicAuthControlUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadTopicAuthControlUnits error] ", e);
             throw e;
         } finally {
@@ -1514,7 +1507,6 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             }
             logger.info("[loadConsumeGroupSettingUnits] total load records is " + count);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.info("[loadConsumeGroupSettingUnits error] ", e);
             throw e;
         } finally {
