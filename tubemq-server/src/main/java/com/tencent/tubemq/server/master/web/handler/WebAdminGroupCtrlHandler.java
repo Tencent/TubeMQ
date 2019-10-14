@@ -193,7 +193,9 @@ public class WebAdminGroupCtrlHandler {
                                     groupObject.get("condStatus"),
                                     false, 0, 0);
                     String strNewFilterConds =
-                            WebParameterUtils.checkAndGetFilterConds((String)groupObject.get("filterConds"), true, sBuilder);
+                            WebParameterUtils.checkAndGetFilterConds(
+                                    (String) groupObject.get("filterConds"),
+                                    true, sBuilder);
                     String recordKey = sBuilder.append(groupName)
                             .append("-").append(groupTopicName).toString();
                     sBuilder.delete(0, sBuilder.length());
@@ -414,7 +416,9 @@ public class WebAdminGroupCtrlHandler {
                         newFilterCondEntity.setControlStatus(filterCondStatus);
                     }
                     String strNewFilterConds =
-                            WebParameterUtils.checkAndGetFilterConds((String)groupObject.get("filterConds"), false, sBuilder);
+                            WebParameterUtils.checkAndGetFilterConds(
+                                    (String) groupObject.get("filterConds"),
+                                    false, sBuilder);
                     if (TStringUtils.isNotBlank(strNewFilterConds)) {
                         if (!curFilterCondEntity.getAttributes().equals(strNewFilterConds)) {
                             foundChange = true;
