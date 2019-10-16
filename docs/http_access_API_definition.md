@@ -170,7 +170,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 1|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -212,7 +212,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 1|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -238,7 +238,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 1|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -279,7 +279,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 1|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -306,7 +306,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 3|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -332,7 +332,7 @@ __Request__
 |deleteWhen|no|the default deleting time of the topic data. The format should like cronjob form `0 0 6, 18 * * ?`|String|
 |deletePolicy|no|the default policy for deleting, the default policy is "delete, 168"|String|
 |numPartitions|no|the default partition number of a default topic on the broker. Default 3|Int|
-|unflushThreshhold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
+|unflushThreshold|no|the maximum message number which allows in memory. It has to be flushed to disk if the number exceed this value. Default 1000|Int|
 |numTopicStores|no|the number of data block and partition group allowed to create, default 1. If it is larger than 1, the partition number and topic number should be mapping with this value|Int|
 |unflushInterval|no|the maximum interval for unflush, default 1000ms|Int|
 |memCacheMsgCntInK|no|the max cached message package, default is 10, the unit is K|Int|
@@ -553,7 +553,7 @@ __Request__
 |topicName|yes|the topic name |List|
 |groupName|yes|the group name |List|
 |confModAuthToken|yes|the authorized key for configuration update|String|
-|condStatus|no| the condition status, 0: disable, 1:enable full authrozation, 2:enable and limit consuming|Int|
+|condStatus|no| the condition status, 0: disable, 1:enable full authorization, 2:enable and limit consuming|Int|
 |filterConds|no| the filter conditions, the max length is 256|String|
 |createUser|yes|the creator|String|
 |createDate|no|the creating date in format `yyyyMMddHHmmss`|String|
@@ -569,7 +569,7 @@ __Request__
 |topicName|yes|the topic name |List|
 |groupName|yes|the group name |List|
 |confModAuthToken|yes|the authorized key for configuration update|String|
-|condStatus|no| the condition status, 0: disable, 1:enable full authrozation, 2:enable and limit consuming|Int|
+|condStatus|no| the condition status, 0: disable, 1:enable full authorization, 2:enable and limit consuming|Int|
 |filterConds|no| the filter conditions, the max length is 256|String|
 |modifyUser|yes|the modifier|String|
 |modifyDate|no|the modification date in format `yyyyMMddHHmmss`|String|
@@ -596,7 +596,7 @@ __Request__
 |---|---|---|---|
 |topicName|yes|the topic name |List|
 |groupName|yes|the group name |List|
-|condStatus|no| the condition status, 0: disable, 1:enable full authrozation, 2:enable and limit consuming|Int|
+|condStatus|no| the condition status, 0: disable, 1:enable full authorization, 2:enable and limit consuming|Int|
 |filterConds|no| the filter conditions, the max length is 256|String|
 
 ### `admin_rebalance_group_allocate`
@@ -636,7 +636,7 @@ __Request__
 
 |name|must|description|type|
 |---|---|---|---|
-|flwoCtrlInfo|yes|the flow control info in JSON format|String|
+|flowCtrlInfo|yes|the flow control info in JSON format|String|
 |confModAuthToken|yes|the authorized key for configuration update|String|
 |consumerId|yes|the consumer id|List|
 |groupName|yes|the group name |List|
@@ -658,7 +658,7 @@ __Request__
 |qryPriorityId|no| the consuming priority Id. It is a composed field `A0B` with default value 301, <br>the value of A,B is [1, 2, 3] which means file, backup memory, and main memory respectively|int|
 |createUser|yes|the creator|String|
 |needSSDProc|no|whether to enable SSD to handle, default false|Boolean|
-|flwoCtrlInfo|yes|the flow control info in JSON format|String|
+|flowCtrlInfo|yes|the flow control info in JSON format|String|
 |createDate|yes|the creating date in format `yyyyMMddHHmmss`|String|
 
 ### `admin_query_def_flow_control_rule`
@@ -681,7 +681,7 @@ __Request__
 
 |name|must|description|type|
 |---|---|---|---|
-|flwoCtrlInfo|yes|the flow control info in JSON format|String|
+|flowCtrlInfo|yes|the flow control info in JSON format|String|
 |groupName|yes|the group name to set flow control rule|String|
 |confModAuthToken|yes|the authorized key for configuration update|String|
 |StatusId|no| the strategy status Id, default 0|int|
@@ -698,7 +698,7 @@ __Request__
 
 |name|must|description|type|
 |---|---|---|---|
-|flwoCtrlInfo|yes|the flow control info in JSON format|String|
+|flowCtrlInfo|yes|the flow control info in JSON format|String|
 |groupName|yes|the group name to set flow control rule|String|
 |confModAuthToken|yes|the authorized key for configuration update|String|
 |StatusId|no| the strategy status Id, default 0|int|
@@ -789,7 +789,7 @@ __Request__
 |modifyDate|yes|the modifying date in format `yyyyMMddHHmmss`|String|
 |confModAuthToken|yes|the authorized key for configuration update|String|
 
-## Master subscriber relattion API
+## Master subscriber relation API
 
 1. Query consumer group subscription information
 
@@ -800,11 +800,11 @@ response:
 ```json
 {
     "errCode": 0, 
-    "errMsg":"Ok", 
+    "errMsg": "Ok", 
     "count": 263,  
     "data": [{ 
-        "consumeGroup":"", 
-        "topicSet":["a","b"],
+        "consumeGroup": "", 
+        "topicSet": ["a", "b"],
         "consumerNum": 33
        }]
 }									
@@ -819,17 +819,17 @@ response:
 ```json
 {
     "errCode": 0, 
-    "errMsg":"Ok", 
-    "count"": 263, 
-    "topicSet":["a","b"],
-    "consumeGroup":"", 
-    "data"": [{      
-       "consumerId":"",
-       "parCount":1,
-       "parInfo":[{
-           "brokerAddr":"",
-           "topic":"",
-           "partId":2
+    "errMsg": "Ok", 
+    "count": 263, 
+    "topicSet": ["a", "b"],
+    "consumeGroup": "", 
+    "data": [{      
+       "consumerId": "",
+       "parCount": 1,
+       "parInfo": [{
+           "brokerAddr": "",
+           "topic": "",
+           "partId": 2
        }] 
    }]
 }									
@@ -839,7 +839,7 @@ response:
 
 ### `admin_snapshot_message`
 
-Check whether it is transfering data under current broker's topic, and what is the content.
+Check whether it is transferring data under current broker's topic, and what is the content.
 
 
 __Request__

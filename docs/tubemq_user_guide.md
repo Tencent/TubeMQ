@@ -230,7 +230,7 @@ Then we run the consume data demo. Also replace the server ip
 ```bash
 java -Xmx512m -Dlog4j.configuration=file:/opt/tubemq-server/conf/tools.log4j.properties -Djava.net.preferIPv4Stack=true -cp /opt/tubemq-server/lib/*:/opt/tubemq-server/conf/*: com.tencent.tubemq.example.MessageConsumerExample YOUR_SERVER_IP YOUR_SERVER_IP:8000 demo demoGroup 3 1 1
 ```
-From the log, we can see the message recieved by the consumer.
+From the log, we can see the message received by the consumer.
 
 ```bash
 [2019-09-11 16:09:29,720] INFO Receive messages:2500 (com.tencent.tubemq.example.MsgRecvStats)
