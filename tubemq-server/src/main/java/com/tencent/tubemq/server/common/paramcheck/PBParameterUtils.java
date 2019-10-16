@@ -237,7 +237,7 @@ public class PBParameterUtils {
             }
             retResult.setCheckResult(false,
                     TErrCodeConstants.BAD_REQUEST,
-                    strBuffer.append("[Parameter error] System require at lest ")
+                    strBuffer.append("[Parameter error] System requires at least ")
                             .append(minClientCnt).append(" clients to consume data together, please add client" +
                             " resources!").toString());
             return retResult;

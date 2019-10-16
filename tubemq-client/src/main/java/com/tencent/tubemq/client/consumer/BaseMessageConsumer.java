@@ -333,8 +333,8 @@ public class BaseMessageConsumer implements MessageConsumer {
                     }
                     if (!consumeSubInfo.isSubscribedTopicContain(partitionKeyItems[1].trim())) {
                         throw new TubeClientException(new StringBuilder(256)
-                                .append("Parameter error: not included in subcribed topic list: "
-                                        + "partOffsetMap's key is ")
+                                .append("Parameter error: not included in subcribed topic list: ")
+                                .append("partOffsetMap's key is ")
                                 .append(entry.getKey()).append(", subscribed topics are ")
                                 .append(consumeSubInfo.getSubscribedTopics().toString()).toString());
                     }
@@ -1583,8 +1583,8 @@ public class BaseMessageConsumer implements MessageConsumer {
                                                         strFailInfo.indexOf(TokenConstants.ATTR_SEP);
                                                 if (index < 0) {
                                                     logger.error(strBuffer
-                                                            .append("Parse Heartbeat response error : "
-                                                                    + "invalid response, ")
+                                                            .append("Parse Heartbeat response error : ")
+                                                            .append("invalid response, ")
                                                             .append(strFailInfo).toString());
                                                     strBuffer.delete(0, strBuffer.length());
                                                     continue;

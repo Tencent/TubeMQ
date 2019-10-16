@@ -298,11 +298,9 @@ public class BrokerAdminServlet extends HttpServlet {
                 }
                 if (!topicName.matches(TBaseConstants.META_TMP_STRING_VALUE)) {
                     sBuilder.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
-                            .append("Invalid parameter: the value of ")
-                            .append(topicName)
-                            .append(" in topicName parameter must begin with a letter,"
-                                    + " can only contain characters,numbers,and underscores!")
-                            .append("\"}");
+                            .append("Invalid parameter: the value of ").append(topicName)
+                            .append(" in topicName parameter must begin with a letter,")
+                            .append(" can only contain characters,numbers,and underscores!\"}");
                     return sBuilder;
                 }
                 bathTopicNames.add(topicName);
