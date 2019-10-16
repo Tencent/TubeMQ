@@ -306,8 +306,9 @@ public class NettyRpcServer implements ServiceRpcServer {
                         long curTime = System.currentTimeMillis();
                         if (curTime - befTime > 180000) {
                             if (lastParseTime.compareAndSet(befTime, System.currentTimeMillis())) {
-                                logger.warn("[Abnormal Visit] Abnormal Message Content visit"
-                                        + " list is :" + errParseAddrMap.toString());
+                                logger.warn(new StringBuilder(512)
+                                        .append("[Abnormal Visit] Abnormal Message Content visit list is :")
+                                        .append(errParseAddrMap).toString());
                                 errParseAddrMap.clear();
                             }
                         }
