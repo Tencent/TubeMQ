@@ -73,10 +73,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Encoder;
 
 /***
  * Broker service. Receive and conduct client's request, store messages, query messages, print statistics, etc.
@@ -552,8 +552,8 @@ public class BrokerServiceServer implements BrokerReadService, BrokerWriteServic
                 List<Message> messageList = DataConverterUtil.convertMessage(topicName, tmpMsgList);
                 int startPos = messageList.size() - msgCount < 0 ? 0 : messageList.size() - msgCount;
                 for (; startPos < messageList.size(); startPos++) {
-                    String msgItem = (new BASE64Encoder())
-                            .encode(messageList.get(startPos).getData());
+                    String msgItem = new String(
+                            Base64.encodeBase64(messageList.get(startPos).getData()));
                     transferedMessageList.add(msgItem);
                 }
                 int i = 0;
