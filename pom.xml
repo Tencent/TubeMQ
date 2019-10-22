@@ -44,7 +44,7 @@
         <powermock.version>1.6.5</powermock.version>
         <exec.maven.version>1.6.0</exec.maven.version>
         <build.helper.maven.version>3.0.0</build.helper.maven.version>
-        <checkstyle.version>8.17</checkstyle.version>
+        <checkstyle.version>8.18</checkstyle.version>
         <protobuf.version>2.5.0</protobuf.version>
         <je.version>7.3.7</je.version>
     </properties>
