@@ -57,6 +57,13 @@ page at http://checkstyle.sourceforge.net/config.html -->
         <property name="file" value="${checkstyle.suppressions.file}" default="suppressions.xml" />
     </module>
 
+    <!-- Allow use of comment to suppress javadocstyle -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
+        <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
+        <property name="checkFormat" value="$1"/>
+    </module>
+
     <!-- All Java AST specific tests live under TreeWalker module. -->
     <module name="TreeWalker">
 
@@ -64,13 +71,6 @@ page at http://checkstyle.sourceforge.net/config.html -->
              see also https://checkstyle.org/config_misc.html#Indentation
         -->
         <module name="Indentation"/>
-
-        <!-- Allow use of comment to suppress javadocstyle -->
-        <module name="SuppressionCommentFilter">
-            <property name="offCommentFormat" value="CHECKSTYLE.OFF\: ([\w\|]+)"/>
-            <property name="onCommentFormat" value="CHECKSTYLE.ON\: ([\w\|]+)"/>
-            <property name="checkFormat" value="$1"/>
-        </module>
 
         <module name="TodoComment">
             <!-- Checks that disallowed strings are not used in comments.  -->
