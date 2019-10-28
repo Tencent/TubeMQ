@@ -20,7 +20,7 @@ dist: trusty
 language: java
 
 jdk:
-  - openjdk8
+  - openjdk7
 
 before_cache:
   - rm -rf $HOME/.m2/repository/com/tencent/tubemq/
