@@ -209,7 +209,7 @@ public class TubeBroker implements Stoppable, Runnable {
                         if (!shutdown.get()) {
                             long currErrCnt = heartbeatErrors.get();
                             if (currErrCnt > maxReleaseTryCnt) {
-                                if ((currErrCnt - maxReleaseTryCnt) % maxReleaseTryCnt != 0) {
+                                if (currErrCnt % 2 == 0) {
                                     heartbeatErrors.incrementAndGet();
                                     return;
                                 }
