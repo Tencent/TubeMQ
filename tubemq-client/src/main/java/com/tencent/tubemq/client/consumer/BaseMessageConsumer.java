@@ -1550,7 +1550,7 @@ public class BaseMessageConsumer implements MessageConsumer {
                                 .append(currentTime - lastHeartbeatTime2Broker).toString());
                         strBuffer.delete(0, strBuffer.length());
                     }
-                    // Send heartbeat request to the broker connect by the client针
+                    // Send heartbeat request to the broker connect by the client
                     for (BrokerInfo brokerInfo : rmtDataCache.getAllRegisterBrokers()) {
                         List<String> partStrSet = new ArrayList<String>();
                         try {
