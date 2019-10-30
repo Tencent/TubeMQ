@@ -154,19 +154,15 @@ public class RmtDataCache implements Closeable {
      */
     public PartitionSelectResult pullSelect() {
         int count = 2;
-        try {
-            do {
-                if (this.isClosed.get()) {
-                    break;
-                }
-                if (!partitionMap.isEmpty()) {
-                    break;
-                }
-                ThreadUtils.sleep(350);
-            } while (--count > 0);
-        } catch (Throwable e) {
-            //
-        }
+        do {
+            if (this.isClosed.get()) {
+                break;
+            }
+            if (!partitionMap.isEmpty()) {
+                break;
+            }
+            ThreadUtils.sleep(350);
+        } while (--count > 0);
         if (partitionMap.isEmpty()) {
             return new PartitionSelectResult(false,
                     TErrCodeConstants.BAD_REQUEST,
@@ -235,19 +231,15 @@ public class RmtDataCache implements Closeable {
      * @return push result
      */
     public PartitionSelectResult pushSelect() {
-        try {
-            do {
-                if (this.isClosed.get()) {
-                    break;
-                }
-                if (!partitionMap.isEmpty()) {
-                    break;
-                }
-                ThreadUtils.sleep(200);
-            } while (true);
-        } catch (Throwable e) {
-            //
-        }
+        do {
+            if (this.isClosed.get()) {
+                break;
+            }
+            if (!partitionMap.isEmpty()) {
+                break;
+            }
+            ThreadUtils.sleep(200);
+        } while (true);
         if (this.isClosed.get()) {
             return null;
         }
