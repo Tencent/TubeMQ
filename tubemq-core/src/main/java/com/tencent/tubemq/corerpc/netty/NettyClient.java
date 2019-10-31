@@ -139,29 +139,28 @@ public class NettyClient implements Client {
         connectionHeader.writeDelimitedTo(bbo);
         rpcHeader.writeDelimitedTo(bbo);
         rpcBodyRequest.writeDelimitedTo(bbo);
-        RpcDataPack pack =
-                new RpcDataPack(request.getSerialNo(), bbo.getBufferList());
-        Channel channel1 = getChannel();
-        CallFuture<ResponseWrapper> future =
-                new CallFuture<ResponseWrapper>(callback);
+        RpcDataPack pack = new RpcDataPack(request.getSerialNo(), bbo.getBufferList());
+        CallFuture<ResponseWrapper> future = new CallFuture<ResponseWrapper>(callback);
         requests.put(request.getSerialNo(), future);
-        if (channel1 == null) {
-            logger.error(new StringBuilder(256)
-                    .append(this.addressInfo.getHostPortStr())
-                    .append("'s channel is null").toString());
-        } else {
-            getChannel().write(pack);
-        }
         if (callback == null) {
             try {
+                getChannel().write(pack);
                 return future.get(timeout, timeUnit);
-            } catch (TimeoutException e) {
+            } catch (Throwable e) {
                 requests.remove(request.getSerialNo());
                 throw e;
             }
         } else {
-            timeouts.put(request.getSerialNo(),
-                    timer.newTimeout(new TimeoutTask(request.getSerialNo()), timeout, timeUnit));
+            try {
+                timeouts.put(request.getSerialNo(),
+                        timer.newTimeout(new TimeoutTask(request.getSerialNo()), timeout, timeUnit));
+                //write data after build Timeout to avoid one request processed twice
+                getChannel().write(pack);
+            } catch (Throwable e) {
+                requests.remove(request.getSerialNo());
+                throw e;
+            }
+
         }
         return null;
     }
