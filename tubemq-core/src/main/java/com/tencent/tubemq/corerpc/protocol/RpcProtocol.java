@@ -111,6 +111,10 @@ public class RpcProtocol implements Protocol {
         ResponseWrapper responseWrapper = null;
         RequestWrapper requestWrapper = context.getRequest();
         if (System.currentTimeMillis() - context.getReceiveTime() > requestWrapper.getTimeout()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Timeout when request arrived, so give up processing this request from : {}",
+                       rmtAddress);
+            }
             return;
         }
         if (ServiceStatusHolder.isServiceStopped()) {
