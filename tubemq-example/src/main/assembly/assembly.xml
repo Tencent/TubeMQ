@@ -32,7 +32,6 @@
             <directory>../</directory>
             <includes>
                 <include>./conf/tools.log4j.properties</include>
-                <include>./logs</include>
             </includes>
             <excludes>
                 <exclude>**/src/**</exclude>
