@@ -95,3 +95,6 @@
 | 64     | Status error: consumer has been   shutdown                   | 消费者已调用shutdown，不应该继续调用其它函数进行业务处理     |                                                              |
 | 65     | All partition in waiting, retry   later!                      | 所有分区都在等待,请稍候                                      | 该错误信息可以不做打印,遇到该情况时拉取县城sleep 200 ~   400ms |
 | 66     | The request offset reached   maxOffset                       | 请求的分区已经消费到最新位置                                 | 可以通过ConsumerConfig.setMsgNotFoundWaitPeriodMs()设置该情况时分区停止拉取的时间段来等待最新消息的到来 |
+
+---
+<a href="#top">Back to top</a>
