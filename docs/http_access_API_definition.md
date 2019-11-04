@@ -4,22 +4,22 @@
 
 ### `admin_online_broker_configure`
 
-Online the configuration of the Brokers which are new or offline. The Topics' configuration will be distributed to relate Brokers as well.
+The online configuration of the Brokers are new or offline. The configuration of Topics are distributed to related Brokers as well.
 
 __Request__
 
 |name|must|description|type|
 |---|---|---|---|
-|brokerId|yes|the id of broker. It supports bulk brokerId which separated by `,`. The maximum <br> number of a bulk is 50. The brokerId should be distinct in case of bulk value  |int|
-|modifyUser| yes|the user who executes this |String|
-|modifyDate| no|the modify date in the format of "yyyyMMddHHmmss"|String|
-|confModAuthToken| yes|the authorization key |String|
+|brokerId|yes|The broker ID. It supports bulk brokerId which is separated by `,`. The maximum number of a bulk is `50`. The brokerId should be distinct in case of bulk value  |int|
+|modifyUser| yes|The user who executes this |String|
+|modifyDate| no|The modify date in the format of "yyyyMMddHHmmss"|String|
+|confModAuthToken| yes|The authorization key |String|
 
 __Response__
 
 |name|description|type|
 |---|---|---|
-|code| return 0 if success, otherwise failed | int|
+|code| Returns `0` if success, otherwise failed | int|
 |errMsg| "OK" if success, other return error message| string|
 
 ### `admin_reload_broker_configure`
