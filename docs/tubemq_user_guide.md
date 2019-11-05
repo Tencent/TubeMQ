@@ -10,10 +10,9 @@
 ### Build distribution tarball
 Go to the project root, and run
 ```bash
-mvn clean package -Dmaven.test.skip
+mvn clean package -DskipTests
 ```
-Each module of the project can also be built separately.
-
+If you want to build each module of the project separately, you need to run `mvn install` in the project root at first.
 ### Build source code
 If you want to build and debug source code in IDE, go to the project root, and run
 
