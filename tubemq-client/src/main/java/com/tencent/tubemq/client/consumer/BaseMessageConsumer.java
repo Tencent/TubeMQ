@@ -800,22 +800,24 @@ public class BaseMessageConsumer implements MessageConsumer {
                             if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED
                                     || responseB2C.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
                                 unRegPartitions.remove(partition);
-                                if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED) {
-                                    logger.debug(strBuffer
+                                if (logger.isDebugEnabled()) {
+                                    if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED) {
+                                        logger.debug(strBuffer
                                             .append("[Partition occupied], curr consumerId: ")
                                             .append(consumerId).append(", returned message : ")
                                             .append(responseB2C.getErrMsg()).toString());
-                                } else {
-                                    logger.debug(strBuffer
+                                    } else {
+                                        logger.debug(strBuffer
                                             .append("[Certificate failure], curr consumerId: ")
                                             .append(consumerId).append(", returned message : ")
                                             .append(responseB2C.getErrMsg()).toString());
+                                    }
                                 }
                             } else {
                                 logger.warn(strBuffer.append("register2broker error! ")
-                                        .append(retryTimesRegister2Broker).append(" register ")
-                                        .append(partition.toString()).append(" return ")
-                                        .append(responseB2C.getErrMsg()).toString());
+                                    .append(retryTimesRegister2Broker).append(" register ")
+                                    .append(partition.toString()).append(" return ")
+                                    .append(responseB2C.getErrMsg()).toString());
                             }
                             strBuffer.delete(0, strBuffer.length());
                         }
