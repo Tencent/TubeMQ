@@ -321,12 +321,14 @@ public class DefaultBrokerRcvQltyStats implements BrokerRcvQltyStats {
             if ((succRecvNum < avgSuccRecNumThreshold) && (succSendNumThreshold > 2)
                     && (succRecvNum < succSendNumThreshold)) {
                 tmpBrokerForbiddenMap.put(brokerDltNumEntry.getKey(), true);
-                logger.debug(sBuilder.append("[forbidden statistic] brokerId=")
+                if (logger.isDebugEnabled()) {
+                    logger.debug(sBuilder.append("[forbidden statistic] brokerId=")
                         .append(brokerDltNumEntry.getKey()).append(",succRecvNum=")
                         .append(succRecvNum).append(",avgSuccRecNumThreshold=")
                         .append(avgSuccRecNumThreshold).append(",succSendNumThreshold=")
                         .append(succSendNumThreshold).toString());
-                sBuilder.delete(0, sBuilder.length());
+                    sBuilder.delete(0, sBuilder.length());
+                }
             }
             if ((tmpBrokerForbiddenMap.size() >= needHoldCout)
                     || (succRecvNum >= avgSuccRecNumThreshold)) {
