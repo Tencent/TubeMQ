@@ -77,7 +77,6 @@ public class BdbBrokerConfEntity implements Serializable {
         this.brokerId = brokerId;
         this.brokerIp = brokerIp;
         this.brokerPort = brokerPort;
-        this.buildStrInfo();
         this.manageStatus = manageStatus;
         this.numPartitions = numPartitions;
         this.unflushThreshold = unflushThreshold;
@@ -93,6 +92,7 @@ public class BdbBrokerConfEntity implements Serializable {
         this.modifyUser = modifyUser;
         this.modifyDate = modifyDate;
         this.attributes = attributes;
+        this.buildStrInfo();
     }
 
     /**
