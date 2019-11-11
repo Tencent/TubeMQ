@@ -81,6 +81,7 @@ public class NodeRebInfo {
         return this.waitDuration.decrementAndGet();
     }
 
+    @Override
     public NodeRebInfo clone() {
         return new NodeRebInfo(this.clientId,
                 this.status, this.createTime,

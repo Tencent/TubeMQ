@@ -69,6 +69,7 @@ public class DefaultLoadBalancer implements LoadBalancer {
      * @param strBuffer
      * @return
      */
+    @Override
     public Map<String, Map<String, List<Partition>>> balanceCluster(
             Map<String, Map<String, Map<String, Partition>>> clusterState,
             ConsumerInfoHolder consumerHolder,
@@ -440,6 +441,7 @@ public class DefaultLoadBalancer implements LoadBalancer {
      * @param consumers
      * @return
      */
+    @Override
     public Map<String, List<Partition>> roundRobinAssignment(List<Partition> partitions,
                                                              List<String> consumers) {
         if (partitions.isEmpty() || consumers.isEmpty()) {
@@ -614,6 +616,7 @@ public class DefaultLoadBalancer implements LoadBalancer {
      * @param strBuffer
      * @return
      */
+    @Override
     public Map<String, Map<String, Map<String, Partition>>> resetBalanceCluster(
             Map<String, Map<String, Map<String, Partition>>> clusterState,
             ConsumerInfoHolder consumerHolder, TopicPSInfoManager topicPSInfoManager,

@@ -156,6 +156,7 @@ public class ConsumerInfo implements Comparable<ConsumerInfo>, Serializable {
         return overTLS;
     }
 
+    @Override
     public ConsumerInfo clone() {
         return new ConsumerInfo(this.consumerId, this.overTLS, this.group, this.topicSet,
                 this.topicConditions, this.requireBound, this.sessionKey,

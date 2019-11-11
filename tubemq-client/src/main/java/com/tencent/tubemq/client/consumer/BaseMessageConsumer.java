@@ -287,6 +287,7 @@ public class BaseMessageConsumer implements MessageConsumer {
      *
      * @throws TubeClientException
      */
+    @Override
     public void completeSubscribe() throws TubeClientException {
         this.checkClientRunning();
         if (this.consumeSubInfo.isSubscribedTopicEmpty()) {
@@ -307,6 +308,7 @@ public class BaseMessageConsumer implements MessageConsumer {
         this.subStatus.set(1);
     }
 
+    @Override
     public void completeSubscribe(final String sessionKey,
                                   final int sourceCount,
                                   final boolean isSelectBig,
@@ -1170,8 +1172,7 @@ public class BaseMessageConsumer implements MessageConsumer {
                 String inAuthAuthorizedToken = inAuthorizedTokenInfo.getAuthAuthorizedToken();
                 if (TStringUtils.isNotBlank(inAuthAuthorizedToken)) {
                     String curAuthAuthorizedToken = authAuthorizedTokenRef.get();
-                    if (curAuthAuthorizedToken == null
-                            || !inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
+                    if (!inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
                         authAuthorizedTokenRef.set(inAuthAuthorizedToken);
                     }
                 }

@@ -302,11 +302,8 @@ public class BaseResult implements Serializable {
             return true;
         }
 
-        if (pageSizeString.trim().length() == 0) {
-            return true;
-        }
+        return pageSizeString.trim().length() == 0;
 
-        return false;
     }
 
     /**
@@ -448,6 +445,7 @@ public class BaseResult implements Serializable {
         return datestring + " 00:00:00";
     }
 
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }

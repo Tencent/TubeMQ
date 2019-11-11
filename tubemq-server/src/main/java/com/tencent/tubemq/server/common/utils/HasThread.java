@@ -40,6 +40,7 @@ public abstract class HasThread implements Runnable {
         return thread;
     }
 
+    @Override
     public abstract void run();
 
     // // Begin delegation to Thread

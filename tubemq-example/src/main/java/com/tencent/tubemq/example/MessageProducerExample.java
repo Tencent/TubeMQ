@@ -180,6 +180,7 @@ public final class MessageProducerExample {
 
     private class DefaultSendCallback implements MessageSentCallback {
 
+        @Override
         public void onMessageSent(MessageSentResult result) {
             if (result.isSuccess()) {
                 String topicName = result.getMessage().getTopic();
@@ -201,6 +202,7 @@ public final class MessageProducerExample {
             }
         }
 
+        @Override
         public void onException(Throwable e) {
             logger.error("Send message error!", e);
         }

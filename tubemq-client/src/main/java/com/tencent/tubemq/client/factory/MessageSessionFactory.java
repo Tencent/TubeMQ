@@ -27,6 +27,7 @@ import com.tencent.tubemq.corebase.Shutdownable;
 
 public interface MessageSessionFactory extends Shutdownable {
 
+    @Override
     void shutdown() throws TubeClientException;
 
     <T extends Shutdownable> void removeClient(final T client);

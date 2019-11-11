@@ -100,9 +100,7 @@ public class ConsumerBandInfo {
         this.minRequireClientCnt = minRequireClientCnt;
         this.rebalanceCheckStatus = rebalanceCheckStatus;
         this.rebalanCheckPrint = rebalanCheckPrint;
-        for (String topic : topicSet) {
-            this.topicSet.add(topic);
-        }
+        this.topicSet.addAll(topicSet);
         for (Map.Entry<String, ConsumerInfo> entry : consumerInfoMap.entrySet()) {
             this.consumerInfoMap.put(entry.getKey(), entry.getValue().clone());
         }
@@ -143,9 +141,7 @@ public class ConsumerBandInfo {
                 this.createTime = System.currentTimeMillis();
                 this.curCheckCycle.set(0);
             }
-            for (String topic : consumer.getTopicSet()) {
-                this.topicSet.add(topic);
-            }
+            this.topicSet.addAll(consumer.getTopicSet());
             for (Map.Entry<String, TreeSet<String>> entry
                     : consumer.getTopicConditions().entrySet()) {
                 this.topicConditions.put(entry.getKey(), entry.getValue());
@@ -451,9 +447,7 @@ public class ConsumerBandInfo {
 
     public List<ConsumerInfo> getConsumerInfoList() {
         List<ConsumerInfo> result = new ArrayList<ConsumerInfo>();
-        for (ConsumerInfo consumerInfo : this.consumerInfoMap.values()) {
-            result.add(consumerInfo);
-        }
+        result.addAll(this.consumerInfoMap.values());
         return result;
     }
 
@@ -473,6 +467,7 @@ public class ConsumerBandInfo {
         return this.rebalanceMap;
     }
 
+    @Override
     public ConsumerBandInfo clone() {
         // no need to deep clone
         return new ConsumerBandInfo(this.isBandConsume, this.sessionKey,

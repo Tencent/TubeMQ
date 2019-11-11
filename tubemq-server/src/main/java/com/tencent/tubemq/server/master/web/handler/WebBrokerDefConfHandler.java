@@ -975,9 +975,8 @@ public class WebBrokerDefConfHandler {
                 }
             }
             for (BdbBrokerConfEntity oldEntity : bathBrokerEntitys) {
-                if (oldEntity == null
-                        || !WebParameterUtils.checkBrokerInOnlineStatus(oldEntity)
-                        || WebParameterUtils.checkBrokerInProcessing(oldEntity.getBrokerId(), brokerConfManage, null)) {
+                if (!WebParameterUtils.checkBrokerInOnlineStatus(oldEntity) || WebParameterUtils
+                    .checkBrokerInProcessing(oldEntity.getBrokerId(), brokerConfManage, null)) {
                     continue;
                 }
                 try {

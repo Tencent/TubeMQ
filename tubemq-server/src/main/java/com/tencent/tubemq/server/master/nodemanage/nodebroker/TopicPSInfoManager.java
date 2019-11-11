@@ -250,8 +250,7 @@ public class TopicPSInfoManager {
     }
 
     public List<Partition> getPartitionList(String topic) {
-        List<Partition> partList = new ArrayList<Partition>();
-        partList.addAll(getPartitionSet(topic));
+        List<Partition> partList = new ArrayList<Partition>(getPartitionSet(topic));
         return partList;
     }
 

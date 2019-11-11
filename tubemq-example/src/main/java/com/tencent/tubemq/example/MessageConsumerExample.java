@@ -147,16 +147,19 @@ public final class MessageConsumerExample {
             this.topic = topic;
         }
 
+        @Override
         public void receiveMessages(List<Message> messages) {
             if (messages != null && !messages.isEmpty()) {
                 msgRecvStats.addMsgCount(this.topic, messages.size());
             }
         }
 
+        @Override
         public Executor getExecutor() {
             return null;
         }
 
+        @Override
         public void stop() {
         }
     }

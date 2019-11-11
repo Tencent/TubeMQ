@@ -156,6 +156,7 @@ public class NettyRpcServer implements ServiceRpcServer {
             return;
         }
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+            @Override
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline pipeline = new DefaultChannelPipeline();
                 if (isOverTLS) {
@@ -257,6 +258,7 @@ public class NettyRpcServer implements ServiceRpcServer {
          * Invoked when an exception was raised by an I/O thread or a
          * {@link ChannelHandler}.
          */
+        @Override
         public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
             if (!(e.getCause() instanceof IOException)) {
                 logger.error("catch some exception not IOException", e.getCause());
@@ -267,6 +269,7 @@ public class NettyRpcServer implements ServiceRpcServer {
          * Invoked when a message object (e.g: {@link ChannelBuffer}) was received
          * from a remote peer.
          */
+        @Override
         public void messageReceived(final ChannelHandlerContext ctx,
                                     MessageEvent e) throws Exception {
             if (!(e.getMessage() instanceof RpcDataPack)) {

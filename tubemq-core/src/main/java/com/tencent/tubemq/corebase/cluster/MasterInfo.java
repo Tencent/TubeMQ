@@ -79,9 +79,7 @@ public class MasterInfo {
             }
         }
         nodeHostPortList = new ArrayList<String>(addrMap4Failover.size());
-        for (String hostPortStr : addrMap4Failover.keySet()) {
-            nodeHostPortList.add(hostPortStr);
-        }
+        nodeHostPortList.addAll(addrMap4Failover.keySet());
         int count = 0;
         Collections.sort(nodeHostPortList);
         StringBuilder builder = new StringBuilder(256);

@@ -167,6 +167,7 @@ public class MAMessageProducerExample {
             this.producer = producer;
         }
 
+        @Override
         public void run() {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
             try {
@@ -220,6 +221,7 @@ public class MAMessageProducerExample {
     }
 
     private class DefaultSendCallback implements MessageSentCallback {
+        @Override
         public void onMessageSent(MessageSentResult result) {
             if (result.isSuccess()) {
                 if (SENT_SUCC_COUNTER.incrementAndGet() % 1000 == 0) {
@@ -232,6 +234,7 @@ public class MAMessageProducerExample {
             }
         }
 
+        @Override
         public void onException(Throwable e) {
             logger.error("Send message error!", e);
         }
