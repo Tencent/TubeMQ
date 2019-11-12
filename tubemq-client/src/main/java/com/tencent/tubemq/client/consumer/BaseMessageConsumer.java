@@ -185,17 +185,11 @@ public class BaseMessageConsumer implements MessageConsumer {
                         }
                         switch (event.getType()) {
                             case DISCONNECT:
-                                disconnectFromBroker(event);
-                                rebalanceResults.put(event);
-                                break;
                             case ONLY_DISCONNECT:
                                 disconnectFromBroker(event);
                                 rebalanceResults.put(event);
                                 break;
                             case CONNECT:
-                                connect2Broker(event);
-                                rebalanceResults.put(event);
-                                break;
                             case ONLY_CONNECT:
                                 connect2Broker(event);
                                 rebalanceResults.put(event);
