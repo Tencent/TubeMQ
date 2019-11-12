@@ -26,7 +26,6 @@ package com.tencent.tubemq.corebase.utils;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * A Map-backed Set.
