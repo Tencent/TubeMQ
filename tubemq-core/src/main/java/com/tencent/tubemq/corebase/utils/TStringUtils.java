@@ -95,7 +95,7 @@ public class TStringUtils {
      * @since 2.0
      */
     public static boolean isBlank(String str) {
-        return str == nil || isEmpty(str.trim());
+        return str == null || isEmpty(str.trim());
     }
 
     /**
