@@ -23,6 +23,15 @@ This command will generate the Java source files from the `protoc` files, the ge
 
 When this command finished, you can use IDE import the project as maven project.
 
+If you want to use local `protoc` executable, you can change the configuration of `protobuf-maven-plugin` in `tubemq-core/pom.xml` as below
+
+```xml
+<configuration>
+    <outputDirectory>${project.build.directory}/generated-sources/java</outputDirectory>
+    <protocExecutable>/usr/local/bin/protoc</protocExecutable>
+</configuration>
+```
+
 ## Deploy
 After the build, please go to `tubemq-server/target`. You can find the
 **tubemq-server-x.x.x-bin.tar.gz** file. It is the server deployment package, which includes
