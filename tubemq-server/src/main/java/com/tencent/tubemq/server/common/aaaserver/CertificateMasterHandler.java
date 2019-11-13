@@ -27,7 +27,8 @@ public interface CertificateMasterHandler {
 
     CertifiedResult identityValidBrokerInfo(final ClientMaster.MasterCertificateInfo authenticInfo);
 
-    CertifiedResult identityValidUserInfo(final ClientMaster.MasterCertificateInfo authenticInfo);
+    CertifiedResult identityValidUserInfo(final ClientMaster.MasterCertificateInfo authenticInfo,
+                                          boolean isProduce);
 
     CertifiedResult validProducerAuthorizeInfo(String userName, Set<String> topics, String clientIp);
 
