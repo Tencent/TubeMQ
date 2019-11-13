@@ -34,7 +34,7 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
 
     private static final Logger logger =
             LoggerFactory.getLogger(SimpleCertificateBrokerHandler.class);
-    private static final int MAX_VISIT_TOKEN_SIZE = 6;
+    private static final int MAX_VISIT_TOKEN_SIZE = 6; // at least 3 items
 
     private final TubeBroker tubeBroker;
     private final AtomicReference<List<Long>> visitTokenList =
@@ -69,6 +69,9 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
         if (!currList.contains(curVisitToken)) {
             while (true) {
                 currList = visitTokenList.get();
+                if (currList.contains(curVisitToken)) {
+                    return;
+                }
                 List<Long> updateList = new ArrayList<Long>(currList);
                 while (updateList.size() >= MAX_VISIT_TOKEN_SIZE) {
                     updateList.remove(0);
