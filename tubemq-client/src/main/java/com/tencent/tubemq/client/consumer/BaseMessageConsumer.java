@@ -91,6 +91,8 @@ public class BaseMessageConsumer implements MessageConsumer {
     private final BlockingQueue<ConsumerEvent> rebalanceResults =
             new ArrayBlockingQueue<ConsumerEvent>(REBALANCE_QUEUE_SIZE);
     // flowctrl
+    private boolean isCurGroupCtrl = false;
+    private AtomicLong lastCheckTime = new AtomicLong(0);
     private final FlowCtrlRuleHandler groupFlowCtrlRuleHandler =
             new FlowCtrlRuleHandler();
     private final FlowCtrlRuleHandler defFlowCtrlRuleHandler =
@@ -727,6 +729,7 @@ public class BaseMessageConsumer implements MessageConsumer {
         builder.setClientId(this.consumerId);
         builder.setGroupName(this.consumerConfig.getConsumerGroup());
         builder.setTopicName(partition.getTopic());
+        builder.setEscFlowCtrl(isCurGroupCtrl());
         builder.setPartitionId(partition.getPartitionId());
         builder.setLastPackConsumed(isLastConsumed);
         builder.setManualCommitOffset(false);
@@ -1343,6 +1346,17 @@ public class BaseMessageConsumer implements MessageConsumer {
         if (this.isShutdown()) {
             throw new TubeClientException("Status error: consumer has been shutdown");
         }
+    }
+
+    private boolean isCurGroupCtrl() {
+        long curCheckTime = this.lastCheckTime.get();
+        if (System.currentTimeMillis() - curCheckTime >= 10000) {
+            if (this.lastCheckTime.compareAndSet(curCheckTime, System.currentTimeMillis())) {
+                this.isCurGroupCtrl =
+                    this.groupFlowCtrlRuleHandler.getCurDataLimit(Long.MAX_VALUE) != null;
+            }
+        }
+        return this.isCurGroupCtrl;
     }
 
     /**
