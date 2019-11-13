@@ -28,25 +28,32 @@ public class SimpleVisitTokenManage extends AbstractDaemonService {
     private static final Logger logger = LoggerFactory.getLogger(SimpleVisitTokenManage.class);
 
     private final MasterConfig masterConfig;
-    private final AtomicLong visitAuthorized = new AtomicLong(System.currentTimeMillis());
+    private final AtomicLong validVisitAuthorized = new AtomicLong(0);
+    private final AtomicLong freshVisitAuthorized = new AtomicLong(0);
 
     public SimpleVisitTokenManage(final MasterConfig masterConfig) {
         super("[VisitToken Manager]", (masterConfig.getVisitTokenValidPeriodMs() * 4) / 5);
         this.masterConfig = masterConfig;
-        visitAuthorized.set(System.currentTimeMillis());
+        freshVisitAuthorized.set(System.currentTimeMillis());
+        validVisitAuthorized.set(freshVisitAuthorized.get());
         super.start();
     }
 
     public long getCurVisitToken() {
-        return visitAuthorized.get();
+        return validVisitAuthorized.get();
     }
+
+    public long getFreshVisitToken() {
+        return freshVisitAuthorized.get();
+    }
+
 
     @Override
     protected void loopProcess(long intervalMs) {
         while (!super.isStopped()) {
             try {
                 Thread.sleep(intervalMs);
-                visitAuthorized.set(System.currentTimeMillis());
+                validVisitAuthorized.set(freshVisitAuthorized.getAndSet(System.currentTimeMillis()));
             } catch (InterruptedException e) {
                 logger.warn("[VisitToken Manager] Daemon generator thread has been interrupted");
                 return;

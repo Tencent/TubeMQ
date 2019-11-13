@@ -339,7 +339,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 new HashSet<String>(transTopicSet), hostName, overtls);
         builder.setBrokerCheckSum(this.defaultBrokerConfManage.getBrokerInfoCheckSum());
         builder.addAllBrokerInfos(this.defaultBrokerConfManage.getBrokersMap(overtls).values());
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
         logger.info(strBuffer.append("[Producer Register] ")
                 .append(producerId).append(", isOverTLS=").append(overtls).toString());
         builder.setSuccess(true);
@@ -423,7 +423,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         Map<String, String> availTopicPartitions = getProducerTopicPartitionInfo(producerId);
         builder.addAllTopicInfos(availTopicPartitions.values());
         builder.setBrokerCheckSum(defaultBrokerConfManage.getBrokerInfoCheckSum());
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
         if (defaultBrokerConfManage.getBrokerInfoCheckSum() != inBrokerCheckSum) {
             builder.addAllBrokerInfos(defaultBrokerConfManage.getBrokersMap(overtls).values());
         }
@@ -684,7 +684,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 }
             }
         }
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
         builder.setNotAllocated(consumerHolder.isNotAllocated(groupName));
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
@@ -866,7 +866,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 }
             }
         }
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
         builder.setNotAllocated(consumerHolder.isNotAllocated(groupName));
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
@@ -1058,7 +1058,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
         builder.setErrMsg("OK!");
-        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null);
+        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null, true);
         builder.setAuthorizedInfo(authorizedBuilder.build());
         EnableBrokerFunInfo.Builder enableInfo = EnableBrokerFunInfo.newBuilder();
         enableInfo.setEnableProduceAuthenticate(masterConfig.isStartProduceAuthenticate());
@@ -1292,7 +1292,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                     .append(brokerSyncStatusInfo.getLastPushBrokerTopicSetConfInfo())
                     .toString());
         }
-        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null);
+        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null, true);
         builder.setAuthorizedInfo(authorizedBuilder.build());
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
@@ -2159,9 +2159,13 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
      * @param authAuthorizedToken
      * @return
      */
-    private MasterAuthorizedInfo.Builder genAuthorizedInfo(String authAuthorizedToken) {
+    private MasterAuthorizedInfo.Builder genAuthorizedInfo(String authAuthorizedToken, boolean isBroker) {
         MasterAuthorizedInfo.Builder authorizedBuilder = MasterAuthorizedInfo.newBuilder();
-        authorizedBuilder.setVisitAuthorizedToken(visitTokenManage.getCurVisitToken());
+        if (isBroker) {
+            authorizedBuilder.setVisitAuthorizedToken(visitTokenManage.getFreshVisitToken());
+        } else {
+            authorizedBuilder.setVisitAuthorizedToken(visitTokenManage.getCurVisitToken());
+        }
         if (TStringUtils.isNotBlank(authAuthorizedToken)) {
             authorizedBuilder.setAuthAuthorizedToken(authAuthorizedToken);
         }
