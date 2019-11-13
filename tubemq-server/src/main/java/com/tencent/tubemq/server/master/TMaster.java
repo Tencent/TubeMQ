@@ -291,7 +291,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         builder.setSuccess(false);
         builder.setBrokerCheckSum(-1);
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), true);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
@@ -366,7 +366,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         builder.setSuccess(false);
         builder.setBrokerCheckSum(-1);
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), true);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
@@ -455,7 +455,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         CloseResponseM2P.Builder builder = CloseResponseM2P.newBuilder();
         builder.setSuccess(false);
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), true);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
@@ -498,7 +498,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         RegisterResponseM2C.Builder builder = RegisterResponseM2C.newBuilder();
         builder.setSuccess(false);
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), false);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
@@ -712,7 +712,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         builder.setSuccess(false);
         // identity valid
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), false);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
@@ -891,7 +891,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         CloseResponseM2C.Builder builder = CloseResponseM2C.newBuilder();
         builder.setSuccess(false);
         CertifiedResult certResult =
-                serverAuthHandler.identityValidUserInfo(request.getAuthInfo());
+                serverAuthHandler.identityValidUserInfo(request.getAuthInfo(), false);
         if (!certResult.result) {
             builder.setErrCode(certResult.errCode);
             builder.setErrMsg(certResult.errInfo);
