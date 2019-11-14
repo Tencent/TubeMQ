@@ -1480,9 +1480,13 @@ public class BaseMessageConsumer implements MessageConsumer {
                         }
                         return;
                     }
-                    heartbeatRetryTimes++;
                     logger.error(strBuffer.append("[Heartbeat Failed] ")
                             .append(response.getErrMsg()).toString());
+                    if (response.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
+                        adjustHeartBeatPeriod("certificate failure", strBuffer);
+                    } else {
+                        heartbeatRetryTimes++;
+                    }
                     return;
                 }
                 // Process the heartbeat success response
@@ -1529,15 +1533,23 @@ public class BaseMessageConsumer implements MessageConsumer {
                 if (!isShutdown()) {
                     logger.error("Heartbeat failed,retry later.", e);
                 }
-                lastHeartbeatTime2Master = System.currentTimeMillis();
-                heartbeatRetryTimes++;
-                if (!isShutdown()
-                        && heartbeatRetryTimes > consumerConfig.getMaxHeartBeatRetryTimes()) {
-                    strBuffer.delete(0, strBuffer.length());
-                    logger.error(strBuffer.append("Heartbeat exception! Sleep ")
-                            .append(consumerConfig.getHeartbeatPeriodAfterFail())
-                            .append(" ms ").toString(), e);
-                    ThreadUtils.sleep(consumerConfig.getHeartbeatPeriodAfterFail());
+                adjustHeartBeatPeriod("heartbeat exception", strBuffer);
+            }
+        }
+
+        private void adjustHeartBeatPeriod(String reason, StringBuilder sBuilder) {
+            lastHeartbeatTime2Master = System.currentTimeMillis();
+            heartbeatRetryTimes++;
+            if (!isShutdown()
+                    && heartbeatRetryTimes > consumerConfig.getMaxHeartBeatRetryTimes()) {
+                logger.warn(sBuilder.append("Adjust HeartbeatPeriod for ").append(reason)
+                        .append(", sleep ").append(consumerConfig.getHeartbeatPeriodAfterFail())
+                        .append(" Ms").toString());
+                sBuilder.delete(0, sBuilder.length());
+                try {
+                    Thread.sleep(consumerConfig.getHeartbeatPeriodAfterFail());
+                } catch (InterruptedException e1) {
+                    //
                 }
             }
         }
@@ -1622,6 +1634,17 @@ public class BaseMessageConsumer implements MessageConsumer {
                                             }
                                         }
                                     }
+                                }
+                                if (heartBeatResponseV2.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
+                                    for (Partition partition : partitions) {
+                                        removePartition(partition);
+                                    }
+                                    logger.warn(strBuffer
+                                            .append("[heart2broker error] certificate failure, ")
+                                            .append(brokerInfo.getBrokerStrInfo())
+                                            .append("'s partitions ared released, ")
+                                            .append(heartBeatResponseV2.getErrMsg()).toString());
+                                    strBuffer.delete(0, strBuffer.length());
                                 }
                             }
                         } catch (Throwable ee) {
