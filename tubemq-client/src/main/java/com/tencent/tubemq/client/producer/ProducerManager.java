@@ -623,15 +623,17 @@ public class ProducerManager {
                         logger.error(sBuilder.append("[Heartbeat Failed] ")
                                 .append(response.getErrMsg()).toString());
                         sBuilder.delete(0, sBuilder.length());
-                        if (response.getErrCode() == TErrCodeConstants.HB_NO_NODE
-                                || response.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
+                        if (response.getErrCode() == TErrCodeConstants.HB_NO_NODE) {
                             try {
                                 register2Master();
                             } catch (Throwable ee) {
                                 logger.error(sBuilder
-                                        .append("[Heartbeat Failed] re-register failure, error is ")
-                                        .append(ee.getMessage()).toString());
+                                    .append("[Heartbeat Failed] re-register failure, error is ")
+                                    .append(ee.getMessage()).toString());
+                                sBuilder.delete(0, sBuilder.length());
                             }
+                        } else if (response.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
+                            adjustHeartBeatPeriod("certificate failure", sBuilder);
                         }
                     }
                     return;
@@ -682,23 +684,28 @@ public class ProducerManager {
                                     .append("#").append(e.getMessage()).toString());
                     sBuilder.delete(0, sBuilder.length());
                 }
-                lastHeartbeatTime = System.currentTimeMillis();
-                heartbeatRetryTimes++;
-                if ((nodeStatus.get() == 1)
-                        && heartbeatRetryTimes > tubeClientConfig.getMaxHeartBeatRetryTimes()) {
-                    logger.error(sBuilder.append("Heartbeat exception! Sleep ")
-                            .append(tubeClientConfig.getHeartbeatPeriodAfterFail())
-                            .append(" Ms").toString(), e);
-                    sBuilder.delete(0, sBuilder.length());
-                    try {
-                        Thread.sleep(tubeClientConfig.getHeartbeatPeriodAfterFail());
-                    } catch (InterruptedException e1) {
-                        return;
-                    }
-                }
+                adjustHeartBeatPeriod("heartbeat exception", sBuilder);
             } finally {
                 heartBeatStatus.compareAndSet(1, 0);
             }
         }
+
+        private void adjustHeartBeatPeriod(String reason, StringBuilder sBuilder) {
+            lastHeartbeatTime = System.currentTimeMillis();
+            heartbeatRetryTimes++;
+            if ((nodeStatus.get() != 1)
+                && heartbeatRetryTimes > tubeClientConfig.getMaxHeartBeatRetryTimes()) {
+                logger.warn(sBuilder.append("Adjust HeartbeatPeriod for ").append(reason)
+                    .append(", sleep ").append(tubeClientConfig.getHeartbeatPeriodAfterFail())
+                    .append(" Ms").toString());
+                sBuilder.delete(0, sBuilder.length());
+                try {
+                    Thread.sleep(tubeClientConfig.getHeartbeatPeriodAfterFail());
+                } catch (InterruptedException e1) {
+                    return;
+                }
+            }
+        }
     }
+
 }
