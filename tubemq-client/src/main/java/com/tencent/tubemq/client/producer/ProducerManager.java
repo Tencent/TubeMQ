@@ -150,9 +150,9 @@ public class ProducerManager {
     /**
      * Start the producer manager.
      *
-     * @throws TubeClientException
+     * @throws Throwable
      */
-    public void start() throws TubeClientException {
+    public void start() throws Throwable {
         if (nodeStatus.get() <= 0) {
             if (nodeStatus.compareAndSet(-1, 0)) {
                 register2Master();
@@ -375,7 +375,7 @@ public class ProducerManager {
         }
     }
 
-    private void register2Master() throws TubeClientException {
+    private void register2Master() throws Throwable {
         int remainingRetry =
                 this.tubeClientConfig.getMaxRegisterRetryTimes();
         StringBuilder sBuilder = new StringBuilder(512);
@@ -419,7 +419,7 @@ public class ProducerManager {
                     //
                 }
                 if (remainingRetry <= 0) {
-                    throw new TubeClientException("Register producer exception, error is ", e);
+                    throw e;
                 }
             }
         } while (true);

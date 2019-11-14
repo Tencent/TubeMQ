@@ -129,7 +129,15 @@ public class TubeBaseSessionFactory implements InnerSessionFactory {
     @Override
     public MessageProducer createProducer() throws TubeClientException {
         this.brokerRcvQltyStats.startBrokerStatistic();
-        this.producerManager.start();
+        try {
+            this.producerManager.start();
+        } catch (Throwable e) {
+            if (e instanceof TubeClientException) {
+                throw (TubeClientException) e;
+            } else {
+                throw new TubeClientException("Create Producer failure, ", e);
+            }
+        }
         return this.addClient(new SimpleMessageProducer(this, this.tubeClientConfig));
     }
 
