@@ -368,7 +368,7 @@ public class WebAdminFlowRuleHandler {
             List<Integer> ruleTypes = Arrays.asList(0, 1, 2, 3);
             inFlowCtrlInfo = String.valueOf(inFlowCtrlInfo).trim();
             FlowCtrlRuleHandler flowCtrlRuleHandler =
-                    new FlowCtrlRuleHandler();
+                new FlowCtrlRuleHandler(true);
             Map<Integer, List<FlowCtrlItem>> flowCtrlItemMap =
                     flowCtrlRuleHandler.parseFlowCtrlInfo(inFlowCtrlInfo);
             for (Integer typeId : ruleTypes) {

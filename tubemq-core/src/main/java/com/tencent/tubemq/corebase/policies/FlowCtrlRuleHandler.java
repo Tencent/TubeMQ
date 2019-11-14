@@ -43,7 +43,8 @@ import org.slf4j.LoggerFactory;
  * the processing speed
  */
 public class FlowCtrlRuleHandler {
-
+    private final boolean isDefaultHandler;
+    private final String flowCtrlName;
     private static final Logger logger =
             LoggerFactory.getLogger(FlowCtrlRuleHandler.class);
     private final TimeZone timeZone = TimeZone.getTimeZone("GMT+8:00");
@@ -81,7 +82,13 @@ public class FlowCtrlRuleHandler {
     private Map<Integer, List<FlowCtrlItem>> flowCtrlRuleSet =
             new ConcurrentHashMap<Integer, List<FlowCtrlItem>>();
 
-    public FlowCtrlRuleHandler() {
+    public FlowCtrlRuleHandler(boolean isDefault) {
+        this.isDefaultHandler = isDefault;
+        if (this.isDefaultHandler) {
+            flowCtrlName = "Default_FlowCtrl";
+        } else {
+            flowCtrlName = "Group_FlowCtrl";
+        }
 
     }
 
@@ -108,10 +115,10 @@ public class FlowCtrlRuleHandler {
             this.flowCtrlId.set(flowCtrlId);
             this.strFlowCtrlInfo = flowCtrlInfo;
             logger.info(new StringBuilder(512)
-                    .append("[Flow Ctrl] FlowCtrl Rule updated to flowId=")
-                    .append(flowCtrlId).append(",ssdTranslateId=")
-                    .append(ssdTranslateId).append(",qyrPriorityId=")
-                    .append(qyrPriorityId).toString());
+                .append("[Flow Ctrl] Updated ").append(flowCtrlName)
+                .append(" to flowId=").append(flowCtrlId)
+                .append(",ssdTranslateId=").append(ssdTranslateId)
+                .append(",qyrPriorityId=").append(qyrPriorityId).toString());
             this.ssdTranslateId.set(ssdTranslateId);
             this.qryPriorityId.set(qyrPriorityId);
             clearStatisData();

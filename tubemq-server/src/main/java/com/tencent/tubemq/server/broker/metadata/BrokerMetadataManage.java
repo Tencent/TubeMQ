@@ -42,7 +42,7 @@ public class BrokerMetadataManage implements MetadataManage {
             new PropertyChangeSupport(this);
     // the rule handler of flow control.
     private final FlowCtrlRuleHandler flowCtrlRuleHandler =
-            new FlowCtrlRuleHandler();
+            new FlowCtrlRuleHandler(true);
     // broker's config check sum.
     private int brokerConfCheckSumId = 0;
     // broker's metadata Id.
