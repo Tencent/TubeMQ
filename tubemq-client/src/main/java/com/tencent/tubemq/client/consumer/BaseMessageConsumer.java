@@ -283,6 +283,7 @@ public class BaseMessageConsumer implements MessageConsumer {
      *
      * @throws TubeClientException
      */
+    @Override
     public void completeSubscribe() throws TubeClientException {
         this.checkClientRunning();
         if (this.consumeSubInfo.isSubscribedTopicEmpty()) {
@@ -303,6 +304,7 @@ public class BaseMessageConsumer implements MessageConsumer {
         this.subStatus.set(1);
     }
 
+    @Override
     public void completeSubscribe(final String sessionKey,
                                   final int sourceCount,
                                   final boolean isSelectBig,
@@ -797,18 +799,18 @@ public class BaseMessageConsumer implements MessageConsumer {
                             if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED
                                     || responseB2C.getErrCode() == TErrCodeConstants.CERTIFICATE_FAILURE) {
                                 unRegPartitions.remove(partition);
-                                if (logger.isDebugEnabled()) {
-                                    if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED) {
+                                if (responseB2C.getErrCode() == TErrCodeConstants.PARTITION_OCCUPIED) {
+                                    if (logger.isDebugEnabled()) {
                                         logger.debug(strBuffer
-                                            .append("[Partition occupied], curr consumerId: ")
-                                            .append(consumerId).append(", returned message : ")
-                                            .append(responseB2C.getErrMsg()).toString());
-                                    } else {
-                                        logger.debug(strBuffer
+                                                .append("[Partition occupied], curr consumerId: ")
+                                                .append(consumerId).append(", returned message : ")
+                                                .append(responseB2C.getErrMsg()).toString());
+                                    }
+                                } else {
+                                    logger.warn(strBuffer
                                             .append("[Certificate failure], curr consumerId: ")
                                             .append(consumerId).append(", returned message : ")
                                             .append(responseB2C.getErrMsg()).toString());
-                                    }
                                 }
                             } else {
                                 logger.warn(strBuffer.append("register2broker error! ")
@@ -960,7 +962,7 @@ public class BaseMessageConsumer implements MessageConsumer {
         if (subInfoList != null) {
             builder.addAllSubscribeInfo(DataConverterUtil.formatSubInfo(subInfoList));
         }
-        ClientMaster.MasterCertificateInfo.Builder authInfoBuilder = genMasterCertificateInfo(false);
+        ClientMaster.MasterCertificateInfo.Builder authInfoBuilder = genMasterCertificateInfo(true);
         if (authInfoBuilder != null) {
             builder.setAuthInfo(authInfoBuilder.build());
         }
@@ -1044,7 +1046,7 @@ public class BaseMessageConsumer implements MessageConsumer {
         builder.setQryPriorityId(groupFlowCtrlRuleHandler.getQryPriorityId());
         builder.addAllPartitionInfo(partitionList);
         ClientBroker.AuthorizedInfo.Builder authInfoBuilder =
-                genBrokerAuthenticInfo(false);
+                genBrokerAuthenticInfo(true);
         if (authInfoBuilder != null) {
             builder.setAuthInfo(authInfoBuilder.build());
         }
@@ -1126,7 +1128,7 @@ public class BaseMessageConsumer implements MessageConsumer {
             authInfoBuilder = ClientMaster.MasterCertificateInfo.newBuilder();
             authInfoBuilder.setAuthInfo(authenticateHandler
                     .genMasterAuthenticateToken(consumerConfig.getUsrName(),
-                            consumerConfig.getUsrPassWord()));
+                            consumerConfig.getUsrPassWord()).build());
         }
         return authInfoBuilder;
     }
@@ -1167,8 +1169,7 @@ public class BaseMessageConsumer implements MessageConsumer {
                 String inAuthAuthorizedToken = inAuthorizedTokenInfo.getAuthAuthorizedToken();
                 if (TStringUtils.isNotBlank(inAuthAuthorizedToken)) {
                     String curAuthAuthorizedToken = authAuthorizedTokenRef.get();
-                    if (curAuthAuthorizedToken == null
-                            || !inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
+                    if (!inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
                         authAuthorizedTokenRef.set(inAuthAuthorizedToken);
                     }
                 }

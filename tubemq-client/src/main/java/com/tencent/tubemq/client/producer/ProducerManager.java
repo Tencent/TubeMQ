@@ -453,7 +453,7 @@ public class ProducerManager {
         }
         builder.setHostName(AddressUtils.getLocalAddress());
         ClientMaster.MasterCertificateInfo.Builder authInfoBuilder =
-                genMasterCertificateInfo(false);
+                genMasterCertificateInfo(true);
         if (authInfoBuilder != null) {
             builder.setAuthInfo(authInfoBuilder.build());
         }
@@ -591,7 +591,7 @@ public class ProducerManager {
             authInfoBuilder = ClientMaster.MasterCertificateInfo.newBuilder();
             authInfoBuilder.setAuthInfo(authenticateHandler
                     .genMasterAuthenticateToken(tubeClientConfig.getUsrName(),
-                            tubeClientConfig.getUsrPassWord()));
+                            tubeClientConfig.getUsrPassWord()).build());
         }
         return authInfoBuilder;
     }
