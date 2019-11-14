@@ -27,8 +27,8 @@ public class PartitionExtTest {
 
     @Test
     public void testPartitionExt() {
-        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
-        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
+        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler(false);
+        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler(true);
         PartitionExt partition = new PartitionExt(
                 groupFlowCtrlRuleHandler,
                 defFlowCtrlRuleHandler,
@@ -45,8 +45,8 @@ public class PartitionExtTest {
 
     @Test
     public void testPartitionExtSuccess() {
-        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
-        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
+        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler(false);
+        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler(true);
         PartitionExt partition = new PartitionExt(
                 groupFlowCtrlRuleHandler,
                 defFlowCtrlRuleHandler,
@@ -63,8 +63,8 @@ public class PartitionExtTest {
 
     @Test
     public void testPartitionExtError() {
-        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
-        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
+        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler(false);
+        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler(true);
         PartitionExt partition = new PartitionExt(
                 groupFlowCtrlRuleHandler,
                 defFlowCtrlRuleHandler,

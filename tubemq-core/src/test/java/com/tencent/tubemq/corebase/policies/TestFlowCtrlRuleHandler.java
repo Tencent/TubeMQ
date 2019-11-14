@@ -40,7 +40,7 @@ public class TestFlowCtrlRuleHandler {
     @Test
     public void testFlowCtrlRuleHandler() {
         try {
-            FlowCtrlRuleHandler handler = new FlowCtrlRuleHandler();
+            FlowCtrlRuleHandler handler = new FlowCtrlRuleHandler(true);
             handler.updateDefFlowCtrlInfo(1001, 2, 10, mockFlowCtrlInfo());
             TimeZone timeZone = TimeZone.getTimeZone("GMT+8:00");
             Calendar rightNow = Calendar.getInstance(timeZone);

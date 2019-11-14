@@ -94,9 +94,9 @@ public class BaseMessageConsumer implements MessageConsumer {
     private boolean isCurGroupCtrl = false;
     private AtomicLong lastCheckTime = new AtomicLong(0);
     private final FlowCtrlRuleHandler groupFlowCtrlRuleHandler =
-            new FlowCtrlRuleHandler();
+            new FlowCtrlRuleHandler(false);
     private final FlowCtrlRuleHandler defFlowCtrlRuleHandler =
-            new FlowCtrlRuleHandler();
+            new FlowCtrlRuleHandler(true);
     private final ConsumerSamplePrint samplePrintCtrl =
             new ConsumerSamplePrint();
     private final RpcConfig rpcConfig = new RpcConfig();

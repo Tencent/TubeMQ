@@ -34,8 +34,8 @@ public class RmtDataCacheTest {
 
     @Test
     public void testRmtDataCache() {
-        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
-        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler();
+        FlowCtrlRuleHandler groupFlowCtrlRuleHandler = new FlowCtrlRuleHandler(false);
+        FlowCtrlRuleHandler defFlowCtrlRuleHandler = new FlowCtrlRuleHandler(true);
         List<Partition> partitions = new ArrayList<>();
         BrokerInfo brokerInfo = new BrokerInfo(1, "127.0.0.1", 18080);
         Partition expectPartition = new Partition(brokerInfo, "test", 1);

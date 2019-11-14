@@ -1220,19 +1220,20 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         int reqQureyPriorityId = request.hasQryPriorityId()
                 ? request.getQryPriorityId() : TBaseConstants.META_VALUE_UNDEFINED;
         if (request.getTakeConfInfo()) {
-            strBuffer.append("[Broker Report] heartbeat report: broker configure id : ")
-                    .append(request.getCurBrokerConfId())
-                    .append(", checksum id  is ").append(request.getConfCheckSumId())
-                    .append(", hasFlowCheckId=").append(request.hasFlowCheckId())
-                    .append(",reFlowCtrlId=").append(reFlowCtrlId)
-                    .append(", reqSsdTransId=").append(reqSsdTransId)
-                    .append(", reqQureyPriorityId=").append(reqQureyPriorityId)
-                    .append(", default broker configure is ").append(request.getBrokerDefaultConfInfo())
-                    .append(", broker topic configure is ").append(request.getBrokerTopicSetConfInfoList())
-                    .append(", broker is Online : ").append(request.getBrokerOnline())
-                    .append(", readStatusRpt=").append(request.getReadStatusRpt())
-                    .append(", writeStatusRpt=").append(request.getWriteStatusRpt())
-                    .append(", current brokerSyncStatusInfo is ");
+            strBuffer.append("[Broker Report] heartbeat report: brokerId=")
+                .append(request.getBrokerId()).append(", configureId=")
+                .append(request.getCurBrokerConfId())
+                .append(", checksumId=").append(request.getConfCheckSumId())
+                .append(", hasFlowCheckId=").append(request.hasFlowCheckId())
+                .append(",reFlowCtrlId=").append(reFlowCtrlId)
+                .append(", reqSsdTransId=").append(reqSsdTransId)
+                .append(", reqQureyPriorityId=").append(reqQureyPriorityId)
+                .append(", default broker configure is ").append(request.getBrokerDefaultConfInfo())
+                .append(", broker topic configure is ").append(request.getBrokerTopicSetConfInfoList())
+                .append(", broker is Online : ").append(request.getBrokerOnline())
+                .append(", readStatusRpt=").append(request.getReadStatusRpt())
+                .append(", writeStatusRpt=").append(request.getWriteStatusRpt())
+                .append(", current brokerSyncStatusInfo is ");
             logger.info(brokerSyncStatusInfo.toJsonString(strBuffer, true).toString());
             strBuffer.delete(0, strBuffer.length());
         }
