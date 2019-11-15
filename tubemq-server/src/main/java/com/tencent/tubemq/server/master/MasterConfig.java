@@ -62,6 +62,7 @@ public class MasterConfig extends AbstractFileConfig {
     private boolean startOffsetResetCheck = false;
     private int rowLockWaitDurMs =
             TServerConstants.CFG_ROWLOCK_DEFAULT_DURATION;
+    private boolean startVisitTokenCheck = false;
     private boolean startProduceAuthenticate = false;
     private boolean startProduceAuthorize = false;
     private boolean startConsumeAuthenticate = false;
@@ -187,6 +188,10 @@ public class MasterConfig extends AbstractFileConfig {
 
     public ZKConfig getZkConfig() {
         return zkConfig;
+    }
+
+    public boolean isStartVisitTokenCheck() {
+        return startVisitTokenCheck;
     }
 
     public long getVisitTokenValidPeriodMs() {
@@ -393,6 +398,9 @@ public class MasterConfig extends AbstractFileConfig {
             // must between 5,000 ms and 120,000 ms
             this.authValidTimeStampPeriodMs =
                     tmpPeriodMs < 5000 ? 5000 : tmpPeriodMs > 120000 ? 120000 : tmpPeriodMs;
+        }
+        if (TStringUtils.isNotBlank(masterConf.get("startVisitTokenCheck"))) {
+            this.startVisitTokenCheck = this.getBoolean(masterConf, "startVisitTokenCheck");
         }
         if (TStringUtils.isNotBlank(masterConf.get("startProduceAuthenticate"))) {
             this.startProduceAuthenticate = this.getBoolean(masterConf, "startProduceAuthenticate");

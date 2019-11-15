@@ -35,6 +35,7 @@ In addition to the back-end system configuration file, the Master also stores th
 | needBrokerVisitAuth           | no       | boolean | Whether to enable Broker access authentication, the default is false. If true, the message reported by the broker must carry the correct username and signature information. |
 | visitName                     | no       | string  | The username of the Broker access authentication. The default is an empty string. This value must exist when needBrokerVisitAuth is true. This value must be the same as the value of the visitName field in broker.ini. |
 | visitPassword                 | no       | string  | The password for the Broker access authentication. The default is an empty string. This value must exist when needBrokerVisitAuth is true. This value must be the same as the value of the visitPassword field in broker.ini. |
+| startVisitTokenCheck      | no       | boolean | Whether to enable client visitToken check, the default is false |
 | startProduceAuthenticate      | no       | boolean | Whether to enable production end user authentication, the default is false |
 | startProduceAuthorize         | no       | boolean | Whether to enable production-side production authorization authentication, the default is false |
 | startConsumeAuthenticate      | no       | boolean | Whether to enable consumer user authentication, the default is false |

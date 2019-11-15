@@ -24,12 +24,12 @@ import java.util.Set;
 
 public interface CertificateBrokerHandler {
 
-    void configure(boolean enableProduceAuthenticate, boolean enableProduceAuthorize,
-                   boolean enableConsumeAuthenticate, boolean enableConsumeAuthorize);
+    void configure(ClientMaster.EnableBrokerFunInfo enableFunInfo);
 
-    void appendVisitToken(ClientMaster.MasterAuthorizedInfo authorizedInfo);
+    void appendVisitToken(ClientMaster.MasterBrokerAuthorizedInfo authorizedInfo);
 
-    CertifiedResult identityValidUserInfo(final ClientBroker.AuthorizedInfo authorizedInfo, boolean isProduce);
+    CertifiedResult identityValidUserInfo(final ClientBroker.AuthorizedInfo authorizedInfo,
+                                          boolean isProduce);
 
     CertifiedResult validProduceAuthorizeInfo(final String userName, final String topicName,
                                               final String msgType, String clientIp);
@@ -39,4 +39,13 @@ public interface CertificateBrokerHandler {
                                               final String topicName, final Set<String> msgTypeLst,
                                               boolean isRegister, String clientIp);
 
+    boolean isEnableProduceAuthenticate();
+
+    boolean isEnableProduceAuthorize();
+
+    boolean isEnableConsumeAuthenticate();
+
+    boolean isEnableConsumeAuthorize();
+
+    boolean isEnableVisitTokenCheck();
 }

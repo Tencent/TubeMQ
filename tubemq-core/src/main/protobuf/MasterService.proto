@@ -35,6 +35,7 @@ message EnableBrokerFunInfo {
     required bool enableConsumeAuthorize = 2;
     required bool enableProduceAuthenticate = 3;
     required bool enableProduceAuthorize = 4;
+    optional bool enableVisitTokenCheck = 5;
 }
 
 message AuthenticateInfo {
@@ -52,6 +53,11 @@ message MasterCertificateInfo {
 
 message MasterAuthorizedInfo {
     required int64 visitAuthorizedToken = 1;
+    optional string authAuthorizedToken = 2;
+}
+
+message MasterBrokerAuthorizedInfo {
+    required string visitAuthorizedToken = 1;
     optional string authAuthorizedToken = 2;
 }
 
@@ -220,7 +226,8 @@ message RegisterResponseM2B {
     optional int64 flowCheckId = 13;
     optional string flowControlInfo = 14;
     optional int32 qryPriorityId = 15;
-    optional MasterAuthorizedInfo authorizedInfo = 16;
+    optional MasterAuthorizedInfo authorizedInfo = 16; /* Deprecated  */
+    optional MasterBrokerAuthorizedInfo brokerAuthorizedInfo = 17;
 }
 
 message HeartRequestB2M {
@@ -264,7 +271,8 @@ message HeartResponseM2B {
     optional int64 flowCheckId = 15;
     optional string flowControlInfo = 16;
     optional int32 qryPriorityId = 17;
-    optional MasterAuthorizedInfo authorizedInfo = 18;
+    optional MasterAuthorizedInfo authorizedInfo = 18;   /* Deprecated  */
+    optional MasterBrokerAuthorizedInfo brokerAuthorizedInfo = 19;
 }
 
 message CloseRequestB2M {

@@ -17,6 +17,7 @@
 
 package com.tencent.tubemq.server.master.utils;
 
+import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.daemon.AbstractDaemonService;
 import com.tencent.tubemq.server.master.MasterConfig;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,12 +31,17 @@ public class SimpleVisitTokenManage extends AbstractDaemonService {
     private final MasterConfig masterConfig;
     private final AtomicLong validVisitAuthorized = new AtomicLong(0);
     private final AtomicLong freshVisitAuthorized = new AtomicLong(0);
+    private String brokerVisitTokens = "";
+    private StringBuilder strBuilder = new StringBuilder(256);
 
     public SimpleVisitTokenManage(final MasterConfig masterConfig) {
         super("[VisitToken Manager]", (masterConfig.getVisitTokenValidPeriodMs() * 4) / 5);
         this.masterConfig = masterConfig;
         freshVisitAuthorized.set(System.currentTimeMillis());
         validVisitAuthorized.set(freshVisitAuthorized.get());
+        brokerVisitTokens = strBuilder.append(validVisitAuthorized.get())
+            .append(TokenConstants.ARRAY_SEP).append(freshVisitAuthorized.get()).toString();
+        strBuilder.delete(0, strBuilder.length());
         super.start();
     }
 
@@ -47,6 +53,9 @@ public class SimpleVisitTokenManage extends AbstractDaemonService {
         return freshVisitAuthorized.get();
     }
 
+    public String getBrokerVisitTokens() {
+        return brokerVisitTokens;
+    }
 
     @Override
     protected void loopProcess(long intervalMs) {
@@ -54,6 +63,9 @@ public class SimpleVisitTokenManage extends AbstractDaemonService {
             try {
                 Thread.sleep(intervalMs);
                 validVisitAuthorized.set(freshVisitAuthorized.getAndSet(System.currentTimeMillis()));
+                brokerVisitTokens = strBuilder.append(validVisitAuthorized.get())
+                    .append(TokenConstants.ARRAY_SEP).append(freshVisitAuthorized.get()).toString();
+                strBuilder.delete(0, strBuilder.length());
             } catch (InterruptedException e) {
                 logger.warn("[VisitToken Manager] Daemon generator thread has been interrupted");
                 return;

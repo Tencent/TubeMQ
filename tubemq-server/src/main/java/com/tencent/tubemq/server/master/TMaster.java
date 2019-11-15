@@ -46,6 +46,7 @@ import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.HeartResponse
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.HeartResponseM2C;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.HeartResponseM2P;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.MasterAuthorizedInfo;
+import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.MasterBrokerAuthorizedInfo;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.RegisterRequestB2M;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.RegisterRequestC2M;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster.RegisterRequestP2M;
@@ -684,7 +685,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 }
             }
         }
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false));
         builder.setNotAllocated(consumerHolder.isNotAllocated(groupName));
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
@@ -866,7 +867,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 }
             }
         }
-        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false).build());
+        builder.setAuthorizedInfo(genAuthorizedInfo(certResult.authorizedToken, false));
         builder.setNotAllocated(consumerHolder.isNotAllocated(groupName));
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
@@ -1058,9 +1059,12 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
         builder.setErrMsg("OK!");
-        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null, true);
-        builder.setAuthorizedInfo(authorizedBuilder.build());
+        // begin:  deprecated when brokers version equal to current master version
+        builder.setAuthorizedInfo(genAuthorizedInfo(null, true));
+        // end deprecated
+        builder.setBrokerAuthorizedInfo(genBrokerAuthorizedInfo(null));
         EnableBrokerFunInfo.Builder enableInfo = EnableBrokerFunInfo.newBuilder();
+        enableInfo.setEnableVisitTokenCheck(masterConfig.isStartVisitTokenCheck());
         enableInfo.setEnableProduceAuthenticate(masterConfig.isStartProduceAuthenticate());
         enableInfo.setEnableProduceAuthorize(masterConfig.isStartProduceAuthorize());
         enableInfo.setEnableConsumeAuthenticate(masterConfig.isStartConsumeAuthenticate());
@@ -1293,8 +1297,10 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                     .append(brokerSyncStatusInfo.getLastPushBrokerTopicSetConfInfo())
                     .toString());
         }
-        MasterAuthorizedInfo.Builder authorizedBuilder = genAuthorizedInfo(null, true);
-        builder.setAuthorizedInfo(authorizedBuilder.build());
+        // begin:  deprecated when brokers version equal to current master version
+        builder.setAuthorizedInfo(genAuthorizedInfo(null, true));
+        // end deprecated
+        builder.setBrokerAuthorizedInfo(genBrokerAuthorizedInfo(null));
         builder.setSuccess(true);
         builder.setErrCode(TErrCodeConstants.SUCCESS);
         builder.setErrMsg("OK!");
@@ -2155,7 +2161,22 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
     }
 
     /**
-     * get authorized info
+     * get broker authorized info
+     *
+     * @param authAuthorizedToken
+     * @return
+     */
+    private MasterBrokerAuthorizedInfo.Builder genBrokerAuthorizedInfo(String authAuthorizedToken) {
+        MasterBrokerAuthorizedInfo.Builder authorizedBuilder = MasterBrokerAuthorizedInfo.newBuilder();
+        authorizedBuilder.setVisitAuthorizedToken(visitTokenManage.getBrokerVisitTokens());
+        if (TStringUtils.isNotBlank(authAuthorizedToken)) {
+            authorizedBuilder.setAuthAuthorizedToken(authAuthorizedToken);
+        }
+        return authorizedBuilder;
+    }
+
+    /**
+     * get client authorized info
      *
      * @param authAuthorizedToken
      * @return
