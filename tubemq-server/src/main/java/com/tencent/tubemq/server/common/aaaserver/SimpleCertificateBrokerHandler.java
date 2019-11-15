@@ -90,7 +90,7 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
                     while (true) {
                         currList = visitTokenList.get();
                         if (currList.contains(curVisitToken)) {
-                            return;
+                            break;
                         }
                         List<Long> updateList = new ArrayList<Long>(currList);
                         while (updateList.size() >= MAX_VISIT_TOKEN_SIZE) {
@@ -98,7 +98,7 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
                         }
                         updateList.add(curVisitToken);
                         if (visitTokenList.compareAndSet(currList, updateList)) {
-                            return;
+                            break;
                         }
                     }
                 }
