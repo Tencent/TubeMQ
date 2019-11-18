@@ -35,6 +35,7 @@ In addition to the back-end system configuration file, the Master also stores th
 | needBrokerVisitAuth           | no       | boolean | Whether to enable Broker access authentication, the default is false. If true, the message reported by the broker must carry the correct username and signature information. |
 | visitName                     | no       | string  | The username of the Broker access authentication. The default is an empty string. This value must exist when needBrokerVisitAuth is true. This value must be the same as the value of the visitName field in broker.ini. |
 | visitPassword                 | no       | string  | The password for the Broker access authentication. The default is an empty string. This value must exist when needBrokerVisitAuth is true. This value must be the same as the value of the visitPassword field in broker.ini. |
+| startVisitTokenCheck      | no       | boolean | Whether to enable client visitToken check, the default is false |
 | startProduceAuthenticate      | no       | boolean | Whether to enable production end user authentication, the default is false |
 | startProduceAuthorize         | no       | boolean | Whether to enable production-side production authorization authentication, the default is false |
 | startConsumeAuthenticate      | no       | boolean | Whether to enable consumer user authentication, the default is false |
@@ -113,6 +114,7 @@ In addition to the back-end system configuration file, the Master also stores th
 | tcpReadServiceThread  | no       | int     | Broker supports the number of socket worker threads for TCP consumer services, optional fields, defaults to 2 times the number of CPUs of the machine |
 | logClearupDurationMs  | no       | long    | The aging cleanup period of the message file, in milliseconds. The default is 30 minutes for a log cleanup operation. The minimum is 30 minutes. |
 | logFlushDiskDurMs     | no       | long    | Batch check message persistence to file check cycle, in milliseconds, default is 20 seconds for a full check and brush |
+| visitTokenCheckInValidTimeMs       | no       | long | The length of the delay check for the visitToken check since the Broker is registered, in ms, the default is 120000, the value range [60000, 300000]. |
 | visitMasterAuth       | no       | boolean | Whether the authentication of the master is enabled, the default is false. If true, the user name and signature information are added to the signaling reported to the master. |
 | visitName             | no       | string  | User name of the access master. The default is an empty string. This value must exist when visitMasterAuth is true. The value must be the same as the value of the visitName field in master.ini. |
 | visitPassword         | no       | string  | The password for accessing the master. The default is an empty string. This value must exist when visitMasterAuth is true. The value must be the same as the value of the visitPassword field in master.ini. |

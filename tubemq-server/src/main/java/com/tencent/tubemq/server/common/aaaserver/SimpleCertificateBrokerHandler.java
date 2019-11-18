@@ -18,6 +18,7 @@
 package com.tencent.tubemq.server.common.aaaserver;
 
 import com.tencent.tubemq.corebase.TErrCodeConstants;
+import com.tencent.tubemq.corebase.TokenConstants;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientBroker;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
@@ -35,10 +36,12 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
     private static final Logger logger =
             LoggerFactory.getLogger(SimpleCertificateBrokerHandler.class);
     private static final int MAX_VISIT_TOKEN_SIZE = 6; // at least 3 items
-
+    private long inValidTokenCheckTimeMs = 120000; // 2 minutes
     private final TubeBroker tubeBroker;
     private final AtomicReference<List<Long>> visitTokenList =
             new AtomicReference<List<Long>>();
+    private String lastUpdatedVisitTokens = "";
+    private boolean enableVisitTokenCheck = false;
     private boolean enableProduceAuthenticate = false;
     private boolean enableProduceAuthorize = false;
     private boolean enableConsumeAuthenticate = false;
@@ -47,39 +50,61 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
     public SimpleCertificateBrokerHandler(final TubeBroker tubeBroker) {
         this.tubeBroker = tubeBroker;
         this.visitTokenList.set(new ArrayList<Long>());
+        this.inValidTokenCheckTimeMs =
+            tubeBroker.getTubeConfig().getVisitTokenCheckInValidTimeMs();
     }
 
     @Override
-    public void configure(boolean enableProduceAuthenticate, boolean enableProduceAuthorize,
-                          boolean enableConsumeAuthenticate, boolean enableConsumeAuthorize) {
-        this.enableProduceAuthenticate = enableProduceAuthenticate;
-        this.enableProduceAuthorize = enableProduceAuthorize;
-        this.enableConsumeAuthenticate = enableConsumeAuthenticate;
-        this.enableConsumeAuthorize = enableConsumeAuthorize;
+    public void configure(ClientMaster.EnableBrokerFunInfo enableFunInfo) {
+        if (enableFunInfo != null) {
+            if (enableFunInfo.hasEnableVisitTokenCheck()) {
+                this.enableVisitTokenCheck = enableFunInfo.getEnableVisitTokenCheck();
+            }
+            this.enableProduceAuthenticate = enableFunInfo.getEnableProduceAuthenticate();
+            this.enableProduceAuthorize = enableFunInfo.getEnableProduceAuthorize();
+            this.enableConsumeAuthenticate = enableFunInfo.getEnableConsumeAuthenticate();
+            this.enableConsumeAuthorize = enableFunInfo.getEnableConsumeAuthorize();
+        }
 
     }
 
     @Override
-    public void appendVisitToken(ClientMaster.MasterAuthorizedInfo authorizedInfo) {
+    public void appendVisitToken(ClientMaster.MasterBrokerAuthorizedInfo authorizedInfo) {
         if (authorizedInfo == null) {
             return;
         }
-        long curVisitToken = authorizedInfo.getVisitAuthorizedToken();
-        List<Long> currList = visitTokenList.get();
-        if (!currList.contains(curVisitToken)) {
-            while (true) {
-                currList = visitTokenList.get();
-                if (currList.contains(curVisitToken)) {
-                    return;
+        String curBrokerVistTokens = authorizedInfo.getVisitAuthorizedToken();
+        if (TStringUtils.isBlank(curBrokerVistTokens)
+            || lastUpdatedVisitTokens.equals(curBrokerVistTokens)) {
+            return;
+        }
+        lastUpdatedVisitTokens = curBrokerVistTokens;
+        String[] visitTokenItems = curBrokerVistTokens.split(TokenConstants.ARRAY_SEP);
+        for (int i = 0; i < visitTokenItems.length; i++) {
+            if (TStringUtils.isBlank(visitTokenItems[i])) {
+                continue;
+            }
+            try {
+                long curVisitToken = Long.valueOf(visitTokenItems[i].trim());
+                List<Long> currList = visitTokenList.get();
+                if (!currList.contains(curVisitToken)) {
+                    while (true) {
+                        currList = visitTokenList.get();
+                        if (currList.contains(curVisitToken)) {
+                            break;
+                        }
+                        List<Long> updateList = new ArrayList<Long>(currList);
+                        while (updateList.size() >= MAX_VISIT_TOKEN_SIZE) {
+                            updateList.remove(0);
+                        }
+                        updateList.add(curVisitToken);
+                        if (visitTokenList.compareAndSet(currList, updateList)) {
+                            break;
+                        }
+                    }
                 }
-                List<Long> updateList = new ArrayList<Long>(currList);
-                while (updateList.size() >= MAX_VISIT_TOKEN_SIZE) {
-                    updateList.remove(0);
-                }
-                updateList.add(curVisitToken);
-                if (visitTokenList.compareAndSet(currList, updateList)) {
-                    return;
-                }
+            } catch (Throwable e) {
+                //
             }
         }
     }
@@ -90,18 +115,23 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
         CertifiedResult result = new CertifiedResult();
         if (authorizedInfo == null) {
             result.setFailureResult(TErrCodeConstants.CERTIFICATE_FAILURE,
-                    "Authorized Info is required!");
+                "Authorized Info is required!");
             return result;
         }
-        long curVisitToken = authorizedInfo.getVisitAuthorizedToken();
-        List<Long> currList = visitTokenList.get();
-        if (!currList.contains(curVisitToken)) {
-            result.setFailureResult(TErrCodeConstants.CERTIFICATE_FAILURE,
-                    "Visit Authorized Token is invalid!");
-            return result;
+        if (enableVisitTokenCheck) {
+            long curVisitToken = authorizedInfo.getVisitAuthorizedToken();
+            List<Long> currList = visitTokenList.get();
+            if (tubeBroker.isKeepAlive()) {
+                if (!currList.contains(curVisitToken)
+                    && (System.currentTimeMillis() - tubeBroker.getLastRegTime() > inValidTokenCheckTimeMs)) {
+                    result.setFailureResult(TErrCodeConstants.CERTIFICATE_FAILURE,
+                        "Visit Authorized Token is invalid!");
+                    return result;
+                }
+            }
         }
         if ((isProduce && !enableProduceAuthenticate)
-                || (!isProduce && !enableConsumeAuthenticate)) {
+            || (!isProduce && !enableConsumeAuthenticate)) {
             result.setSuccessResult("", "");
             return result;
         }
@@ -148,5 +178,28 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
         return result;
     }
 
+    @Override
+    public boolean isEnableProduceAuthenticate() {
+        return enableProduceAuthenticate;
+    }
 
+    @Override
+    public boolean isEnableProduceAuthorize() {
+        return enableProduceAuthorize;
+    }
+
+    @Override
+    public boolean isEnableConsumeAuthenticate() {
+        return enableConsumeAuthenticate;
+    }
+
+    @Override
+    public boolean isEnableConsumeAuthorize() {
+        return enableConsumeAuthorize;
+    }
+
+    @Override
+    public boolean isEnableVisitTokenCheck() {
+        return enableVisitTokenCheck;
+    }
 }
