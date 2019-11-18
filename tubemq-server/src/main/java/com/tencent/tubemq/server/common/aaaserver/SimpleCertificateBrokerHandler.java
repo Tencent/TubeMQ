@@ -36,8 +36,7 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
     private static final Logger logger =
             LoggerFactory.getLogger(SimpleCertificateBrokerHandler.class);
     private static final int MAX_VISIT_TOKEN_SIZE = 6; // at least 3 items
-    private static final int MAX_ALLOWED_DELAY_DURATION = 240000; // 4 minutes
-
+    private long inValidTokenCheckTimeMs = 120000; // 2 minutes
     private final TubeBroker tubeBroker;
     private final AtomicReference<List<Long>> visitTokenList =
             new AtomicReference<List<Long>>();
@@ -51,6 +50,8 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
     public SimpleCertificateBrokerHandler(final TubeBroker tubeBroker) {
         this.tubeBroker = tubeBroker;
         this.visitTokenList.set(new ArrayList<Long>());
+        this.inValidTokenCheckTimeMs =
+            tubeBroker.getTubeConfig().getVisitTokenCheckInValidTimeMs();
     }
 
     @Override
@@ -122,7 +123,7 @@ public class SimpleCertificateBrokerHandler implements CertificateBrokerHandler 
             List<Long> currList = visitTokenList.get();
             if (tubeBroker.isKeepAlive()) {
                 if (!currList.contains(curVisitToken)
-                    && (System.currentTimeMillis() - tubeBroker.getLastRegTime() > MAX_ALLOWED_DELAY_DURATION)) {
+                    && (System.currentTimeMillis() - tubeBroker.getLastRegTime() > inValidTokenCheckTimeMs)) {
                     result.setFailureResult(TErrCodeConstants.CERTIFICATE_FAILURE,
                         "Visit Authorized Token is invalid!");
                     return result;

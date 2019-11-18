@@ -104,6 +104,8 @@ public class BrokerConfig extends AbstractFileConfig {
     private int allowedReadIOExcptCnt = 10;
     // write io exception max count
     private int allowedWriteIOExcptCnt = 10;
+    //
+    private long visitTokenCheckInValidTimeMs = 120000;
     private long ioExcptStatsDurationMs = 120000;
     // row lock wait duration
     private int rowLockWaitDurMs =
@@ -265,6 +267,11 @@ public class BrokerConfig extends AbstractFileConfig {
             this.authValidTimeStampPeriodMs =
                     tmpPeriodMs < 5000 ? 5000 : tmpPeriodMs > 120000 ? 120000 : tmpPeriodMs;
         }
+        if (TStringUtils.isNotBlank(brokerSect.get("visitTokenCheckInValidTimeMs"))) {
+            long tmpPeriodMs = this.getLong(brokerSect, "visitTokenCheckInValidTimeMs");
+            this.visitTokenCheckInValidTimeMs =
+                tmpPeriodMs < 60000 ? 60000 : tmpPeriodMs > 300000 ? 300000 : tmpPeriodMs;
+        }
         if (TStringUtils.isNotBlank(brokerSect.get("socketSendBuffer"))) {
             this.socketSendBuffer = getLong(brokerSect, "socketSendBuffer");
         }
@@ -389,6 +396,10 @@ public class BrokerConfig extends AbstractFileConfig {
 
     public int getPort() {
         return this.port;
+    }
+
+    public long getVisitTokenCheckInValidTimeMs() {
+        return visitTokenCheckInValidTimeMs;
     }
 
     public int getTcpWriteServiceThread() {

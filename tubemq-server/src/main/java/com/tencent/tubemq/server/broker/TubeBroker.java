@@ -149,6 +149,10 @@ public class TubeBroker implements Stoppable, Runnable {
         return this.offsetManager;
     }
 
+    public BrokerConfig getTubeConfig() {
+        return tubeConfig;
+    }
+
     public boolean isKeepAlive() {
         return  this.isKeepAlive.get();
     }
