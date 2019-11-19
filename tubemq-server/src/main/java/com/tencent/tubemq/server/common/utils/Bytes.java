@@ -22,12 +22,12 @@
 
 package com.tencent.tubemq.server.common.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.Unsafe;
