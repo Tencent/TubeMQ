@@ -100,6 +100,7 @@ public class FlowCtrlItem {
         return new FlowCtrlResult(this.dataLtInSZ, this.freqLtInMs);
     }
 
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;

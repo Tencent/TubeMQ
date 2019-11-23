@@ -565,8 +565,7 @@ public class ProducerManager {
                 String inAuthAuthorizedToken = inAuthorizedTokenInfo.getAuthAuthorizedToken();
                 if (TStringUtils.isNotBlank(inAuthAuthorizedToken)) {
                     String curAuthAuthorizedToken = authAuthorizedTokenRef.get();
-                    if (curAuthAuthorizedToken == null
-                            || !inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
+                    if (!inAuthAuthorizedToken.equals(curAuthAuthorizedToken)) {
                         authAuthorizedTokenRef.set(inAuthAuthorizedToken);
                     }
                 }

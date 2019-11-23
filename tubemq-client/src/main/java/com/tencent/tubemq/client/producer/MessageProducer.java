@@ -39,5 +39,6 @@ public interface MessageProducer extends Shutdownable {
     void sendMessage(final Message message, final MessageSentCallback cb)
             throws TubeClientException, InterruptedException;
 
+    @Override
     void shutdown() throws Throwable;
 }

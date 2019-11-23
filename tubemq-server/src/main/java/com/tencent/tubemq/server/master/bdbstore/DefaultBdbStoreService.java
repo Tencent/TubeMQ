@@ -180,6 +180,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
                 new ReplicationGroupAdmin(this.bdbConfig.getBdbRepGroupName(), helpers);
     }
 
+    @Override
     public boolean isMaster() {
         return isMaster;
     }
@@ -189,6 +190,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
      *
      * @return
      */
+    @Override
     public InetSocketAddress getMasterAddress() {
         ReplicationGroup replicationGroup = null;
         try {
@@ -413,6 +415,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
      *
      * @return
      */
+    @Override
     public long getMasterStartTime() {
         return masterStartTime;
     }
@@ -912,7 +915,7 @@ public class DefaultBdbStoreService implements BdbStoreService, Server {
             return false;
         }
         ReplicationMutableConfig tmpConfig = repEnv.getRepMutableConfig();
-        return tmpConfig == null ? false : tmpConfig.getDesignatedPrimary();
+        return tmpConfig != null && tmpConfig.getDesignatedPrimary();
     }
 
     /**

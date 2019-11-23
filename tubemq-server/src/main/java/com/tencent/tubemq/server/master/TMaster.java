@@ -1849,7 +1849,7 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
     public void run() {
         try {
             if (!this.stopped) {
-                Thread.currentThread().sleep(masterConfig.getFirstBalanceDelayAfterStartMs());
+                Thread.sleep(masterConfig.getFirstBalanceDelayAfterStartMs());
                 this.balancerChore = startBalancerChore(this);
                 this.resetBalancerChore = startResetBalancerChore(this);
                 initialized = true;

@@ -40,6 +40,7 @@ public class ConsumeOffsetInfo {
         return currOffset;
     }
 
+    @Override
     public String toString() {
         return this.partitionKey + TokenConstants.SEGMENT_SEP + this.currOffset;
     }

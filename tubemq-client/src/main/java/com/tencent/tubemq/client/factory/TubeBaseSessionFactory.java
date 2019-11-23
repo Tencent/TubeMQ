@@ -94,6 +94,7 @@ public class TubeBaseSessionFactory implements InnerSessionFactory {
         }
     }
 
+    @Override
     public DefaultBrokerRcvQltyStats getBrokerRcvQltyStats() {
         return this.brokerRcvQltyStats;
     }

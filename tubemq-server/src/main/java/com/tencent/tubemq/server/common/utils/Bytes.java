@@ -22,11 +22,12 @@
 
 package com.tencent.tubemq.server.common.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.Unsafe;
@@ -84,25 +85,21 @@ public class Bytes {
 
     public static String toStringBinary(final byte[] b, int off, int len) {
         StringBuilder result = new StringBuilder();
-        try {
-            String first = new String(b, off, len, "ISO-8859-1");
-            for (int i = 0; i < first.length(); ++i) {
-                int ch = first.charAt(i) & 0xFF;
-                if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')
-                        || " `~!@#$%^&*()-_=+[]{}\\|;:'\",.<>/?".indexOf(ch) >= 0) {
-                    result.append(first.charAt(i));
-                } else {
-                    result.append(String.format("\\x%02X", ch));
-                }
+        String first = new String(b, off, len, StandardCharsets.ISO_8859_1);
+        for (int i = 0; i < first.length(); ++i) {
+            int ch = first.charAt(i) & 0xFF;
+            if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')
+                    || " `~!@#$%^&*()-_=+[]{}\\|;:'\",.<>/?".indexOf(ch) >= 0) {
+                result.append(first.charAt(i));
+            } else {
+                result.append(String.format("\\x%02X", ch));
             }
-        } catch (UnsupportedEncodingException e) {
-            logger.error("ISO-8859-1 not supported?", e);
         }
         return result.toString();
     }
 
     interface Comparer<T> {
-        public abstract int compareTo(T buffer1, int offset1, int length1, T buffer2, int offset2,
+        int compareTo(T buffer1, int offset1, int length1, T buffer2, int offset2,
                                       int length2);
     }
 

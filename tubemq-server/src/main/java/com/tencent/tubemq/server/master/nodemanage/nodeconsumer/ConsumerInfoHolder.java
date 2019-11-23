@@ -278,7 +278,7 @@ public class ConsumerInfoHolder {
             if (consumeBandInfo != null) {
                 for (String consumerId : consumerIdSet) {
                     String oldGroup = consumerIndexMap.get(consumerId);
-                    if (oldGroup != null && group.equals(oldGroup)) {
+                    if (group.equals(oldGroup)) {
                         consumeBandInfo.addNodeRelInfo(consumerId, waitDuration);
                     }
                 }

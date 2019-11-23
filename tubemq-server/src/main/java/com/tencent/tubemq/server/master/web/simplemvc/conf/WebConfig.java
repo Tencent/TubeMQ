@@ -20,6 +20,7 @@ package com.tencent.tubemq.server.master.web.simplemvc.conf;
 import com.tencent.tubemq.corebase.utils.TStringUtils;
 import com.tencent.tubemq.server.master.web.simplemvc.Action;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -119,9 +120,7 @@ public class WebConfig {
     private void parseTypes(String typePattern) {
         String[] typeArr = typePattern.split(",");
         types.clear();
-        for (String type : typeArr) {
-            types.add(type);
-        }
+        Collections.addAll(types, typeArr);
     }
 
     public List<String> getBeanFilePathList() {

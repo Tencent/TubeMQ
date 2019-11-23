@@ -35,6 +35,7 @@ public class SSDSegEvent {
         this.segCnt = segCnt;
     }
 
+    @Override
     public String toString() {
         return new StringBuilder(512).append("{storeKey=").append(storeKey)
                 .append(",partStr=").append(partStr).append(",startOffset=")

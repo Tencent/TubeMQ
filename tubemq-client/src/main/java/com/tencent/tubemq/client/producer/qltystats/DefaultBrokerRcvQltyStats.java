@@ -418,6 +418,7 @@ public class DefaultBrokerRcvQltyStats implements BrokerRcvQltyStats {
         }
     }
 
+    @Override
     public String toString() {
         return "lastStatisticTime:" + this.lastLinkStatisticTime + TokenConstants.ATTR_SEP
                 + ",lastPrinttime:" + this.lastPrinttime + TokenConstants.ATTR_SEP

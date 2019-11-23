@@ -111,12 +111,14 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
      * Stops the {@link Timer} which was specified in the constructor of this handler. You should
      * not call this method if the {@link Timer} is in use by other objects.
      */
+    @Override
     public void releaseExternalResources() {
         if (timer != null) {
             timer.stop();
         }
     }
 
+    @Override
     public void beforeAdd(ChannelHandlerContext ctx) throws Exception {
         if (ctx.getPipeline().isAttached()) {
             // channelOpen event has been fired already, which means
@@ -129,14 +131,17 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
         }
     }
 
+    @Override
     public void afterAdd(ChannelHandlerContext ctx) throws Exception {
         // NOOP
     }
 
+    @Override
     public void beforeRemove(ChannelHandlerContext ctx) throws Exception {
         destroy(ctx);
     }
 
+    @Override
     public void afterRemove(ChannelHandlerContext ctx) throws Exception {
         // NOOP
     }
@@ -205,6 +210,7 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
             this.ctx = ctx;
         }
 
+        @Override
         public void run(Timeout timeout) throws Exception {
             if (timeout.isCancelled()) {
                 return;
@@ -230,6 +236,7 @@ public class ReadTimeoutHandler extends SimpleChannelUpstreamHandler implements
         private void fireReadTimedOut(final ChannelHandlerContext ctx) throws Exception {
             ctx.getPipeline().execute(new Runnable() {
 
+                @Override
                 public void run() {
                     try {
                         readTimedOut(ctx);

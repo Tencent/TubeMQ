@@ -69,10 +69,7 @@ public class BdbTopicAuthControlEntity implements Serializable {
     }
 
     public boolean isEnableAuthControl() {
-        if (enableAuthControl == 1) {
-            return true;
-        }
-        return false;
+        return enableAuthControl == 1;
     }
 
     public int getEnableAuthControl() {

@@ -94,10 +94,7 @@ public class MessageFetchManager {
      * @return true if shut down
      */
     public boolean isShutdown() {
-        if (this.managerStatus.get() == 0) {
-            return true;
-        }
-        return false;
+        return this.managerStatus.get() == 0;
     }
 
     public void stopFetchWorkers(boolean onlySetStatus) throws InterruptedException {

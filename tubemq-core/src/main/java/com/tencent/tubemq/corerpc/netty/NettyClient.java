@@ -346,10 +346,8 @@ public class NettyClient implements Client {
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
             Throwable t = e.getCause();
-            if (t != null
-                    && (t instanceof IOException
-                    || t instanceof ReadTimeoutException
-                    || t instanceof UnresolvedAddressException)) {
+            if ((t instanceof IOException || t instanceof ReadTimeoutException
+                || t instanceof UnresolvedAddressException)) {
                 if (t instanceof ReadTimeoutException) {
                     logger.info("Close client {} due to idle.", e.getChannel());
                 }

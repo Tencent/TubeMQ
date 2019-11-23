@@ -28,6 +28,7 @@ public class SSDCtrlResult {
         this.dataEndDLtInSz = dataEndDLtInSz;
     }
 
+    @Override
     public String toString() {
         return "{dataStartDltInSize=" + dataStartDltInSize + ",dataEndDLtInSz=" + dataEndDLtInSz + "}";
     }

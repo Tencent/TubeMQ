@@ -460,6 +460,7 @@ public class FileSegment implements Segment, Comparable<FileSegment> {
         return new RecoverResult(totalBytes - validBytes, false);
     }
 
+    @Override
     public boolean equals(Segment other) {
         if (this == other) {
             return true;

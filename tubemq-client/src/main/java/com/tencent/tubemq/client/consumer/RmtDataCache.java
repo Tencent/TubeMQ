@@ -568,9 +568,7 @@ public class RmtDataCache implements Closeable {
         ConcurrentLinkedQueue<Partition> partitionList =
                 brokerPartitionConMap.get(brokerInfo);
         if (partitionList != null) {
-            for (Partition tmpPart : partitionList) {
-                retPartition.add(tmpPart);
-            }
+            retPartition.addAll(partitionList);
         }
         return retPartition;
     }
@@ -611,9 +609,7 @@ public class RmtDataCache implements Closeable {
     public void resumeTimeoutConsumePartitions(long allowedPeriodTimes) {
         if (!partitionUsedMap.isEmpty()) {
             List<String> partKeys = new ArrayList<String>();
-            for (String key : partitionUsedMap.keySet()) {
-                partKeys.add(key);
-            }
+            partKeys.addAll(partitionUsedMap.keySet());
             for (String keyId : partKeys) {
                 Long oldTime = partitionUsedMap.get(keyId);
                 if (oldTime != null && System.currentTimeMillis() - oldTime > allowedPeriodTimes) {
