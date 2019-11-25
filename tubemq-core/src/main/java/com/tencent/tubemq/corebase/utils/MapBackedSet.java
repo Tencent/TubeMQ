@@ -28,7 +28,7 @@ import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A Map-backed Set.
@@ -39,13 +39,13 @@ public class MapBackedSet<E> extends AbstractSet<E> implements Serializable {
 
     private static final long serialVersionUID = -8347878570391674042L;
 
-    protected final Map<E, Boolean> map;
+    protected final ConcurrentHashMap<E, Boolean> map;
 
-    public MapBackedSet(Map<E, Boolean> map) {
+    public MapBackedSet(ConcurrentHashMap<E, Boolean> map) {
         this.map = map;
     }
 
-    public MapBackedSet(Map<E, Boolean> map, Collection<E> c) {
+    public MapBackedSet(ConcurrentHashMap<E, Boolean> map, Collection<E> c) {
         this.map = map;
         addAll(c);
     }
