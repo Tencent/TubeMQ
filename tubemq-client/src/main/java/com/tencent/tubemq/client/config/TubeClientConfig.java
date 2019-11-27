@@ -69,6 +69,7 @@ public class TubeClientConfig {
     private long linkStatsForbiddenDurationMs = RpcConstants.CFG_LQ_FORBIDDEN_DURATION_MS;
     private int linkStatsMaxAllowedFailTimes = RpcConstants.CFG_LQ_MAX_ALLOWED_FAIL_COUNT;
     private double linkStatsMaxForbiddenRate = RpcConstants.CFG_LQ_MAX_FAIL_FORBIDDEN_RATE;
+    private long unAvailableFbdDurationMs = RpcConstants.CFG_UNAVAILABLE_FORBIDDEN_DURATION_MS;
     private double maxSentForbiddenRate = 0.15;
     private long maxForbiddenCheckDuration = 30000;
 
@@ -163,6 +164,14 @@ public class TubeClientConfig {
         } else {
             this.rpcConnProcesserCnt = rpcConnProcesserCnt;
         }
+    }
+
+    public long getUnAvailableFbdDurationMs() {
+        return unAvailableFbdDurationMs;
+    }
+
+    public void setUnAvailableFbdDurationMs(long unAvailableFbdDurationMs) {
+        this.unAvailableFbdDurationMs = unAvailableFbdDurationMs;
     }
 
     public int getRpcNettyWorkMemorySize() {
@@ -488,6 +497,9 @@ public class TubeClientConfig {
         if (linkStatsForbiddenDurationMs != that.linkStatsForbiddenDurationMs) {
             return false;
         }
+        if (unAvailableFbdDurationMs != that.unAvailableFbdDurationMs) {
+            return false;
+        }
         if (linkStatsMaxAllowedFailTimes != that.linkStatsMaxAllowedFailTimes) {
             return false;
         }
@@ -541,31 +553,32 @@ public class TubeClientConfig {
             sBuilder.append("\"").append(item).append("\"");
         }
         return sBuilder.append("],\"rpcReadTimeoutMs\":").append(this.rpcReadTimeoutMs)
-                .append(",\"rpcConnProcesserCnt\":").append(this.rpcConnProcesserCnt)
-                .append(",\"rpcNnettyWorkMemorySize\":").append(this.rpcNnettyWorkMemorySize)
-                .append(",\"rpcRspCallBackThreadCnt\":").append(this.rpcRspCallBackThreadCnt)
-                .append(",\"nettyWriteBufferHighWaterMark\":").append(this.nettyWriteBufferHighWaterMark)
-                .append(",\"nettyWriteBufferLowWaterMark\":").append(this.nettyWriteBufferLowWaterMark)
-                .append(",\"maxRegisterRetryTimes\":").append(this.maxRegisterRetryTimes)
-                .append(",\"regFailWaitPeriodMs\":").append(this.regFailWaitPeriodMs)
-                .append(",\"maxHeartBeatRetryTimes\":").append(this.maxHeartBeatRetryTimes)
-                .append(",\"heartbeatPeriodMs\":").append(this.heartbeatPeriodMs)
-                .append(",\"heartbeatPeriodAfterFail\":").append(this.heartbeatPeriodAfterFail)
-                .append(",\"linkStatsDurationMs\":").append(this.linkStatsDurationMs)
-                .append(",\"linkStatsForbiddenDurationMs\":").append(this.linkStatsForbiddenDurationMs)
-                .append(",\"linkStatsMaxAllowedFailTimes\":").append(this.linkStatsMaxAllowedFailTimes)
-                .append(",\"linkStatsMaxForbiddenRate\":").append(this.linkStatsMaxForbiddenRate)
-                .append(",\"maxSentForbiddenRate\":").append(this.maxSentForbiddenRate)
-                .append(",\"maxForbiddenCheckDuration\":").append(this.maxForbiddenCheckDuration)
-                .append(",\"sessionStatisticCheckDuration\":").append(this.sessionStatisticCheckDuration)
-                .append(",\"sessionWarnForbiddenRate\":").append(this.sessionWarnForbiddenRate)
-                .append(",\"sessionWarnDelayedMsgCount\":").append(this.sessionWarnDelayedMsgCount)
-                .append(",\"linkMaxAllowedDelayedMsgCount\":").append(this.linkMaxAllowedDelayedMsgCount)
-                .append(",\"sessionMaxAllowedDelayedMsgCount\":").append(this.sessionMaxAllowedDelayedMsgCount)
-                .append(",\"enableUserAuthentic\":").append(this.enableUserAuthentic)
-                .append(",\"usrName\":\"").append(this.usrName)
-                .append("\",\"usrPassWord\":\"").append(this.usrPassWord)
-                .append("\",").append(this.tlsConfig.toString())
-                .append("}").toString();
+            .append(",\"rpcConnProcesserCnt\":").append(this.rpcConnProcesserCnt)
+            .append(",\"rpcNnettyWorkMemorySize\":").append(this.rpcNnettyWorkMemorySize)
+            .append(",\"rpcRspCallBackThreadCnt\":").append(this.rpcRspCallBackThreadCnt)
+            .append(",\"nettyWriteBufferHighWaterMark\":").append(this.nettyWriteBufferHighWaterMark)
+            .append(",\"nettyWriteBufferLowWaterMark\":").append(this.nettyWriteBufferLowWaterMark)
+            .append(",\"maxRegisterRetryTimes\":").append(this.maxRegisterRetryTimes)
+            .append(",\"regFailWaitPeriodMs\":").append(this.regFailWaitPeriodMs)
+            .append(",\"maxHeartBeatRetryTimes\":").append(this.maxHeartBeatRetryTimes)
+            .append(",\"heartbeatPeriodMs\":").append(this.heartbeatPeriodMs)
+            .append(",\"heartbeatPeriodAfterFail\":").append(this.heartbeatPeriodAfterFail)
+            .append(",\"linkStatsDurationMs\":").append(this.linkStatsDurationMs)
+            .append(",\"linkStatsForbiddenDurationMs\":").append(this.linkStatsForbiddenDurationMs)
+            .append(",\"linkStatsMaxAllowedFailTimes\":").append(this.linkStatsMaxAllowedFailTimes)
+            .append(",\"linkStatsMaxForbiddenRate\":").append(this.linkStatsMaxForbiddenRate)
+            .append(",\"maxSentForbiddenRate\":").append(this.maxSentForbiddenRate)
+            .append(",\"maxForbiddenCheckDuration\":").append(this.maxForbiddenCheckDuration)
+            .append(",\"sessionStatisticCheckDuration\":").append(this.sessionStatisticCheckDuration)
+            .append(",\"sessionWarnForbiddenRate\":").append(this.sessionWarnForbiddenRate)
+            .append(",\"sessionWarnDelayedMsgCount\":").append(this.sessionWarnDelayedMsgCount)
+            .append(",\"linkMaxAllowedDelayedMsgCount\":").append(this.linkMaxAllowedDelayedMsgCount)
+            .append(",\"sessionMaxAllowedDelayedMsgCount\":").append(this.sessionMaxAllowedDelayedMsgCount)
+            .append(",\"unAvailableFbdDurationMs\":").append(this.unAvailableFbdDurationMs)
+            .append(",\"enableUserAuthentic\":").append(this.enableUserAuthentic)
+            .append(",\"usrName\":\"").append(this.usrName)
+            .append("\",\"usrPassWord\":\"").append(this.usrPassWord)
+            .append("\",").append(this.tlsConfig.toString())
+            .append("}").toString();
     }
 }

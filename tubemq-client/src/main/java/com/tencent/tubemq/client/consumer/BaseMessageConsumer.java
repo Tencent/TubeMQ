@@ -1282,23 +1282,6 @@ public class BaseMessageConsumer implements MessageConsumer {
                     strBuffer.delete(0, strBuffer.length());
                     break;
                 }
-                case TErrCodeConstants.NOT_FOUND:
-                case TErrCodeConstants.FORBIDDEN:
-                case TErrCodeConstants.MOVED: {
-                    // Slow down the request based on the limitation configuration when meet these errors
-                    long limitDlt = consumerConfig.getMsgNotFoundWaitPeriodMs();
-                    if (msgRspB2C.getErrCode() == TErrCodeConstants.FORBIDDEN) {
-                        limitDlt = 2000;
-                    } else if (msgRspB2C.getErrCode() == TErrCodeConstants.MOVED) {
-                        limitDlt = 200;
-                    }
-                    rmtDataCache.errRspRelease(partitionKey, topic,
-                            taskContext.getUsedToken(), false, -1,
-                            0, msgRspB2C.getErrCode(), false, 0,
-                            limitDlt, isFilterConsume(topic), -1);
-                    taskContext.setFailProcessResult(msgRspB2C.getErrCode(), msgRspB2C.getErrMsg());
-                    break;
-                }
                 case TErrCodeConstants.HB_NO_NODE:
                 case TErrCodeConstants.CERTIFICATE_FAILURE:
                 case TErrCodeConstants.DUPLICATE_PARTITION: {
@@ -1319,12 +1302,38 @@ public class BaseMessageConsumer implements MessageConsumer {
                     taskContext.setFailProcessResult(msgRspB2C.getErrCode(), msgRspB2C.getErrMsg());
                     break;
                 }
-                default: {
-                    // Unknown error
+                case TErrCodeConstants.NOT_FOUND:
+                case TErrCodeConstants.FORBIDDEN:
+                case TErrCodeConstants.SERVICE_UNAVILABLE:
+                case TErrCodeConstants.MOVED:
+                default:{
+                    // Slow down the request based on the limitation configuration when meet these errors
+                    long limitDlt = 300;
+                    switch (msgRspB2C.getErrCode()) {
+                        case TErrCodeConstants.FORBIDDEN: {
+                            limitDlt = 2000;
+                            break;
+                        }
+                        case TErrCodeConstants.SERVICE_UNAVILABLE: {
+                            limitDlt = 300;
+                            break;
+                        }
+                        case TErrCodeConstants.MOVED: {
+                            limitDlt = 200;
+                            break;
+                        }
+                        case TErrCodeConstants.NOT_FOUND: {
+                            limitDlt = consumerConfig.getMsgNotFoundWaitPeriodMs();
+                            break;
+                        }
+                        default: {
+                            //
+                        }
+                    }
                     rmtDataCache.errRspRelease(partitionKey, topic,
-                            taskContext.getUsedToken(), false, -1,
-                            0, msgRspB2C.getErrCode(), false, 0,
-                            300, isFilterConsume(topic), -1);
+                        taskContext.getUsedToken(), false, -1,
+                        0, msgRspB2C.getErrCode(), false, 0,
+                        limitDlt, isFilterConsume(topic), -1);
                     taskContext.setFailProcessResult(msgRspB2C.getErrCode(), msgRspB2C.getErrMsg());
                     break;
                 }
