@@ -25,6 +25,7 @@ import com.tencent.tubemq.server.broker.msgstore.MessageStore;
 import com.tencent.tubemq.server.broker.msgstore.ssd.SSDSegFound;
 import com.tencent.tubemq.server.broker.stats.CountItem;
 import com.tencent.tubemq.server.broker.utils.DataStoreUtils;
+import com.tencent.tubemq.server.broker.utils.DiskSamplePrint;
 import com.tencent.tubemq.server.common.TServerConstants;
 import com.tencent.tubemq.server.common.utils.FileUtil;
 import java.io.Closeable;
@@ -48,6 +49,8 @@ import org.slf4j.LoggerFactory;
 public class MsgFileStore implements Closeable {
     private static final Logger logger = LoggerFactory.getLogger(MsgFileStore.class);
     private static final int MAX_META_REFRESH_DUR = 1000 * 60 * 60;
+    private static final DiskSamplePrint samplePrintCtrl =
+        new DiskSamplePrint(logger);
     // storage ID
     private final String storeKey;
     // data file storage directory
@@ -106,7 +109,7 @@ public class MsgFileStore implements Closeable {
 
     public void appendMsg(final int partitionId, final int keyCode, final long timeRecv,
                           final long inDataOffset, final int msgSize, final ByteBuffer buffer,
-                          final StringBuilder sb) throws IOException {
+                          final StringBuilder sb) throws Throwable {
         //　append message, put in data file first, then index file.
         if (this.closed.get()) {
             throw new IllegalStateException(new StringBuilder(512)
@@ -192,6 +195,7 @@ public class MsgFileStore implements Closeable {
                 }
             }
             if (inIndexOffset != indexOffset || inDataOffset != dataOffset) {
+                ServiceStatusHolder.addWriteIOErrCnt();
                 logger.error(sb.append("[File Store]: appendMsg data Error, storekey=")
                         .append(this.storeKey).append(",msgSize=").append(msgSize)
                         .append(",bufferSize=").append(buffer.array().length)
@@ -201,10 +205,11 @@ public class MsgFileStore implements Closeable {
                         .append(",dataOffset=").append(dataOffset).toString());
                 sb.delete(0, sb.length());
             }
-        } catch (final IOException e) {
-            ServiceStatusHolder.addWriteIOErrCnt();
-            logger.error("[File Store] Append message in file failed ", e);
-            throw e;
+        } catch (Throwable e) {
+            if (!closed.get()) {
+                ServiceStatusHolder.addWriteIOErrCnt();
+            }
+            samplePrintCtrl.printExceptionCaught(e);
         } finally {
             this.writeLock.unlock();
         }
@@ -318,9 +323,8 @@ public class MsgFileStore implements Closeable {
                 if (e2 instanceof IOException) {
                     ServiceStatusHolder.addReadIOErrCnt();
                 }
-                logger.warn(sBuilder.append("[File Store] Get message from file failure,storeKey=")
-                        .append(messageStore.getStoreKey()).append(", partitionId=")
-                        .append(partitionId).toString(), e2);
+                samplePrintCtrl.printExceptionCaught(e2,
+                    messageStore.getStoreKey(), String.valueOf(partitionId));
                 retCode = TErrCodeConstants.INTERNAL_SERVER_ERROR;
                 sBuilder.delete(0, sBuilder.length());
                 errInfo = sBuilder.append("Get message from file failure : ")

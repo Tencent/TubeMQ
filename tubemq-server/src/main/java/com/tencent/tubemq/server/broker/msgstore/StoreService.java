@@ -18,7 +18,6 @@
 package com.tencent.tubemq.server.broker.msgstore;
 
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,5 +34,5 @@ public interface StoreService {
     Collection<MessageStore> getMessageStoresByTopic(final String topic);
 
     MessageStore getOrCreateMessageStore(final String topic,
-                                         final int partition) throws IOException;
+                                         final int partition) throws Throwable;
 }

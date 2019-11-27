@@ -179,7 +179,12 @@ public class BrokerAdminServlet extends HttpServlet {
                     .append(",\"SSDDataDltEndInM\":").append(entry.getValue().getSsdDataEndDltInM());
             MessageStoreManager storeManager = broker.getStoreManager();
             OffsetService offsetService = broker.getOffsetManager();
-            MessageStore store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+            MessageStore store = null;
+            try {
+                store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+            } catch (Throwable e) {
+                //
+            }
             if (store == null) {
                 sBuilder.append(",\"isMessageStoreOk\":false}");
             } else {
@@ -380,7 +385,12 @@ public class BrokerAdminServlet extends HttpServlet {
             return sBuilder;
         }
         MessageStoreManager storeManager = broker.getStoreManager();
-        MessageStore store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+        MessageStore store = null;
+        try {
+            store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+        } catch (Throwable e) {
+            //
+        }
         if (store == null) {
             sBuilder.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
                     .append("Invalid parameter: not found the store by topicName!")
@@ -481,7 +491,12 @@ public class BrokerAdminServlet extends HttpServlet {
         }
         MessageStoreManager storeManager = broker.getStoreManager();
         OffsetService offsetService = broker.getOffsetManager();
-        MessageStore store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+        MessageStore store = null;
+        try {
+            store = storeManager.getOrCreateMessageStore(topicName, partitionId);
+        } catch (Throwable e) {
+            //
+        }
         if (store == null) {
             sBuilder.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
                     .append("Invalid parameter: not found the store by topicName!")

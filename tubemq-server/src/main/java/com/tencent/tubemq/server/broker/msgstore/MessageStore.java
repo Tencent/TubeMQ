@@ -663,8 +663,12 @@ public class MessageStore implements Closeable {
                         .append(" Mb").toString());
                 strBuffer.delete(0, strBuffer.length());
             }
-        } catch (RuntimeException e) {
-            throw new IOException(e);
+        } catch (Throwable e) {
+            if (e instanceof IOException) {
+                throw (IOException) e;
+            } else {
+                throw new IOException(e);
+            }
         } finally {
             try {
                 isFlushOngoing.set(false);
@@ -681,7 +685,7 @@ public class MessageStore implements Closeable {
         }
     }
 
-    private void swapWriteCache(final StringBuilder strBuffer) {
+    private void swapWriteCache(final StringBuilder strBuffer) throws Throwable{
         writeCacheMutex.writeLock().lock();
         try {
             long lastDataPos = msgMemStore.getDataLastWritePos();
@@ -712,11 +716,7 @@ public class MessageStore implements Closeable {
                 writeCacheMutex.writeLock().unlock();
             }
         }
-        try {
-            msgMemStoreBeingFlush.flush(msgFileStore, strBuffer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        msgMemStoreBeingFlush.flush(msgFileStore, strBuffer);
     }
 
 }
