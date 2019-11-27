@@ -274,7 +274,7 @@ public class MsgMemStore implements Closeable {
      * @return
      * @throws IOException
      */
-    public boolean flush(MsgFileStore msgFileStore, final StringBuilder strBuffer) throws IOException {
+    public boolean flush(MsgFileStore msgFileStore, final StringBuilder strBuffer) throws Throwable {
         if (this.curMessageCount.get() == 0) {
             return true;
         }

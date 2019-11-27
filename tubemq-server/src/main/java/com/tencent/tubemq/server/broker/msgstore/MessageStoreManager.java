@@ -294,7 +294,7 @@ public class MessageStoreManager implements StoreService {
      */
     @Override
     public MessageStore getOrCreateMessageStore(final String topic,
-                                                final int partition) throws IOException {
+                                                final int partition) throws Throwable {
         StringBuilder sBuilder = new StringBuilder(512);
         final int storeId = partition < TBaseConstants.META_STORE_INS_BASE
                 ? 0 : partition / TBaseConstants.META_STORE_INS_BASE;
