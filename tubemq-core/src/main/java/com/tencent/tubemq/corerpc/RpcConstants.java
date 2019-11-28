@@ -61,7 +61,8 @@ public final class RpcConstants {
     public static final String RPC_LQ_FORBIDDEN_DURATION = "rpc.link.quality.forbidden.duration";
     public static final String RPC_LQ_MAX_ALLOWED_FAIL_COUNT = "rpc.link.quality.max.allowed.fail.count";
     public static final String RPC_LQ_MAX_FAIL_FORBIDDEN_RATE = "rpc.link.quality.max.fail.forbidden.rate";
-
+    public static final String RPC_SERVICE_UNAVAILABLE_FORBIDDEN_DURATION =
+        "rpc.unavailable.service.forbidden.duration";
     public static final int RPC_PROTOCOL_BEGIN_TOKEN = 0xFF7FF4FE;
     public static final int RPC_MAX_BUFFER_SIZE = 8192;
     public static final int MAX_FRAME_MAX_LIST_SIZE =
@@ -122,7 +123,7 @@ public final class RpcConstants {
     public static final long CFG_LQ_FORBIDDEN_DURATION_MS = 1800000;
     public static final int CFG_LQ_MAX_ALLOWED_FAIL_COUNT = 5;
     public static final double CFG_LQ_MAX_FAIL_FORBIDDEN_RATE = 0.3;
-
+    public static final long CFG_UNAVAILABLE_FORBIDDEN_DURATION_MS = 50000;
     public static final long CFG_DEFAULT_NETTY_WRITEBUFFER_HIGH_MARK = 50 * 1024 * 1024;
     public static final long CFG_DEFAULT_NETTY_WRITEBUFFER_LOW_MARK = 5 * 1024 * 1024;
 

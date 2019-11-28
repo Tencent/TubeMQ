@@ -71,7 +71,7 @@ public class SimpleMessageProducer implements MessageProducer {
         java.security.Security.setProperty("networkaddress.cache.negative.ttl", "1");
         if (sessionFactory == null || tubeClientConfig == null) {
             throw new TubeClientException(
-                    "Illegal parameter: messageSessionFactory or tubeClientConfig is null!");
+                "Illegal parameter: messageSessionFactory or tubeClientConfig is null!");
         }
         this.producerConfig = tubeClientConfig;
         this.sessionFactory = sessionFactory;
@@ -81,19 +81,19 @@ public class SimpleMessageProducer implements MessageProducer {
         this.partitionRouter = new RoundRobinPartitionRouter();
         this.rpcConfig.put(RpcConstants.CONNECT_TIMEOUT, 3000);
         this.rpcConfig.put(RpcConstants.REQUEST_TIMEOUT,
-                tubeClientConfig.getRpcTimeoutMs());
+            tubeClientConfig.getRpcTimeoutMs());
         this.rpcConfig.put(RpcConstants.NETTY_WRITE_HIGH_MARK,
-                tubeClientConfig.getNettyWriteBufferHighWaterMark());
+            tubeClientConfig.getNettyWriteBufferHighWaterMark());
         this.rpcConfig.put(RpcConstants.NETTY_WRITE_LOW_MARK,
-                tubeClientConfig.getNettyWriteBufferLowWaterMark());
+            tubeClientConfig.getNettyWriteBufferLowWaterMark());
         this.rpcConfig.put(RpcConstants.WORKER_COUNT,
-                tubeClientConfig.getRpcConnProcesserCnt());
+            tubeClientConfig.getRpcConnProcesserCnt());
         this.rpcConfig.put(RpcConstants.WORKER_THREAD_NAME,
-                "tube_producer_netty_worker-");
+            "tube_producer_netty_worker-");
         this.rpcConfig.put(RpcConstants.WORKER_MEM_SIZE,
-                tubeClientConfig.getRpcNettyWorkMemorySize());
+            tubeClientConfig.getRpcNettyWorkMemorySize());
         this.rpcConfig.put(RpcConstants.CALLBACK_WORKER_COUNT,
-                tubeClientConfig.getRpcRspCallBackThreadCnt());
+            tubeClientConfig.getRpcRspCallBackThreadCnt());
     }
 
     /**
@@ -211,6 +211,10 @@ public class SimpleMessageProducer implements MessageProducer {
                             AddressUtils.getLocalAddress(), producerConfig.isTlsEnable());
             rpcServiceFactory.resetRmtAddrErrCount(partition.getBroker().getBrokerAddr());
             this.brokerRcvQltyStats.addReceiveStatistic(brokerId, response.getSuccess());
+            if (!response.getSuccess()
+                && response.getErrCode() == TErrCodeConstants.SERVICE_UNAVILABLE) {
+                rpcServiceFactory.addUnavailableBroker(brokerId);
+            }
             return this.buildMsgSentResult(message, partition, response);
         } catch (final Throwable e) {
             if (e instanceof LocalConnException) {
@@ -247,6 +251,10 @@ public class SimpleMessageProducer implements MessageProducer {
                             partition.resetRetries();
                             brokerRcvQltyStats.addReceiveStatistic(brokerId,
                                     responseB2P.getSuccess());
+                            if (!responseB2P.getSuccess()
+                                && responseB2P.getErrCode() == TErrCodeConstants.SERVICE_UNAVILABLE) {
+                                rpcServiceFactory.addUnavailableBroker(brokerId);
+                            }
                             cb.onMessageSent(rt);
                         }
 

@@ -61,8 +61,8 @@ public class ServiceStatusHolder {
             isServiceStopped.set(isStopped);
             if (isStopped) {
                 logger.warn(new StringBuilder(256)
-                        .append("[Service Status]: global-write stopped by caller ")
-                        .append(caller).toString());
+                    .append("[Service Status]: global-write stopped by caller ")
+                    .append(caller).toString());
             }
         }
     }
@@ -124,8 +124,8 @@ public class ServiceStatusHolder {
             isReadStopped.set(isReadStop);
             if (isReadStop) {
                 logger.warn(new StringBuilder(256)
-                        .append("[Service Status]: global-read stopped by caller ")
-                        .append(caller).toString());
+                    .append("[Service Status]: global-read stopped by caller ")
+                    .append(caller).toString());
             } else {
                 if (isPauseRead.get()) {
                     isPauseRead.set(false);
@@ -133,16 +133,16 @@ public class ServiceStatusHolder {
                     lastReadStatsTime.set(System.currentTimeMillis());
                 }
                 logger.warn(new StringBuilder(256)
-                        .append("[Service Status]: global-read opened by caller ")
-                        .append(caller).toString());
+                    .append("[Service Status]: global-read opened by caller ")
+                    .append(caller).toString());
             }
         }
         if (isWriteStopped.get() != isWriteStop) {
             isWriteStopped.set(isWriteStop);
             if (isWriteStop) {
                 logger.warn(new StringBuilder(256)
-                        .append("[Service Status]: global-write stopped by caller ")
-                        .append(caller).toString());
+                    .append("[Service Status]: global-write stopped by caller ")
+                    .append(caller).toString());
             } else {
                 if (isPauseWrite.get()) {
                     isPauseWrite.set(false);
@@ -150,8 +150,8 @@ public class ServiceStatusHolder {
                     lastWriteStatsTime.set(System.currentTimeMillis());
                 }
                 logger.warn(new StringBuilder(256)
-                        .append("[Service Status]: global-write opened by caller ")
-                        .append(caller).toString());
+                    .append("[Service Status]: global-write opened by caller ")
+                    .append(caller).toString());
             }
         }
     }

@@ -140,8 +140,18 @@ public class DefaultBrokerRcvQltyStats implements BrokerRcvQltyStats {
                     .append(this.clientConfig.getSessionMaxAllowedDelayedMsgCount())
                     .append(", current count is ").append(currentWaitCount).toString());
         }
+        long curTime = System.currentTimeMillis();
         Set<Integer> allowedBrokerIds = new HashSet<Integer>();
+        ConcurrentHashMap<Integer, Long> unAvailableBrokerMap = rpcServiceFactory.getUnavilableBrokerMap();
         for (Map.Entry<Integer, List<Partition>> oldBrokerPartEntry : brokerPartList.entrySet()) {
+            Long lastAddTime = unAvailableBrokerMap.get(oldBrokerPartEntry.getKey());
+            if ((lastAddTime != null)
+                && (curTime - lastAddTime <= clientConfig.getUnAvailableFbdDurationMs())) {
+                continue;
+            }
+            if (this.brokerForbiddenMap.containsKey(oldBrokerPartEntry.getKey())) {
+                continue;
+            }
             List<Partition> partitionList = oldBrokerPartEntry.getValue();
             if ((partitionList != null) && !partitionList.isEmpty()) {
                 Partition partition = partitionList.get(0);
@@ -153,8 +163,7 @@ public class DefaultBrokerRcvQltyStats implements BrokerRcvQltyStats {
                             && (curMaxSentNum.get() > this.clientConfig.getLinkMaxAllowedDelayedMsgCount())) {
                         continue;
                     }
-                    if (!rpcServiceFactory.isRemoteAddrForbidden(brokerInfo.getBrokerAddr())
-                            && (!this.brokerForbiddenMap.containsKey(brokerInfo.getBrokerId()))) {
+                    if (!rpcServiceFactory.isRemoteAddrForbidden(brokerInfo.getBrokerAddr())) {
                         allowedBrokerIds.add(brokerInfo.getBrokerId());
                     }
                 }
@@ -247,6 +256,11 @@ public class DefaultBrokerRcvQltyStats implements BrokerRcvQltyStats {
             if (!rpcServiceFactory.getForbiddenAddrMap().isEmpty()) {
                 logger.info(sBuilder.append("[status check]: current request quality reqForbiddenMap is ")
                         .append(rpcServiceFactory.getForbiddenAddrMap().toString()).toString());
+                sBuilder.delete(0, sBuilder.length());
+            }
+            if (!rpcServiceFactory.getUnavilableBrokerMap().isEmpty()) {
+                logger.info(sBuilder.append("[status check]: current service unavailable brokerMap is ")
+                    .append(rpcServiceFactory.getUnavilableBrokerMap().toString()).toString());
                 sBuilder.delete(0, sBuilder.length());
             }
         }

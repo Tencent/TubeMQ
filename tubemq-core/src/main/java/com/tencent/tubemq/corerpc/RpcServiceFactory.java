@@ -63,6 +63,11 @@ public class RpcServiceFactory {
             new ConcurrentHashMap<String, ConnectionNode>();
     private final ConcurrentHashMap<String, Long> updateTime =
             new ConcurrentHashMap<String, Long>();
+    // Temporary invalid broker map
+    private final ConcurrentHashMap<Integer, Long> brokerUnavilableMap =
+        new ConcurrentHashMap<Integer, Long>();
+    private long unAvailableFbdDurationMs =
+        RpcConstants.CFG_UNAVAILABLE_FORBIDDEN_DURATION_MS;
     private AtomicLong lastLogPrintTime = new AtomicLong(0);
     private AtomicLong lastCheckTime = new AtomicLong(0);
     private long linkStatsDurationMs =
@@ -107,6 +112,9 @@ public class RpcServiceFactory {
         this.linkStatsMaxAllowedForbiddenRate =
                 config.getDouble(RpcConstants.RPC_LQ_MAX_FAIL_FORBIDDEN_RATE,
                         RpcConstants.CFG_LQ_MAX_FAIL_FORBIDDEN_RATE);
+        this.unAvailableFbdDurationMs =
+            config.getLong(RpcConstants.RPC_SERVICE_UNAVAILABLE_FORBIDDEN_DURATION,
+                RpcConstants.CFG_UNAVAILABLE_FORBIDDEN_DURATION_MS);
         connectionManager = new ConnectionManager();
         connectionManager.setName(new StringBuilder(256)
                 .append("rpcFactory-Thread-")
@@ -134,13 +142,23 @@ public class RpcServiceFactory {
     }
 
     /**
-     * get all Forbidden Address
+     * get all Link abnormal Forbidden Address
      *
      * @return
      */
     public ConcurrentHashMap<String, Long> getForbiddenAddrMap() {
         return forbiddenAddrMap;
     }
+
+    /**
+     * get all service abnormal Forbidden brokerIds
+     *
+     * @return
+     */
+    public ConcurrentHashMap<Integer, Long> getUnavilableBrokerMap() {
+        return brokerUnavilableMap;
+    }
+
 
     /**
      * @param remoteAddr
@@ -265,6 +283,34 @@ public class RpcServiceFactory {
                 }
                 if ((curTime - recordTime) > (linkStatsForbiddenDurMs + 60000)) {
                     forbiddenAddrMap.remove(tmpAddr);
+                }
+            }
+        }
+    }
+
+    public void addUnavailableBroker(int brokerId) {
+        brokerUnavilableMap.put(brokerId, System.currentTimeMillis());
+    }
+
+    public void rmvExpiredUnavailableBrokers() {
+        long curTime = System.currentTimeMillis();
+        Set<Integer> expiredBrokers = new HashSet<Integer>();
+        for (Map.Entry<Integer, Long> entry : brokerUnavilableMap.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null) {
+                continue;
+            }
+            if (curTime - entry.getValue() > unAvailableFbdDurationMs) {
+                expiredBrokers.add(entry.getKey());
+            }
+        }
+        if (!expiredBrokers.isEmpty()) {
+            for (Integer brokerId : expiredBrokers) {
+                Long lastAddTime = brokerUnavilableMap.get(brokerId);
+                if (lastAddTime == null) {
+                    continue;
+                }
+                if (curTime - lastAddTime > unAvailableFbdDurationMs) {
+                    brokerUnavilableMap.remove(brokerId, lastAddTime);
                 }
             }
         }
@@ -534,6 +580,7 @@ public class RpcServiceFactory {
                             updateTime.remove(serviceKey);
                         }
                         rmvAllExpiredRecords();
+                        rmvExpiredUnavailableBrokers();
                         lastCheckTime.set(System.currentTimeMillis());
                     }
                 } catch (Throwable e2) {
