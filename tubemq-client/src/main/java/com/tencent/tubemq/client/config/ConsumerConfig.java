@@ -191,11 +191,11 @@ public class ConsumerConfig extends TubeClientConfig {
                     .append(TBaseConstants.META_MAX_GROUPNAME_LENGTH)
                     .append(" characters").toString());
         }
-        if (!tmpConsumerGroup.matches(TBaseConstants.META_TMP_STRING_VALUE)) {
+        if (!tmpConsumerGroup.matches(TBaseConstants.META_TMP_GROUP_VALUE)) {
             throw new Exception(new StringBuilder(512)
                     .append("Illegal parameter: the value of consumerGroup")
                     .append(" must begin with a letter, ")
-                    .append("can only contain characters,numbers,and underscores").toString());
+                    .append("can only contain characters,numbers,hyphen,and underscores").toString());
         }
     }
 
