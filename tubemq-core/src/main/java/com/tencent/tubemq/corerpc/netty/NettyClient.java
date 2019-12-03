@@ -116,6 +116,9 @@ public class NettyClient implements Client {
     @Override
     public ResponseWrapper call(RequestWrapper request, Callback callback,
                                 long timeout, TimeUnit timeUnit) throws Exception {
+        if (closed.get()) {
+            throw new ClientClosedException("Netty client has bean closed!");
+        }
         request.setSerialNo(serialNoGenerator.incrementAndGet());
         RPCProtos.RpcConnHeader.Builder builder =
                 RPCProtos.RpcConnHeader.newBuilder();
@@ -147,20 +150,45 @@ public class NettyClient implements Client {
                 getChannel().write(pack);
                 return future.get(timeout, timeUnit);
             } catch (Throwable e) {
-                requests.remove(request.getSerialNo());
-                throw e;
+                Callback<ResponseWrapper> callback1 =
+                    requests.remove(request.getSerialNo());
+                if (callback1 != null) {
+                    if (closed.get()) {
+                        throw new ClientClosedException("Netty client has bean closed!");
+                    } else if (getChannel() == null){
+                        throw new ClientClosedException("Send failure for channel is null!");
+                    } else {
+                        throw e;
+                    }
+                }
             }
         } else {
+            boolean inserted = false;
             try {
                 timeouts.put(request.getSerialNo(),
                         timer.newTimeout(new TimeoutTask(request.getSerialNo()), timeout, timeUnit));
+                inserted = true;
                 //write data after build Timeout to avoid one request processed twice
                 getChannel().write(pack);
             } catch (Throwable e) {
-                requests.remove(request.getSerialNo());
-                throw e;
+                Callback<ResponseWrapper> callback1 =
+                    requests.remove(request.getSerialNo());
+                if (callback1 != null) {
+                    if (inserted) {
+                        Timeout timeout1 = timeouts.remove(request.getSerialNo());
+                        if (timeout1 != null) {
+                            timeout1.cancel();
+                        }
+                    }
+                    if (closed.get()) {
+                        throw new ClientClosedException("Netty client has bean closed!");
+                    } else if (getChannel() == null){
+                        throw new ClientClosedException("Channel is null!");
+                    } else {
+                        throw e;
+                    }
+                }
             }
-
         }
         return null;
     }
