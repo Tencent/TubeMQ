@@ -1214,32 +1214,42 @@ public class WebBrokerDefConfHandler {
         try {
             BdbBrokerConfEntity brokerConfEntity = new BdbBrokerConfEntity();
             boolean withDetail =
-                    WebParameterUtils.validBooleanDataParameter("withDetail",
-                            req.getParameter("withDetail"), false, false);
+                WebParameterUtils.validBooleanDataParameter("withDetail",
+                    req.getParameter("withDetail"), false, false);
             Set<String> bathBrokerIps =
-                    WebParameterUtils.getBatchBrokerIpSet(req.getParameter("brokerIp"), false);
+                WebParameterUtils.getBatchBrokerIpSet(req.getParameter("brokerIp"), false);
             Set<Integer> bathBrokerIds =
-                    WebParameterUtils.getBatchBrokerIdSet(req.getParameter("brokerId"), false);
+                WebParameterUtils.getBatchBrokerIdSet(req.getParameter("brokerId"), false);
+            boolean onlyAbnormal =
+                    WebParameterUtils.validBooleanDataParameter("onlyAbnormal",
+                            req.getParameter("onlyAbnormal"), false, false);
             boolean onlyAutoForbidden =
-                    WebParameterUtils.validBooleanDataParameter("onlyAutoForbidden",
-                            req.getParameter("onlyAutoForbidden"), false, false);
+                WebParameterUtils.validBooleanDataParameter("onlyAutoForbidden",
+                    req.getParameter("onlyAutoForbidden"), false, false);
             boolean onlyEnableTLS =
-                    WebParameterUtils.validBooleanDataParameter("onlyEnableTLS",
-                            req.getParameter("onlyEnableTLS"), false, false);
+                WebParameterUtils.validBooleanDataParameter("onlyEnableTLS",
+                    req.getParameter("onlyEnableTLS"), false, false);
             int count = 0;
             List<BdbBrokerConfEntity> brokerConfEntityList =
-                    brokerConfManage.confGetBdbBrokerEntitySet(brokerConfEntity);
+                brokerConfManage.confGetBdbBrokerEntitySet(brokerConfEntity);
             BrokerInfoHolder brokerInfoHolder = master.getBrokerHolder();
-            Map<Integer, BrokerInfoHolder.BrokerForbInfo> brokerForbInfoMap =
-                    brokerInfoHolder.getAutoForbiddenBrokerMapInfo();
+            Map<Integer, BrokerInfoHolder.BrokerAbnInfo> brokerAbnInfoMap =
+                    brokerInfoHolder.getBrokerAbnormalMap();
+            Map<Integer, BrokerInfoHolder.BrokerFbdInfo> brokerFbdInfoMap =
+                brokerInfoHolder.getAutoForbiddenBrokerMapInfo();
             strBuffer.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"OK\",\"data\":[");
             for (BdbBrokerConfEntity entity : brokerConfEntityList) {
                 if (((!bathBrokerIds.isEmpty()) && (!bathBrokerIds.contains(entity.getBrokerId())))
-                        || ((!bathBrokerIps.isEmpty()) && (!bathBrokerIps.contains(entity.getBrokerIp())))) {
+                    || ((!bathBrokerIps.isEmpty()) && (!bathBrokerIps.contains(entity.getBrokerIp())))) {
                     continue;
                 }
-                BrokerInfoHolder.BrokerForbInfo brokerForbInfo =
-                        brokerForbInfoMap.get(entity.getBrokerId());
+                BrokerInfoHolder.BrokerAbnInfo brokerAbnInfo =
+                        brokerAbnInfoMap.get(entity.getBrokerId());
+                if (onlyAbnormal && brokerAbnInfo == null) {
+                    continue;
+                }
+                BrokerInfoHolder.BrokerFbdInfo brokerForbInfo =
+                    brokerFbdInfoMap.get(entity.getBrokerId());
                 if (onlyAutoForbidden && brokerForbInfo == null) {
                     continue;
                 }
@@ -1253,15 +1263,21 @@ public class WebBrokerDefConfHandler {
                 int brokerManageStatus = entity.getManageStatus();
                 String strManageStatus = WebParameterUtils.getBrokerManageStatusStr(brokerManageStatus);
                 strBuffer.append("{\"brokerId\":").append(entity.getBrokerId())
-                        .append(",\"brokerIp\":\"").append(entity.getBrokerIp())
-                        .append("\",\"brokerPort\":").append(entity.getBrokerPort())
-                        .append(",\"manageStatus\":\"").append(strManageStatus).append("\"");
+                    .append(",\"brokerIp\":\"").append(entity.getBrokerIp())
+                    .append("\",\"brokerPort\":").append(entity.getBrokerPort())
+                    .append(",\"manageStatus\":\"").append(strManageStatus).append("\"");
                 if (brokerInfo == null) {
                     strBuffer.append(",\"brokerTLSPort\":").append(entity.getBrokerTLSPort())
-                            .append(",\"enableTLS\":\"-\"");
+                        .append(",\"enableTLS\":\"-\"");
                 } else {
                     strBuffer.append(",\"brokerTLSPort\":").append(entity.getBrokerTLSPort())
-                            .append(",\"enableTLS\":").append(brokerInfo.isEnableTLS());
+                        .append(",\"enableTLS\":").append(brokerInfo.isEnableTLS());
+                }
+                if (brokerAbnInfo == null) {
+                    strBuffer.append(",\"isRepAbnormal\":false");
+                } else {
+                    strBuffer.append(",\"isRepAbnormal\":true,\"repStatus\":")
+                            .append(brokerAbnInfo.getAbnStatus());
                 }
                 if (brokerForbInfo == null) {
                     strBuffer.append(",\"isAutoForbidden\":false");
@@ -1270,15 +1286,15 @@ public class WebBrokerDefConfHandler {
                 }
                 if (brokerManageStatus == TStatusConstants.STATUS_MANAGE_APPLY) {
                     strBuffer.append(",\"runStatus\":\"-\",\"subStatus\":\"-\"")
-                            .append(",\"isConfChanged\":\"-\",\"isConfLoaded\":\"-\",\"isBrokerOnline\":\"-\"")
-                            .append(",\"brokerVersion\":\"-\",\"acceptPublish\":\"-\",\"acceptSubscribe\":\"-\"");
+                        .append(",\"isConfChanged\":\"-\",\"isConfLoaded\":\"-\",\"isBrokerOnline\":\"-\"")
+                        .append(",\"brokerVersion\":\"-\",\"acceptPublish\":\"-\",\"acceptSubscribe\":\"-\"");
                 } else {
                     BrokerSyncStatusInfo brokerSyncStatusInfo =
-                            brokerConfManage.getBrokerRunSyncStatusInfo(entity.getBrokerId());
+                        brokerConfManage.getBrokerRunSyncStatusInfo(entity.getBrokerId());
                     if (brokerSyncStatusInfo == null) {
                         strBuffer.append(",\"runStatus\":\"unRegister\",\"subStatus\":\"-\"")
-                                .append(",\"isConfChanged\":\"-\",\"isConfLoaded\":\"-\",\"isBrokerOnline\":\"-\"")
-                                .append(",\"brokerVersion\":\"-\",\"acceptPublish\":\"-\",\"acceptSubscribe\":\"-\"");
+                            .append(",\"isConfChanged\":\"-\",\"isConfLoaded\":\"-\",\"isBrokerOnline\":\"-\"")
+                            .append(",\"brokerVersion\":\"-\",\"acceptPublish\":\"-\",\"acceptSubscribe\":\"-\"");
                     } else {
                         boolean isAcceptPublish = false;
                         boolean isAcceptSubscribe = false;
@@ -1288,22 +1304,22 @@ public class WebBrokerDefConfHandler {
                                 strBuffer.append(",\"runStatus\":\"running\",\"subStatus\":\"idle\"");
                             } else {
                                 strBuffer.append(",\"runStatus\":\"running\",\"subStatus\":\"processing_event\"," +
-                                        "\"stepOp\":")
-                                        .append(stepStatus);
+                                    "\"stepOp\":")
+                                    .append(stepStatus);
                             }
                         } else {
                             if (stepStatus == TStatusConstants.STATUS_SERVICE_UNDEFINED) {
                                 strBuffer.append(",\"runStatus\":\"notRegister\",\"subStatus\":\"idle\"");
                             } else {
                                 strBuffer.append(",\"runStatus\":\"notRegister\",\"subStatus\":\"processing_event\"," +
-                                        "\"stepOp\":")
-                                        .append(stepStatus);
+                                    "\"stepOp\":")
+                                    .append(stepStatus);
                             }
                         }
                         strBuffer.append(",\"isConfChanged\":\"").append(brokerSyncStatusInfo.isBrokerConfChaned())
-                                .append("\",\"isConfLoaded\":\"").append(brokerSyncStatusInfo.isBrokerLoaded())
-                                .append("\",\"isBrokerOnline\":\"").append(brokerSyncStatusInfo.isBrokerOnline())
-                                .append("\"");
+                            .append("\",\"isConfLoaded\":\"").append(brokerSyncStatusInfo.isBrokerLoaded())
+                            .append("\",\"isBrokerOnline\":\"").append(brokerSyncStatusInfo.isBrokerOnline())
+                            .append("\"");
                         switch (brokerManageStatus) {
                             case TStatusConstants.STATUS_MANAGE_ONLINE: {
                                 isAcceptPublish = false;
@@ -1311,8 +1327,8 @@ public class WebBrokerDefConfHandler {
                                 if (brokerSyncStatusInfo.isBrokerRegister()) {
                                     if (brokerSyncStatusInfo.isBrokerOnline()) {
                                         if ((stepStatus == TStatusConstants.STATUS_SERVICE_TOONLINE_WAIT_REGISTER)
-                                                || (stepStatus == TStatusConstants.STATUS_SERVICE_TOONLINE_WAIT_ONLINE)
-                                                || (stepStatus == TStatusConstants.STATUS_SERVICE_TOONLINE_ONLY_READ)) {
+                                            || (stepStatus == TStatusConstants.STATUS_SERVICE_TOONLINE_WAIT_ONLINE)
+                                            || (stepStatus == TStatusConstants.STATUS_SERVICE_TOONLINE_ONLY_READ)) {
                                             isAcceptPublish = false;
                                             isAcceptSubscribe = true;
                                         } else {
@@ -1352,8 +1368,8 @@ public class WebBrokerDefConfHandler {
                             }
                         }
                         strBuffer.append(",\"brokerVersion\":\"-\",\"acceptPublish\":\"")
-                                .append(isAcceptPublish).append("\",\"acceptSubscribe\":\"")
-                                .append(isAcceptSubscribe).append("\"");
+                            .append(isAcceptPublish).append("\",\"acceptSubscribe\":\"")
+                            .append(isAcceptSubscribe).append("\"");
                         if (withDetail) {
                             strBuffer = brokerSyncStatusInfo.toJsonString(strBuffer.append(","), false);
                         }
@@ -1365,7 +1381,7 @@ public class WebBrokerDefConfHandler {
         } catch (Exception e) {
             strBuffer.delete(0, strBuffer.length());
             strBuffer.append("{\"result\":false,\"errCode\":400,\"errMsg\":\"")
-                    .append(e.getMessage()).append("\",\"count\":0,\"data\":[]}");
+                .append(e.getMessage()).append("\",\"count\":0,\"data\":[]}");
         }
         return strBuffer;
     }

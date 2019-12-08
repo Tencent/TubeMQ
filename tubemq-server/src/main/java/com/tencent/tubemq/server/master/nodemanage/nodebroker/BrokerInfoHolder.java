@@ -17,6 +17,7 @@
 
 package com.tencent.tubemq.server.master.nodemanage.nodebroker;
 
+import static com.tencent.tubemq.server.common.utils.WebParameterUtils.getBrokerManageStatusStr;
 import com.tencent.tubemq.corebase.cluster.BrokerInfo;
 import com.tencent.tubemq.corebase.protobuf.generated.ClientMaster;
 import com.tencent.tubemq.server.common.TStatusConstants;
@@ -42,8 +43,10 @@ public class BrokerInfoHolder {
             LoggerFactory.getLogger(BrokerInfoHolder.class);
     private final ConcurrentHashMap<Integer/* brokerId */, BrokerInfo> brokerInfoMap =
             new ConcurrentHashMap<Integer, BrokerInfo>();
-    private final ConcurrentHashMap<Integer/* brokerId */, BrokerForbInfo> brokerForbiddenMap =
-            new ConcurrentHashMap<Integer, BrokerForbInfo>();
+    private final ConcurrentHashMap<Integer/* brokerId */, BrokerAbnInfo> brokerAbnormalMap =
+            new ConcurrentHashMap<Integer, BrokerAbnInfo>();
+    private final ConcurrentHashMap<Integer/* brokerId */, BrokerFbdInfo> brokerForbiddenMap =
+            new ConcurrentHashMap<Integer, BrokerFbdInfo>();
     private final int maxAutoForbiddenCnt;
     private final BrokerConfManage brokerConfManage;
     private AtomicInteger brokerTotalCount = new AtomicInteger(0);
@@ -69,34 +72,92 @@ public class BrokerInfoHolder {
     public void updateBrokerReportStatus(int brokerId,
                                          int reportReadStatus,
                                          int reportWriteStatus) {
-        if (reportReadStatus < 0 || reportWriteStatus < 0) {
-            if (brokerForbiddenMap.get(brokerId) == null) {
-                if (brokerForbiddenCount.incrementAndGet() > maxAutoForbiddenCnt) {
-                    brokerForbiddenCount.decrementAndGet();
-                } else {
-                    int manageStatus =
-                            getManageStatus(reportWriteStatus >= 0, reportReadStatus >= 0);
-                    if (updateCurManageStatus(brokerId, manageStatus)) {
+        if (reportReadStatus == 0 && reportWriteStatus == 0) {
+            BrokerAbnInfo brokerAbnInfo = brokerAbnormalMap.get(brokerId);
+            if (brokerAbnInfo != null) {
+                if (brokerForbiddenMap.get(brokerId) == null) {
+                    brokerAbnInfo = brokerAbnormalMap.remove(brokerId);
+                    if (brokerAbnInfo != null) {
                         logger.warn(new StringBuilder(512)
-                                .append("[Broker Status] master auto-change current broker ")
-                                .append(brokerId).append("'s manage status to")
-                                .append(manageStatus).toString());
-                    } else {
-                        brokerForbiddenCount.decrementAndGet();
+                            .append("[Broker AutoForbidden] broker ")
+                            .append(brokerId).append(" return to normal!").toString());
                     }
                 }
+            }
+            return;
+        }
+        BdbBrokerConfEntity oldEntity =
+            brokerConfManage.getBrokerDefaultConfigStoreInfo(brokerId);
+        if (oldEntity == null) {
+            return;
+        }
+        int manageStatus = getManageStatus(reportWriteStatus, reportReadStatus);
+        if ((oldEntity.getManageStatus() == manageStatus)
+            || ((manageStatus == TStatusConstants.STATUS_MANAGE_OFFLINE)
+            && (oldEntity.getManageStatus() < TStatusConstants.STATUS_MANAGE_ONLINE))) {
+            return;
+        }
+        BrokerAbnInfo brokerAbnInfo = brokerAbnormalMap.get(brokerId);
+        if (brokerAbnInfo == null) {
+            if (brokerAbnormalMap.putIfAbsent(brokerId,
+                new BrokerAbnInfo(brokerId, reportReadStatus, reportWriteStatus)) == null) {
+                logger.warn(new StringBuilder(512)
+                    .append("[Broker AutoForbidden] broker report abnormal, ")
+                    .append(brokerId).append("'s reportReadStatus=")
+                    .append(reportReadStatus).append(", reportWriteStatus=")
+                    .append(reportWriteStatus).toString());
+            }
+        } else {
+            brokerAbnInfo.updateLastRepStatus(reportReadStatus, reportWriteStatus);
+        }
+        BrokerFbdInfo brokerFbdInfo = brokerForbiddenMap.get(brokerId);
+        if (brokerFbdInfo == null) {
+            BrokerFbdInfo tmpBrokerFbdInfo =
+                new BrokerFbdInfo(brokerId, oldEntity.getManageStatus(),
+                    manageStatus, System.currentTimeMillis());
+            if (reportReadStatus > 0 || reportWriteStatus > 0) {
+                if (updateCurManageStatus(brokerId, oldEntity, manageStatus)) {
+                    if (brokerForbiddenMap.putIfAbsent(brokerId, tmpBrokerFbdInfo) == null) {
+                        brokerForbiddenCount.incrementAndGet();
+                        logger.warn(new StringBuilder(512)
+                            .append("[Broker AutoForbidden] master add missing forbidden broker, ")
+                            .append(brokerId).append("'s manage status to ")
+                            .append(getBrokerManageStatusStr(manageStatus)).toString());
+                    }
+                }
+            } else {
+                if (brokerForbiddenCount.incrementAndGet() > maxAutoForbiddenCnt) {
+                    brokerForbiddenCount.decrementAndGet();
+                    return;
+                }
+                if (updateCurManageStatus(brokerId, oldEntity, manageStatus)) {
+                    if (brokerForbiddenMap.putIfAbsent(brokerId, tmpBrokerFbdInfo) != null) {
+                        brokerForbiddenCount.decrementAndGet();
+                        return;
+                    }
+                    logger.warn(new StringBuilder(512)
+                        .append("[Broker AutoForbidden] master auto forbidden broker, ")
+                        .append(brokerId).append("'s manage status to ")
+                        .append(getBrokerManageStatusStr(manageStatus)).toString());
+                } else {
+                    brokerForbiddenCount.decrementAndGet();
+                }
+            }
+        } else {
+            if (updateCurManageStatus(brokerId, oldEntity, manageStatus)) {
+                brokerFbdInfo.updateInfo(oldEntity.getManageStatus(), manageStatus);
             }
         }
     }
 
     public void setBrokerHeartBeatReqStatus(int brokerId,
                                             ClientMaster.HeartResponseM2B.Builder builder) {
-        BrokerForbInfo brokerForbInfo = brokerForbiddenMap.get(brokerId);
-        if (brokerForbInfo == null) {
+        BrokerFbdInfo brokerFbdInfo = brokerForbiddenMap.get(brokerId);
+        if (brokerFbdInfo == null) {
             builder.setStopWrite(false);
             builder.setStopRead(false);
         } else {
-            switch (brokerForbInfo.newStatus) {
+            switch (brokerFbdInfo.newStatus) {
                 case TStatusConstants.STATUS_MANAGE_ONLINE_NOT_READ: {
                     builder.setStopWrite(false);
                     builder.setStopRead(true);
@@ -137,11 +198,12 @@ public class BrokerInfoHolder {
      */
     public BrokerInfo removeBroker(Integer brokerId) {
         BrokerInfo brokerInfo = brokerInfoMap.remove(brokerId);
-        BrokerForbInfo brokerForbInfo = brokerForbiddenMap.remove(brokerId);
+        brokerAbnormalMap.remove(brokerId);
+        BrokerFbdInfo brokerFbdInfo = brokerForbiddenMap.remove(brokerId);
         if (brokerInfo != null) {
             this.brokerTotalCount.decrementAndGet();
         }
-        if (brokerForbInfo != null) {
+        if (brokerFbdInfo != null) {
             this.brokerForbiddenCount.decrementAndGet();
         }
         return brokerInfo;
@@ -154,6 +216,7 @@ public class BrokerInfoHolder {
     public void clear() {
         brokerInfoMap.clear();
         brokerForbiddenCount.set(0);
+        brokerAbnormalMap.clear();
         brokerForbiddenMap.clear();
 
     }
@@ -165,17 +228,17 @@ public class BrokerInfoHolder {
     /**
      * Deduce status according to publish status and subscribe status
      *
-     * @param inAcceptPublish
-     * @param inAcceptSubscribe
+     * @param repWriteStatus
+     * @param repReadStatus
      * @return
      */
-    private int getManageStatus(boolean inAcceptPublish, boolean inAcceptSubscribe) {
+    private int getManageStatus(int repWriteStatus, int repReadStatus) {
         int manageStatus = TStatusConstants.STATUS_MANAGE_ONLINE_NOT_READ;
-        if ((inAcceptPublish) && (inAcceptSubscribe)) {
+        if (repWriteStatus == 0 && repReadStatus == 0) {
             manageStatus = TStatusConstants.STATUS_MANAGE_ONLINE;
-        } else if (!inAcceptPublish && !inAcceptSubscribe) {
+        } else if (repWriteStatus != 0 && repReadStatus != 0) {
             manageStatus = TStatusConstants.STATUS_MANAGE_OFFLINE;
-        } else if (inAcceptSubscribe) {
+        } else if (repWriteStatus != 0) {
             manageStatus = TStatusConstants.STATUS_MANAGE_ONLINE_NOT_WRITE;
         }
         return manageStatus;
@@ -188,56 +251,49 @@ public class BrokerInfoHolder {
      * @param manageStatus
      * @return true if success otherwise false
      */
-    private boolean updateCurManageStatus(int brokerId, int manageStatus) {
-        BdbBrokerConfEntity oldEntity =
-                brokerConfManage.getBrokerDefaultConfigStoreInfo(brokerId);
-        if (oldEntity == null) {
-            return false;
-        }
+    private boolean updateCurManageStatus(int brokerId, BdbBrokerConfEntity oldEntity, int manageStatus) {
         if ((oldEntity.getManageStatus() == manageStatus)
-                || ((manageStatus == TStatusConstants.STATUS_MANAGE_OFFLINE)
-                && (oldEntity.getManageStatus() < TStatusConstants.STATUS_MANAGE_ONLINE))) {
+            || ((manageStatus == TStatusConstants.STATUS_MANAGE_OFFLINE)
+            && (oldEntity.getManageStatus() < TStatusConstants.STATUS_MANAGE_ONLINE))) {
             return false;
         }
         try {
             if (WebParameterUtils.checkBrokerInProcessing(oldEntity.getBrokerId(),
-                    brokerConfManage, null)) {
+                brokerConfManage, null)) {
                 return false;
             }
             BdbBrokerConfEntity newEntity =
-                    new BdbBrokerConfEntity(oldEntity.getBrokerId(),
-                            oldEntity.getBrokerIp(), oldEntity.getBrokerPort(),
-                            oldEntity.getDftNumPartitions(), oldEntity.getDftUnflushThreshold(),
-                            oldEntity.getDftUnflushInterval(), oldEntity.getDftDeleteWhen(),
-                            oldEntity.getDftDeletePolicy(), manageStatus,
-                            oldEntity.isAcceptPublish(), oldEntity.isAcceptSubscribe(),
-                            oldEntity.getAttributes(), oldEntity.isConfDataUpdated(),
-                            oldEntity.isBrokerLoaded(), oldEntity.getRecordCreateUser(),
-                            oldEntity.getRecordCreateDate(), "Broker AutoReport",
-                            new Date());
+                new BdbBrokerConfEntity(oldEntity.getBrokerId(),
+                    oldEntity.getBrokerIp(), oldEntity.getBrokerPort(),
+                    oldEntity.getDftNumPartitions(), oldEntity.getDftUnflushThreshold(),
+                    oldEntity.getDftUnflushInterval(), oldEntity.getDftDeleteWhen(),
+                    oldEntity.getDftDeletePolicy(), manageStatus,
+                    oldEntity.isAcceptPublish(), oldEntity.isAcceptSubscribe(),
+                    oldEntity.getAttributes(), oldEntity.isConfDataUpdated(),
+                    oldEntity.isBrokerLoaded(), oldEntity.getRecordCreateUser(),
+                    oldEntity.getRecordCreateDate(), "Broker AutoReport",
+                    new Date());
             boolean isNeedFastStart =
-                    WebBrokerDefConfHandler.isBrokerStartNeedFast(brokerConfManage,
-                            newEntity.getBrokerId(), oldEntity.getManageStatus(), newEntity.getManageStatus());
+                WebBrokerDefConfHandler.isBrokerStartNeedFast(brokerConfManage,
+                    newEntity.getBrokerId(), oldEntity.getManageStatus(), newEntity.getManageStatus());
             brokerConfManage.confModBrokerDefaultConfig(newEntity);
             brokerConfManage.triggerBrokerConfDataSync(newEntity,
-                    oldEntity.getManageStatus(), isNeedFastStart);
-            if (brokerForbiddenMap.putIfAbsent(brokerId,
-                    new BrokerForbInfo(brokerId,
-                            oldEntity.getManageStatus(), manageStatus,
-                            System.currentTimeMillis())) != null) {
-                return false;
-            }
+                oldEntity.getManageStatus(), isNeedFastStart);
             return true;
         } catch (Throwable e1) {
             return false;
         }
     }
 
-    public BrokerForbInfo getAutoForbiddenBrokerInfo(int brokerId) {
+    public Map<Integer, BrokerAbnInfo> getBrokerAbnormalMap() {
+        return brokerAbnormalMap;
+    }
+
+    public BrokerFbdInfo getAutoForbiddenBrokerInfo(int brokerId) {
         return this.brokerForbiddenMap.get(brokerId);
     }
 
-    public Map<Integer, BrokerForbInfo> getAutoForbiddenBrokerMapInfo() {
+    public Map<Integer, BrokerFbdInfo> getAutoForbiddenBrokerMapInfo() {
         return this.brokerForbiddenMap;
     }
 
@@ -251,41 +307,93 @@ public class BrokerInfoHolder {
         if (brokerIdSet == null || brokerIdSet.isEmpty()) {
             return;
         }
-        List<BrokerForbInfo> brokerForbInfos = new ArrayList<BrokerForbInfo>();
+        List<BrokerFbdInfo> brokerFbdInfos = new ArrayList<BrokerFbdInfo>();
         for (Integer brokerId : brokerIdSet) {
-            BrokerForbInfo forbInfo = this.brokerForbiddenMap.remove(brokerId);
-            if (forbInfo != null) {
-                brokerForbInfos.add(forbInfo);
+            BrokerFbdInfo fbdInfo = this.brokerForbiddenMap.remove(brokerId);
+            if (fbdInfo != null) {
+                brokerFbdInfos.add(fbdInfo);
+                this.brokerAbnormalMap.remove(brokerId);
+                this.brokerForbiddenCount.decrementAndGet();
             }
         }
-        if (!brokerForbInfos.isEmpty()) {
+        if (!brokerFbdInfos.isEmpty()) {
             logger.info(new StringBuilder(512)
-                    .append("[Remove AutoForbidden] : remove current auto-forbidden brokers by reason ")
-                    .append(reason).append(", release list is ").append(brokerForbInfos.toString()).toString());
+                    .append("[Broker AutoForbidden] remove forbidden brokers by reason ")
+                    .append(reason).append(", release list is ").append(brokerFbdInfos.toString()).toString());
         }
     }
 
-    public class BrokerForbInfo {
-        public int brokerId;
-        public int befStatus;
-        public int newStatus;
-        public long forbiddenTime;
+    public class BrokerAbnInfo {
+        private int brokerId;
+        private int abnStatus;  // 0 normal , -100 read abnormal, -1 write abnormal, -101 r & w abnormal
+        private long firstRepTime;
+        private long lastRepTime;
 
-        BrokerForbInfo(int brokerId, int befStatus, int newStatus, long forbiddenTime) {
+        public BrokerAbnInfo(int brokerId, int reportReadStatus, int reportWriteStatus) {
             this.brokerId = brokerId;
-            this.befStatus = befStatus;
-            this.forbiddenTime = forbiddenTime;
+            this.abnStatus = reportReadStatus * 100 + reportWriteStatus;
+            this.firstRepTime = System.currentTimeMillis();
+            this.lastRepTime = this.firstRepTime;
+        }
 
+        public void updateLastRepStatus(int reportReadStatus, int reportWriteStatus) {
+            this.abnStatus = reportReadStatus * 100 + reportWriteStatus;
+            this.lastRepTime = System.currentTimeMillis();
+        }
+
+        public int getAbnStatus() {
+            return abnStatus;
+        }
+
+        public long getFirstRepTime() {
+            return firstRepTime;
+        }
+
+        public long getLastRepTime() {
+            return lastRepTime;
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .append("brokerId", brokerId)
-                    .append("befStatus", befStatus)
-                    .append("newStatus", newStatus)
-                    .append("forbiddenTime", forbiddenTime)
+                    .append("abnStatus", abnStatus)
+                    .append("firstRepTime", firstRepTime)
+                    .append("lastRepTime", lastRepTime)
                     .toString();
+        }
+    }
+
+    public class BrokerFbdInfo {
+        private int brokerId;
+        private int befStatus;
+        private int newStatus;
+        private long forbiddenTime;
+        private long lastUpdateTime;
+
+        public BrokerFbdInfo(int brokerId, int befStatus, int newStatus, long forbiddenTime) {
+            this.brokerId = brokerId;
+            this.befStatus = befStatus;
+            this.newStatus = newStatus;
+            this.forbiddenTime = forbiddenTime;
+            this.lastUpdateTime = forbiddenTime;
+        }
+
+        public void updateInfo(int befStatus, int newStatus) {
+            this.befStatus = befStatus;
+            this.newStatus = newStatus;
+            this.lastUpdateTime = System.currentTimeMillis();
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                .append("brokerId", brokerId)
+                .append("befStatus", befStatus)
+                .append("newStatus", newStatus)
+                .append("forbiddenTime", forbiddenTime)
+                .append("lastUpdateTime", lastUpdateTime)
+                .toString();
         }
     }
 

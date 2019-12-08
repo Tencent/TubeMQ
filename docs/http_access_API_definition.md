@@ -95,7 +95,8 @@ __Request__
 |name|must|description|type|
 |---|---|---|---|
 |brokerId|yes|the id of broker. It supports bulk brokerId which separated by `,`. The maximum <br> number of a bulk is 50. The brokerId should be distinct in case of bulk value  |int|
-|onlyAutoForbidden| yes|only auto forbidden set, default is false |Boolean|
+|onlyAbnormal| no|only report abnormal set, default is false |Boolean|
+|onlyAutoForbidden| no|only auto forbidden set, default is false |Boolean|
 |onlyEnableTLS| no|only enable TLS set, default is false|Boolean|
 |withDetail| yes|whether it needs detail, default is false |Boolean|
 

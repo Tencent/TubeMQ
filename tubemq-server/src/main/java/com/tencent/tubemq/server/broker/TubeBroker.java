@@ -213,108 +213,110 @@ public class TubeBroker implements Stoppable, Runnable {
         // register to master, and heartbeat to master.
         this.register2Master();
         this.scheduledExecutorService.scheduleAtFixedRate(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!shutdown.get()) {
-                            long currErrCnt = heartbeatErrors.get();
-                            if (currErrCnt > maxReleaseTryCnt) {
-                                if (currErrCnt % 2 == 0) {
-                                    heartbeatErrors.incrementAndGet();
-                                    return;
-                                }
-                            }
-                            try {
-                                HeartResponseM2B response =
-                                    masterService.brokerHeartbeatB2M(createBrokerHeartBeatRequest(),
-                                        tubeConfig.getHostName(), false);
-                                if (!response.getSuccess()) {
-                                    isKeepAlive.set(false);
-                                    if (response.getErrCode() == TErrCodeConstants.HB_NO_NODE) {
-                                        register2Master();
-                                        heartbeatErrors.set(0);
-                                        logger.info("Re-register to master successfully!");
-                                    }
-                                    return;
-                                }
-                                isKeepAlive.set(true);
-                                heartbeatErrors.set(0);
-                                FlowCtrlRuleHandler flowCtrlRuleHandler =
-                                    metadataManage.getFlowCtrlRuleHandler();
-                                long flowCheckId = flowCtrlRuleHandler.getFlowCtrlId();
-                                long ssdTrnasLateId = flowCtrlRuleHandler.getSsdTranslateId();
-                                int qryPriorityId = flowCtrlRuleHandler.getQryPriorityId();
-                                ServiceStatusHolder
-                                    .setReadWriteServiceStatus(response.getStopRead(),
-                                        response.getStopWrite(), "Master");
-                                if (response.hasFlowCheckId()) {
-                                    qryPriorityId = response.hasQryPriorityId()
-                                        ? response.getQryPriorityId() : qryPriorityId;
-                                    if (response.getFlowCheckId() != flowCheckId) {
-                                        flowCheckId = response.getFlowCheckId();
-                                        ssdTrnasLateId = response.getSsdStoreId();
-                                        try {
-                                            flowCtrlRuleHandler
-                                                .updateDefFlowCtrlInfo(ssdTrnasLateId,
-                                                    qryPriorityId, flowCheckId, response.getFlowControlInfo());
-                                        } catch (Exception e1) {
-                                            logger.warn(
-                                                "[HeartBeat response] found parse flowCtrl rules failure", e1);
-                                        }
-                                    }
-                                    if (response.getSsdStoreId() != ssdTrnasLateId) {
-                                        ssdTrnasLateId = response.getSsdStoreId();
-                                        flowCtrlRuleHandler.setSsdTranslateId(ssdTrnasLateId);
-                                    }
-                                    if (qryPriorityId != flowCtrlRuleHandler.getQryPriorityId()) {
-                                        flowCtrlRuleHandler.setQryPriorityId(qryPriorityId);
-                                    }
-                                }
-                                requireReportConf = response.getNeedReportData();
-                                StringBuilder sBuilder = new StringBuilder(512);
-                                if (response.getTakeConfInfo()) {
-                                    logger.info(sBuilder
-                                        .append("[HeartBeat response] received broker metadata info: brokerConfId=")
-                                        .append(response.getCurBrokerConfId())
-                                        .append(",configCheckSumId=").append(response.getConfCheckSumId())
-                                        .append(",hasFlowCtrl=").append(response.hasFlowCheckId())
-                                        .append(",curFlowCtrlId=").append(flowCheckId)
-                                        .append(",curSsdTrnasLateId=").append(ssdTrnasLateId)
-                                        .append(",curQryPriorityId=").append(qryPriorityId)
-                                        .append(",brokerDefaultConfInfo=")
-                                        .append(response.getBrokerDefaultConfInfo())
-                                        .append(",brokerTopicSetConfList=")
-                                        .append(response.getBrokerTopicSetConfInfoList().toString()).toString());
-                                    sBuilder.delete(0, sBuilder.length());
-                                    metadataManage
-                                        .updateBrokerTopicConfigMap(response.getCurBrokerConfId(),
-                                            response.getConfCheckSumId(), response.getBrokerDefaultConfInfo(),
-                                            response.getBrokerTopicSetConfInfoList(), false, sBuilder);
-                                }
-                                if (response.hasBrokerAuthorizedInfo()) {
-                                    serverAuthHandler.appendVisitToken(response.getBrokerAuthorizedInfo());
-                                }
-                                boolean needProcess =
-                                    metadataManage.updateBrokerRemoveTopicMap(
-                                        response.getTakeRemoveTopicInfo(),
-                                        response.getRemoveTopicConfInfoList(), sBuilder);
-                                if (needProcess) {
-                                    new Thread() {
-                                        @Override
-                                        public void run() {
-                                            storeManager.removeTopicStore();
-                                        }
-                                    }.start();
-                                }
-                            } catch (Throwable t) {
-                                isKeepAlive.set(false);
+            new Runnable() {
+                @Override
+                public void run() {
+                    if (!shutdown.get()) {
+                        long currErrCnt = heartbeatErrors.get();
+                        if (currErrCnt > maxReleaseTryCnt) {
+                            if (currErrCnt % 2 == 0) {
                                 heartbeatErrors.incrementAndGet();
-                                samplePrintCtrl.printExceptionCaught(t);
+                                return;
                             }
                         }
+                        try {
+                            HeartResponseM2B response =
+                                masterService.brokerHeartbeatB2M(createBrokerHeartBeatRequest(),
+                                    tubeConfig.getHostName(), false);
+                            if (!response.getSuccess()) {
+                                isKeepAlive.set(false);
+                                if (response.getErrCode() == TErrCodeConstants.HB_NO_NODE) {
+                                    register2Master();
+                                    heartbeatErrors.set(0);
+                                    logger.info("Re-register to master successfully!");
+                                }
+                                return;
+                            }
+                            isKeepAlive.set(true);
+                            heartbeatErrors.set(0);
+                            FlowCtrlRuleHandler flowCtrlRuleHandler =
+                                metadataManage.getFlowCtrlRuleHandler();
+                            long flowCheckId = flowCtrlRuleHandler.getFlowCtrlId();
+                            long ssdTrnasLateId = flowCtrlRuleHandler.getSsdTranslateId();
+                            int qryPriorityId = flowCtrlRuleHandler.getQryPriorityId();
+                            ServiceStatusHolder
+                                .setReadWriteServiceStatus(response.getStopRead(),
+                                    response.getStopWrite(), "Master");
+                            if (response.hasFlowCheckId()) {
+                                qryPriorityId = response.hasQryPriorityId()
+                                    ? response.getQryPriorityId() : qryPriorityId;
+                                if (response.getFlowCheckId() != flowCheckId) {
+                                    flowCheckId = response.getFlowCheckId();
+                                    ssdTrnasLateId = response.getSsdStoreId();
+                                    try {
+                                        flowCtrlRuleHandler
+                                            .updateDefFlowCtrlInfo(ssdTrnasLateId,
+                                                qryPriorityId, flowCheckId, response.getFlowControlInfo());
+                                    } catch (Exception e1) {
+                                        logger.warn(
+                                            "[HeartBeat response] found parse flowCtrl rules failure", e1);
+                                    }
+                                }
+                                if (response.getSsdStoreId() != ssdTrnasLateId) {
+                                    ssdTrnasLateId = response.getSsdStoreId();
+                                    flowCtrlRuleHandler.setSsdTranslateId(ssdTrnasLateId);
+                                }
+                                if (qryPriorityId != flowCtrlRuleHandler.getQryPriorityId()) {
+                                    flowCtrlRuleHandler.setQryPriorityId(qryPriorityId);
+                                }
+                            }
+                            requireReportConf = response.getNeedReportData();
+                            StringBuilder sBuilder = new StringBuilder(512);
+                            if (response.getTakeConfInfo()) {
+                                logger.info(sBuilder
+                                    .append("[HeartBeat response] received broker metadata info: brokerConfId=")
+                                    .append(response.getCurBrokerConfId())
+                                    .append(",stopWrite=").append(response.getStopWrite())
+                                    .append(",stopRead=").append(response.getStopRead())
+                                    .append(",configCheckSumId=").append(response.getConfCheckSumId())
+                                    .append(",hasFlowCtrl=").append(response.hasFlowCheckId())
+                                    .append(",curFlowCtrlId=").append(flowCheckId)
+                                    .append(",curSsdTrnasLateId=").append(ssdTrnasLateId)
+                                    .append(",curQryPriorityId=").append(qryPriorityId)
+                                    .append(",brokerDefaultConfInfo=")
+                                    .append(response.getBrokerDefaultConfInfo())
+                                    .append(",brokerTopicSetConfList=")
+                                    .append(response.getBrokerTopicSetConfInfoList().toString()).toString());
+                                sBuilder.delete(0, sBuilder.length());
+                                metadataManage
+                                    .updateBrokerTopicConfigMap(response.getCurBrokerConfId(),
+                                        response.getConfCheckSumId(), response.getBrokerDefaultConfInfo(),
+                                        response.getBrokerTopicSetConfInfoList(), false, sBuilder);
+                            }
+                            if (response.hasBrokerAuthorizedInfo()) {
+                                serverAuthHandler.appendVisitToken(response.getBrokerAuthorizedInfo());
+                            }
+                            boolean needProcess =
+                                metadataManage.updateBrokerRemoveTopicMap(
+                                    response.getTakeRemoveTopicInfo(),
+                                    response.getRemoveTopicConfInfoList(), sBuilder);
+                            if (needProcess) {
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        storeManager.removeTopicStore();
+                                    }
+                                }.start();
+                            }
+                        } catch (Throwable t) {
+                            isKeepAlive.set(false);
+                            heartbeatErrors.incrementAndGet();
+                            samplePrintCtrl.printExceptionCaught(t);
+                        }
                     }
-                }, tubeConfig.getHeartbeatPeriodMs(), tubeConfig.getHeartbeatPeriodMs(),
-                TimeUnit.MILLISECONDS);
+                }
+            }, tubeConfig.getHeartbeatPeriodMs(), tubeConfig.getHeartbeatPeriodMs(),
+            TimeUnit.MILLISECONDS);
         this.storeManager.start();
         this.brokerServiceServer.start();
         isOnline = true;
@@ -423,12 +425,10 @@ public class TubeBroker implements Stoppable, Runnable {
                     if (response.getFlowCheckId() != flowCtrlRuleHandler.getFlowCtrlId()) {
                         try {
                             flowCtrlRuleHandler
-                                    .updateDefFlowCtrlInfo(response.getSsdStoreId(),
-                                            response.getQryPriorityId(), response.getFlowCheckId(),
-                                            response.getFlowControlInfo());
+                                .updateDefFlowCtrlInfo(response.getSsdStoreId(), response.getQryPriorityId(),
+                                    response.getFlowCheckId(), response.getFlowControlInfo());
                         } catch (Exception e1) {
-                            logger.warn(
-                                    "[Register response] found parse flowCtrl rules failure", e1);
+                            logger.warn("[Register response] found parse flowCtrl rules failure", e1);
                         }
                     }
                     if (response.getSsdStoreId() != flowCtrlRuleHandler.getSsdTranslateId()) {
@@ -442,6 +442,8 @@ public class TubeBroker implements Stoppable, Runnable {
                 logger.info(sBuilder
                     .append("[Register response] received broker metadata info: brokerConfId=")
                     .append(response.getCurBrokerConfId())
+                    .append(",stopWrite=").append(response.getStopWrite())
+                    .append(",stopRead=").append(response.getStopRead())
                     .append(",configCheckSumId=").append(response.getConfCheckSumId())
                     .append(",hasFlowCtrl=").append(response.hasFlowCheckId())
                     .append(",enableVisitTokenCheck=")
@@ -517,16 +519,18 @@ public class TubeBroker implements Stoppable, Runnable {
             builder.setAuthInfo(authInfoBuilder.build());
         }
         logger.info(new StringBuilder(512)
-                .append("[Register request] current broker report info: brokerConfId=")
-                .append(metadataManage.getBrokerMetadataConfId())
-                .append(",isTlsEnable=").append(tubeConfig.isTlsEnable())
-                .append(",TlsPort=").append(tubeConfig.getTlsPort())
-                .append(",flowCtrlId=").append(flowCtrlRuleHandler.getFlowCtrlId())
-                .append(",SSDTranslateId=").append(flowCtrlRuleHandler.getSsdTranslateId())
-                .append(",QryPriorityId=").append(flowCtrlRuleHandler.getQryPriorityId())
-                .append(",configCheckSumId=").append(metadataManage.getBrokerConfCheckSumId())
-                .append(",brokerDefaultConfInfo=").append(brokerDefaultConfInfo)
-                .append(",brokerTopicSetConfList=").append(topicConfInfoList).toString());
+            .append("[Register request] current broker report info: brokerConfId=")
+            .append(metadataManage.getBrokerMetadataConfId())
+            .append(",readStatusRpt=").append(builder.getReadStatusRpt())
+            .append(",writeStatusRpt=").append(builder.getWriteStatusRpt())
+            .append(",isTlsEnable=").append(tubeConfig.isTlsEnable())
+            .append(",TlsPort=").append(tubeConfig.getTlsPort())
+            .append(",flowCtrlId=").append(flowCtrlRuleHandler.getFlowCtrlId())
+            .append(",SSDTranslateId=").append(flowCtrlRuleHandler.getSsdTranslateId())
+            .append(",QryPriorityId=").append(flowCtrlRuleHandler.getQryPriorityId())
+            .append(",configCheckSumId=").append(metadataManage.getBrokerConfCheckSumId())
+            .append(",brokerDefaultConfInfo=").append(brokerDefaultConfInfo)
+            .append(",brokerTopicSetConfList=").append(topicConfInfoList).toString());
         return builder.build();
     }
 
@@ -564,17 +568,19 @@ public class TubeBroker implements Stoppable, Runnable {
             builder.setBrokerDefaultConfInfo(metadataManage.getBrokerDefMetaConfInfo());
             builder.addAllBrokerTopicSetConfInfo(metadataManage.getTopicMetaConfInfoLst());
             logger.info(new StringBuilder(512)
-                    .append("[HeartBeat request] current broker report info: brokerConfId=")
-                    .append(metadataManage.getBrokerMetadataConfId())
-                    .append(",lastReportedConfigId=").append(metadataManage.getLastRptBrokerMetaConfId())
-                    .append(",configCheckSumId=").append(metadataManage.getBrokerConfCheckSumId())
-                    .append(",brokerDefaultConfInfo=").append(metadataManage.getBrokerDefMetaConfInfo())
-                    .append(",flowCtrlId=").append(flowCtrlRuleHandler.getFlowCtrlId())
-                    .append(",SSDTranslateId=").append(flowCtrlRuleHandler.getSsdTranslateId())
-                    .append(",QryPriorityId=").append(flowCtrlRuleHandler.getQryPriorityId())
-                    .append(",ReadStatusRpt=").append(builder.getReadStatusRpt())
-                    .append(",WriteStatusRpt=").append(builder.getWriteStatusRpt())
-                    .append(",brokerTopicSetConfList=").append(metadataManage.getTopicMetaConfInfoLst()).toString());
+                .append("[HeartBeat request] current broker report info: brokerConfId=")
+                .append(metadataManage.getBrokerMetadataConfId())
+                .append(",readStatusRpt=").append(builder.getReadStatusRpt())
+                .append(",writeStatusRpt=").append(builder.getWriteStatusRpt())
+                .append(",flowCtrlId=").append(flowCtrlRuleHandler.getFlowCtrlId())
+                .append(",SSDTranslateId=").append(flowCtrlRuleHandler.getSsdTranslateId())
+                .append(",QryPriorityId=").append(flowCtrlRuleHandler.getQryPriorityId())
+                .append(",ReadStatusRpt=").append(builder.getReadStatusRpt())
+                .append(",WriteStatusRpt=").append(builder.getWriteStatusRpt())
+                .append(",lastReportedConfigId=").append(metadataManage.getLastRptBrokerMetaConfId())
+                .append(",configCheckSumId=").append(metadataManage.getBrokerConfCheckSumId())
+                .append(",brokerDefaultConfInfo=").append(metadataManage.getBrokerDefMetaConfInfo())
+                .append(",brokerTopicSetConfList=").append(metadataManage.getTopicMetaConfInfoLst()).toString());
             metadataManage.setLastRptBrokerMetaConfId(metadataManage.getBrokerMetadataConfId());
             requireReportConf = false;
         }

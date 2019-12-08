@@ -1044,13 +1044,15 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
         brokerHolder.setBrokerInfo(brokerInfo.getBrokerId(), brokerInfo);
         heartbeatManager.regBrokerNode(String.valueOf(brokerInfo.getBrokerId()));
         logger.info(strBuffer.append("[Broker Register] ").append(clientId)
-                .append(", report broker configure id is :").append(request.getCurBrokerConfId())
-                .append(", report isTlsEnable is :").append(brokerInfo.isEnableTLS())
-                .append(", report TLS port is :").append(brokerInfo.getTlsPort())
-                .append(", report FlowCtrlId is :").append(reFlowCtrlId)
-                .append(", report ssdTransId is :").append(reqSsdTransId)
-                .append(", report qureyPriorityId is :").append(reqQureyPriorityId)
-                .append(", checksum id is :").append(request.getConfCheckSumId()).toString());
+            .append(" report, configureId=").append(request.getCurBrokerConfId())
+            .append(",readStatusRpt=").append(request.getReadStatusRpt())
+            .append(",writeStatusRpt=").append(request.getWriteStatusRpt())
+            .append(",isTlsEnable=").append(brokerInfo.isEnableTLS())
+            .append(",TLSport=").append(brokerInfo.getTlsPort())
+            .append(",FlowCtrlId=").append(reFlowCtrlId)
+            .append(",ssdTransId=").append(reqSsdTransId)
+            .append(",qureyPriorityId=").append(reqQureyPriorityId)
+            .append(",checksumId=").append(request.getConfCheckSumId()).toString());
         strBuffer.delete(0, strBuffer.length());
         if (request.getCurBrokerConfId() > 0) {
             processBrokerReportConfigureInfo(brokerInfo, strBuffer);
@@ -1102,11 +1104,15 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
                 }
             }
         }
-        logger.info(strBuffer.append("[TMaster sync] push broker configure: broker configure id : ")
-                .append(brokerStatusInfo.getLastPushBrokerConfId()).append(", checksum id  is ")
-                .append(brokerStatusInfo.getLastPushBrokerCheckSumId()).append(", default broker configure is ")
-                .append(brokerStatusInfo.getLastPushBrokerDefaultConfInfo()).append(", broker topic configure is ")
-                .append(brokerStatusInfo.getLastPushBrokerTopicSetConfInfo()).toString());
+        logger.info(strBuffer.append("[TMaster sync] push broker configure: brokerId = ")
+            .append(brokerStatusInfo.getBrokerId())
+            .append(",configureId=").append(brokerStatusInfo.getLastPushBrokerConfId())
+            .append(",stopWrite=").append(builder.getStopWrite())
+            .append(",stopRead=").append(builder.getStopRead())
+            .append(",checksumId=").append(brokerStatusInfo.getLastPushBrokerCheckSumId())
+            .append(",default configure is ").append(brokerStatusInfo.getLastPushBrokerDefaultConfInfo())
+            .append(",topic configure is ").append(brokerStatusInfo.getLastPushBrokerTopicSetConfInfo())
+            .toString());
         strBuffer.delete(0, strBuffer.length());
         logger.info(strBuffer.append("[Broker Register] ").append(clientId)
                 .append(", isOverTLS=").append(overtls).toString());
@@ -1227,17 +1233,17 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
             strBuffer.append("[Broker Report] heartbeat report: brokerId=")
                 .append(request.getBrokerId()).append(", configureId=")
                 .append(request.getCurBrokerConfId())
-                .append(", checksumId=").append(request.getConfCheckSumId())
-                .append(", hasFlowCheckId=").append(request.hasFlowCheckId())
+                .append(",readStatusRpt=").append(request.getReadStatusRpt())
+                .append(",writeStatusRpt=").append(request.getWriteStatusRpt())
+                .append(",checksumId=").append(request.getConfCheckSumId())
+                .append(",hasFlowCheckId=").append(request.hasFlowCheckId())
                 .append(",reFlowCtrlId=").append(reFlowCtrlId)
-                .append(", reqSsdTransId=").append(reqSsdTransId)
-                .append(", reqQureyPriorityId=").append(reqQureyPriorityId)
-                .append(", default broker configure is ").append(request.getBrokerDefaultConfInfo())
-                .append(", broker topic configure is ").append(request.getBrokerTopicSetConfInfoList())
-                .append(", broker is Online : ").append(request.getBrokerOnline())
-                .append(", readStatusRpt=").append(request.getReadStatusRpt())
-                .append(", writeStatusRpt=").append(request.getWriteStatusRpt())
-                .append(", current brokerSyncStatusInfo is ");
+                .append(",reqSsdTransId=").append(reqSsdTransId)
+                .append(",reqQureyPriorityId=").append(reqQureyPriorityId)
+                .append(",brokerOnline=").append(request.getBrokerOnline())
+                .append(",default broker configure is ").append(request.getBrokerDefaultConfInfo())
+                .append(",broker topic configure is ").append(request.getBrokerTopicSetConfInfoList())
+                .append(",current brokerSyncStatusInfo is ");
             logger.info(brokerSyncStatusInfo.toJsonString(strBuffer, true).toString());
             strBuffer.delete(0, strBuffer.length());
         }
@@ -1283,19 +1289,20 @@ public class TMaster extends HasThread implements MasterService, Stoppable {
             builder.addAllBrokerTopicSetConfInfo(brokerSyncStatusInfo
                     .getLastPushBrokerTopicSetConfInfo());
             logger.info(strBuffer
-                    .append("[Broker Report] heartbeat sync topic config: broker configure id : ")
-                    .append(brokerSyncStatusInfo.getLastPushBrokerConfId())
-                    .append(",set flowCtrlId=").append(builder.getFlowCheckId())
-                    .append(",set ssdTransId=").append(builder.getSsdStoreId())
-                    .append(",set qryPriorityId=").append(builder.getQryPriorityId())
-                    .append(",set StopWrite=").append(builder.getStopWrite())
-                    .append(",set StopRead=").append(builder.getStopRead())
-                    .append(", checksum id  is ").append(brokerSyncStatusInfo.getLastPushBrokerCheckSumId())
-                    .append(", default broker configure is ")
-                    .append(brokerSyncStatusInfo.getLastPushBrokerDefaultConfInfo())
-                    .append(", broker topic configure is ")
-                    .append(brokerSyncStatusInfo.getLastPushBrokerTopicSetConfInfo())
-                    .toString());
+                .append("[Broker Report] heartbeat sync topic config: brokerId=")
+                .append(brokerId).append(", configureId=")
+                .append(brokerSyncStatusInfo.getLastPushBrokerConfId())
+                .append(",set flowCtrlId=").append(builder.getFlowCheckId())
+                .append(",stopWrite=").append(builder.getStopWrite())
+                .append(",stopRead=").append(builder.getStopRead())
+                .append(",ssdTransId=").append(builder.getSsdStoreId())
+                .append(",qryPriorityId=").append(builder.getQryPriorityId())
+                .append(",checksumId=").append(brokerSyncStatusInfo.getLastPushBrokerCheckSumId())
+                .append(",default configure is ")
+                .append(brokerSyncStatusInfo.getLastPushBrokerDefaultConfInfo())
+                .append(",topic configure is ")
+                .append(brokerSyncStatusInfo.getLastPushBrokerTopicSetConfInfo())
+                .toString());
         }
         // begin:  deprecated when brokers version equal to current master version
         builder.setAuthorizedInfo(genAuthorizedInfo(null, true));
