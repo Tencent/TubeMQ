@@ -794,7 +794,7 @@ __Request__
 
 1. Query consumer group subscription information
 
-Url ` http://127.0.0.1:8088/webapi.htm?type=op_query&method=admin_query_sub_info&topicName=test&consumeGroup=xxx `
+Url ` http://127.0.0.1:8080/webapi.htm?type=op_query&method=admin_query_sub_info&topicName=test&consumeGroup=xxx `
 
 response:
 
@@ -813,7 +813,7 @@ response:
 
 2. Query consumer group detailed subscription information
 
-Url `http://127.0.0.1:8088/webapi.htm?type=op_query&method=admin_query_consume_group_detail&consumeGroup=test_25`
+Url `http://127.0.0.1:8080/webapi.htm?type=op_query&method=admin_query_consume_group_detail&consumeGroup=test_25`
 
 response:
 
