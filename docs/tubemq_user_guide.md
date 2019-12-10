@@ -46,7 +46,7 @@ like this, and all services run on the same node. Zookeeper should be setup in y
 
 | Role | TCP Port | TLS Port | Web Port | Comment |
 | ---- | -------- | -------- | -------- | ------- |
-| Master | 8099 | 8199 | 8088 | Meta data is stored at /stage/metadata |
+| Master | 8099 | 8199 | 8080 | Meta data is stored at /stage/metadata |
 | Broker | 8123 | 8124 | 8081 | Message is stored at /stage/msgdata |
 | Zookeeper | 2181 | | | Offset is stored at /tubemq |
 
@@ -58,7 +58,7 @@ be replaced with your server IP.
 [master]
 hostName=YOUR_SERVER_IP
 port=8000
-webPort=8088
+webPort=8080
 consumerBalancePeriodMs=30000
 firstBalanceDelayAfterStartMs=60000
 consumerHeartbeatTimeoutMs=30000
@@ -152,7 +152,7 @@ the master service.
 ```bash
 ./master.sh start
 ```
-You should be able to access `http://your-master-ip:8088/config/topic_list.htm` to see the
+You should be able to access `http://your-master-ip:8080/config/topic_list.htm` to see the
 web GUI now.
 
 ![TubeMQ Console GUI](img/tubemq-console-gui.png)
