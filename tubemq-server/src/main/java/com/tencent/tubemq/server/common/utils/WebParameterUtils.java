@@ -179,6 +179,38 @@ public class WebParameterUtils {
     }
 
     /**
+     * Parse the parameter value from an object value to group string value
+     *
+     * @param paramName    the parameter name
+     * @param paramValue   the parameter value which is an object for parsing
+     * @param paramMaxLen  the max length of string to return
+     * @param required     a boolean value represent whether the parameter is must required
+     * @param defaultValue a default value returned if failed to parse value from the given object
+     * @return a string value of parameter
+     * @throws Exception if failed to parse the object
+     */
+    public static String validGroupParameter(String paramName, Object paramValue, int paramMaxLen,
+                                             boolean required, String defaultValue) throws Exception {
+        String tmpParamValue = checkParamCommonRequires(paramName, paramValue, required);
+        if (TStringUtils.isBlank(tmpParamValue)) {
+            return defaultValue;
+        }
+        if (paramMaxLen != TBaseConstants.META_VALUE_UNDEFINED) {
+            if (tmpParamValue.length() > paramMaxLen) {
+                throw new Exception(new StringBuilder(512).append("the max length of ")
+                    .append(paramName).append(" parameter is ")
+                    .append(paramMaxLen).append(" characters").toString());
+            }
+        }
+        if (!tmpParamValue.matches(TBaseConstants.META_TMP_GROUP_VALUE)) {
+            throw new Exception(new StringBuilder(512).append("the value of ")
+                .append(paramName).append(" parameter must begin with a letter, ")
+                .append("can only contain characters,numbers,hyphen,and underscores").toString());
+        }
+        return tmpParamValue;
+    }
+
+    /**
      * Parse the parameter value from an object value to ip address of string value
      *
      * @param paramName    the parameter name
@@ -422,12 +454,11 @@ public class WebParameterUtils {
                         .append(TBaseConstants.META_MAX_GROUPNAME_LENGTH)
                         .append(" characters").toString());
             }
-            if (!groupName.matches(TBaseConstants.META_TMP_STRING_VALUE)) {
+            if (!groupName.matches(TBaseConstants.META_TMP_GROUP_VALUE)) {
                 throw new Exception(sb.append("Illegal value: the value of ")
-                        .append(groupName)
-                        .append("in groupName parameter must begin with a letter, can only contain characters," +
-                                "numbers,and underscores")
-                        .toString());
+                    .append(groupName)
+                    .append("in groupName parameter must begin with a letter, can only contain ")
+                    .append("characters,numbers,hyphen,and underscores").toString());
             }
             bathOpGroupNames.add(groupName);
         }

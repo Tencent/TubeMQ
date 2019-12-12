@@ -362,10 +362,10 @@ public class WebAdminTopicAuthHandler {
                 for (int j = 0; j < authConsumeGroupSet.size(); j++) {
                     Map<String, String> groupObject = authConsumeGroupSet.get(j);
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String groupTopicName =
                             WebParameterUtils.validStringParameter("topicName",
                                     groupObject.get("topicName"),

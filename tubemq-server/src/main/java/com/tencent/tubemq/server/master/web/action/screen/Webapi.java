@@ -334,7 +334,7 @@ public class Webapi implements Action {
     private StringBuilder getSubscribeInfo(HttpServletRequest req) {
         StringBuilder strBuffer = new StringBuilder();
         try {
-            String strConsumeGroup = WebParameterUtils.validStringParameter("consumeGroup",
+            String strConsumeGroup = WebParameterUtils.validGroupParameter("consumeGroup",
                     req.getParameter("consumeGroup"), TBaseConstants.META_MAX_GROUPNAME_LENGTH, false, "");
             String strTopicName = WebParameterUtils.validStringParameter("topicName",
                     req.getParameter("topicName"), TBaseConstants.META_MAX_TOPICNAME_LENGTH, false, "");
@@ -413,7 +413,7 @@ public class Webapi implements Action {
     private StringBuilder getConsumeGroupDetailInfo(HttpServletRequest req) {
         StringBuilder strBuffer = new StringBuilder(1024);
         try {
-            String strConsumeGroup = WebParameterUtils.validStringParameter("consumeGroup",
+            String strConsumeGroup = WebParameterUtils.validGroupParameter("consumeGroup",
                     req.getParameter("consumeGroup"), TBaseConstants.META_MAX_GROUPNAME_LENGTH, true, "");
             boolean isBandConsume = false;
             boolean isNotAllocate = false;

@@ -126,7 +126,7 @@ public class BrokerAdminServlet extends HttpServlet {
         int index = 0;
         StringBuilder sBuilder = new StringBuilder(1024);
         String groupNameInput =
-                WebParameterUtils.validStringParameter("groupName",
+                WebParameterUtils.validGroupParameter("groupName",
                         req.getParameter("groupName"),
                         TBaseConstants.META_MAX_GROUPNAME_LENGTH, false, null);
         sBuilder.append("{\"result\":true,\"errCode\":0,\"errMsg\":\"Success!\",\"dataSet\":[");
@@ -365,7 +365,7 @@ public class BrokerAdminServlet extends HttpServlet {
                         req.getParameter("topicName"),
                         TBaseConstants.META_MAX_TOPICNAME_LENGTH, true, "");
         final String groupName =
-                WebParameterUtils.validStringParameter("groupName",
+                WebParameterUtils.validGroupParameter("groupName",
                         req.getParameter("groupName"),
                         TBaseConstants.META_MAX_GROUPNAME_LENGTH, true, "");
         final String modifyUser =
@@ -476,7 +476,7 @@ public class BrokerAdminServlet extends HttpServlet {
                         req.getParameter("topicName"),
                         TBaseConstants.META_MAX_TOPICNAME_LENGTH, true, "");
         String groupName =
-                WebParameterUtils.validStringParameter("groupName",
+                WebParameterUtils.validGroupParameter("groupName",
                         req.getParameter("groupName"),
                         TBaseConstants.META_MAX_GROUPNAME_LENGTH, true, "");
         int partitionId =

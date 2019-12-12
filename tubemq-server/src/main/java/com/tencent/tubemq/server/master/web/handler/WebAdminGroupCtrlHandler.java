@@ -95,10 +95,10 @@ public class WebAdminGroupCtrlHandler {
                             req.getParameter("condStatus"),
                             false, 0, 0);
             String groupName =
-                    WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            true, "");
+                WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    true, "");
             final String strNewFilterConds =
                     WebParameterUtils.checkAndGetFilterConds(req.getParameter("filterConds"), true, sBuilder);
             BdbTopicAuthControlEntity topicAuthControlEntity =
@@ -175,10 +175,10 @@ public class WebAdminGroupCtrlHandler {
                 Map<String, Object> groupObject = filterJsonArray.get(j);
                 try {
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String groupTopicName =
                             WebParameterUtils.validStringParameter("topicName",
                                     groupObject.get("topicName"),
@@ -285,10 +285,10 @@ public class WebAdminGroupCtrlHandler {
                         .append(" not configure in master's topic configure, please configure first!").toString());
             }
             String groupName =
-                    WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            true, "");
+                WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    true, "");
             BdbGroupFilterCondEntity curFilterCondEntity =
                     brokerConfManage.getBdbAllowedGroupFilterConds(topicName, groupName);
             if (curFilterCondEntity == null) {
@@ -374,10 +374,10 @@ public class WebAdminGroupCtrlHandler {
                 Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String topicName =
                             WebParameterUtils.validStringParameter("topicName",
                                     groupObject.get("topicName"),
@@ -522,10 +522,10 @@ public class WebAdminGroupCtrlHandler {
             WebParameterUtils.reqAuthorizenCheck(master, brokerConfManage,
                     req.getParameter("confModAuthToken"));
             String groupName =
-                    WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            true, "");
+                WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    true, "");
             String modifyUser =
                     WebParameterUtils.validStringParameter("modifyUser",
                             req.getParameter("modifyUser"),
@@ -623,10 +623,10 @@ public class WebAdminGroupCtrlHandler {
                             TBaseConstants.META_MAX_TOPICNAME_LENGTH,
                             false, null));
             webGroupFilterCondEntity
-                    .setConsumerGroupName(WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            false, null));
+                .setConsumerGroupName(WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    false, null));
             webGroupFilterCondEntity
                     .setCreateUser(WebParameterUtils.validStringParameter("createUser",
                             req.getParameter("createUser"),
@@ -785,10 +785,10 @@ public class WebAdminGroupCtrlHandler {
                 Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String groupTopicName =
                             WebParameterUtils.validStringParameter("topicName",
                                     groupObject.get("topicName"),
@@ -872,11 +872,11 @@ public class WebAdminGroupCtrlHandler {
                             TBaseConstants.META_MAX_TOPICNAME_LENGTH,
                             false, null));
             webConsumerGroupEntity
-                    .setConsumerGroupName(WebParameterUtils.validStringParameter(
-                            "groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            false, null));
+                .setConsumerGroupName(WebParameterUtils.validGroupParameter(
+                    "groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    false, null));
             webConsumerGroupEntity
                     .setRecordCreateUser(WebParameterUtils.validStringParameter("createUser",
                             req.getParameter("createUser"),
@@ -1052,10 +1052,10 @@ public class WebAdminGroupCtrlHandler {
                 Map<String, Object> groupObject = jsonArray.get(j);
                 try {
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String groupTopicName =
                             WebParameterUtils.validStringParameter("topicName",
                                     groupObject.get("topicName"),
@@ -1128,10 +1128,10 @@ public class WebAdminGroupCtrlHandler {
                             TBaseConstants.META_MAX_TOPICNAME_LENGTH,
                             false, null));
             webBlackGroupEntity
-                    .setBlackGroupName(WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            false, null));
+                .setBlackGroupName(WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    false, null));
             webBlackGroupEntity
                     .setCreateUser(WebParameterUtils.validStringParameter("createUser",
                             req.getParameter("createUser"),
@@ -1299,10 +1299,10 @@ public class WebAdminGroupCtrlHandler {
                 Map<String, Object> groupObject = groupNameJsonArray.get(j);
                 try {
                     String groupName =
-                            WebParameterUtils.validStringParameter("groupName",
-                                    groupObject.get("groupName"),
-                                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                                    true, "");
+                        WebParameterUtils.validGroupParameter("groupName",
+                            groupObject.get("groupName"),
+                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                            true, "");
                     String groupCreateUser =
                             WebParameterUtils.validStringParameter("createUser",
                                     groupObject.get("createUser"),
@@ -1361,10 +1361,10 @@ public class WebAdminGroupCtrlHandler {
                 new BdbConsumeGroupSettingEntity();
         try {
             queryEntity
-                    .setConsumeGroupName(WebParameterUtils.validStringParameter("groupName",
-                            req.getParameter("groupName"),
-                            TBaseConstants.META_MAX_GROUPNAME_LENGTH,
-                            false, null));
+                .setConsumeGroupName(WebParameterUtils.validGroupParameter("groupName",
+                    req.getParameter("groupName"),
+                    TBaseConstants.META_MAX_GROUPNAME_LENGTH,
+                    false, null));
             queryEntity
                     .setCreateUser(WebParameterUtils.validStringParameter("createUser",
                             req.getParameter("createUser"),
