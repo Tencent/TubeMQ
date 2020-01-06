@@ -1,3 +1,5 @@
+# This is the old repository for Apache TubeMQ, the new repository has been moved to https://github.com/apache/incubator-tubemq which is under management of ASF.
+
 # TubeMQ
 
 [README in Chinese](README.cn.md)
