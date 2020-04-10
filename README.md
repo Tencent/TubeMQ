@@ -1,4 +1,9 @@
-# This is the old repository for Apache TubeMQ, the new repository has been moved to https://github.com/apache/incubator-tubemq which is under management of ASF.
+**This is the old repository for Apache TubeMQ, TubeMQ has been donated to the Apache Software Foundation.**
+Please use the new Apache mailing lists, site, and repository:
+
+* Mailing list: dev@tubemq.apache.org (subscribe using dev-subscribe@tubemq.apache.org)
+* Site: https://tubemq.apache.org
+* Repository: https://github.com/apache/incubator-tubemq
 
 # TubeMQ
 
