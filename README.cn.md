@@ -1,10 +1,7 @@
-# TubeMQ
+TubeMQ 已捐赠给 Apache Software Foundation 并更名为 InLong，此旧存储库已删除，仅保留 readme.MD 文件。
 
-[英文版 README](README.md)
+最新内容请访问 Apache 新邮件列表、站点和存储库：
 
-TubeMQ是腾讯大数据在2013年开始研发的分布式消息中间件系统（MQ），专注服务大数据场景下海量数据的高性能存储和传输。经过近7年上万亿的海量数据沉淀，较之于众多的开源MQ组件，TubeMQ在海量实践（稳定性+性能）和低成本方面有一定的优势，近期我们在开源TubeMQ的相关代码及设计，更多资料正在陆续整理和上传之中。
-
-## 文档
-- [用户手册](./docs/tubemq_user_guide.md)
-
-更多疑问，请联系： gosonzhang@tencent.com, junpingdu@tencent.com
+- 邮件列表：dev@inlong.apache.org（使用 dev-subscribe@inlong.apache.org 订阅）
+- 网站：https://inlong.apache.org
+- 存储库：https://github.com/apache/incubator-inlong
